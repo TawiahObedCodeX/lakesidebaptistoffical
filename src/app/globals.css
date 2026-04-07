@@ -1,0 +1,248 @@
+/* @import "tailwindcss";
+
+:root {
+  --background: #F7F6F3;
+  --foreground: #1F2937;
+  --pri: #2C3E50;
+  --sec: #8C6A4F;
+  --acc: #C9A66B;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif);
+}
+
+.text-pri { color: var(--pri); }
+.text-sec { color: var(--sec); }
+.bg-pri { background: var(--pri); }
+.bg-sec { background: var(--sec); } */
+
+
+
+/* =============================================================================
+   global.css — Color Tokens Only
+   Tailwind CSS v4 (2026) — CSS-first configuration via @theme
+   Animations → Framer Motion  |  Icons → react-icons / local images
+   =============================================================================
+   Color sources:
+     • Main site theme  (style.css)
+     • Auth pages       (auth.css)
+     • Donation page    (donation-page.css)
+     • Theme overrides  (theme-overrides.css)
+     • SlickNav         (slicknav.css)
+   ============================================================================= */
+
+   @import "tailwindcss";
+
+   /* ---------------------------------------------------------------------------
+      1.  TAILWIND v4 THEME  —  all colors registered as design tokens
+      --------------------------------------------------------------------------- */
+   @theme {
+   
+     /* --- Brand: Primary (deep blue-gray) ------------------------------------ */
+     --color-brand-primary:         #2C3E50;
+     --color-brand-primary-dark:    #213243;
+     --color-brand-primary-light:   #31475A;
+     --color-brand-primary-muted:   rgba(44, 62, 80, 0.16);
+   
+     /* --- Brand: Secondary (warm bronze) ------------------------------------- */
+     --color-brand-secondary:       #8C6A4F;
+     --color-brand-secondary-dark:  #7B5A43;
+     --color-brand-secondary-deeper:#6F523E;
+     --color-brand-secondary-muted: rgba(140, 106, 79, 0.16);
+   
+     /* --- Brand: Accent (soft gold) ----------------------------------------- */
+     --color-brand-accent:          #C9A66B;
+     --color-brand-accent-light:    #F0D69F;
+     --color-brand-accent-muted:    rgba(201, 166, 107, 0.14);
+   
+     /* --- Site core palette -------------------------------------------------- */
+     --color-site-bg:               #F7F6F3;   /* warm off-white page bg       */
+     --color-site-surface:          #FFFFFF;   /* card / modal surface         */
+     --color-site-text:             #1F2937;   /* body copy (slate-800)        */
+     --color-site-muted:            #6B7280;   /* secondary text (slate-500)   */
+   
+     /* --- Legacy site variables (kept for parity) ---------------------------- */
+     --color-primary:               #000000;   /* --primary-color              */
+     --color-secondary-bg:          #FFF4F1;   /* --secondary-color            */
+     --color-body-text:             #525252;   /* --text-color                 */
+     --color-accent:                #3810CC;   /* --accent-color (deep purple) */
+     --color-white:                 #FFFFFF;
+     --color-error:                 rgb(80, 18, 213);
+   
+     /* --- Dividers ----------------------------------------------------------- */
+     --color-divider:               rgba(255, 255, 255, 0.149); /* --divider-color       */
+     --color-divider-dark:          #E9E9E9;                    /* --dark-divider-color  */
+   
+     /* --- Neutrals (from Bootstrap root + Tailwind slate) ------------------- */
+     --color-neutral-50:            #F8FAFC;
+     --color-neutral-100:           #F1F5F9;
+     --color-neutral-200:           #E2E8F0;
+     --color-neutral-300:           #CBD5E1;
+     --color-neutral-400:           #94A3B8;
+     --color-neutral-500:           #64748B;
+     --color-neutral-600:           #475569;
+     --color-neutral-700:           #334155;
+     --color-neutral-800:           #1E293B;
+     --color-neutral-900:           #0F172A;
+   
+     /* --- Blues (donation / payment UI) ------------------------------------- */
+     --color-blue-50:               #EFF6FF;
+     --color-blue-100:              #DBEAFE;
+     --color-blue-300:              #93C5FD;
+     --color-blue-400:              #60A5FA;
+     --color-blue-500:              #3B82F6;
+     --color-blue-600:              #2563EB;
+     --color-blue-700:              #1D4ED8;
+     --color-blue-800:              #1C4A8C;   /* dp-submit / dp-hint primary  */
+     --color-blue-900:              #1E3A8A;
+     --color-blue-sky:              #0EA5E9;   /* sky-500                      */
+     --color-blue-sky-dark:         #0369A1;
+     --color-blue-navy:             #0B1F3A;   /* dp-topbar                    */
+     --color-blue-navy-mid:         #0D2645;
+     --color-blue-navy-deep:        #071526;
+   
+     /* --- Vibrant payment palette (kept for payment page variant) ----------- */
+     --color-payment-pink:          #FF006E;
+     --color-payment-purple:        #3810CC;   /* same as --accent              */
+     --color-payment-cyan:          #00D4FF;
+     --color-payment-gold:          #FFD700;
+   
+     /* --- Status ------------------------------------------------------------ */
+     --color-success:               #10B981;   /* emerald-500                  */
+     --color-success-bg:            #E9F9EE;
+     --color-success-border:        rgba(21, 115, 71, 0.22);
+     --color-success-text:          #157347;
+   
+     --color-danger:                #DC3545;
+     --color-danger-bg:             #FDECEC;
+     --color-danger-border:         rgba(176, 42, 55, 0.22);
+     --color-danger-text:           #B02A37;
+   
+     --color-info-bg:               rgba(219, 234, 254, 0.95);
+     --color-info-border:           rgba(29, 78, 216, 0.22);
+     --color-info-text:             #1D4ED8;
+   
+     --color-warning-bg:            #FFF3CD;
+     --color-warning-text:          #664D03;
+   
+     /* --- SlickNav (mobile nav) legacy colors ------------------------------- */
+     --color-slicknav-bg:           #4C4C4C;
+     --color-slicknav-btn:          #222222;
+     --color-slicknav-text:         #FFFFFF;
+     --color-slicknav-hover-bg:     #CCCCCC;
+     --color-slicknav-hover-text:   #222222;
+   
+     /* --- Overlays / glass -------------------------------------------------- */
+     --color-overlay-dark:          rgba(0, 0, 0, 0.60);
+     --color-overlay-primary:       rgba(44, 62, 80, 0.90);
+     --color-glass-white:           rgba(255, 255, 255, 0.08);
+     --color-glass-border:          rgba(255, 255, 255, 0.12);
+   
+     /* --- Border radius (shared scale) -------------------------------------- */
+     --radius-sm:   0.25rem;
+     --radius-md:   0.5rem;
+     --radius-lg:   0.75rem;
+     --radius-xl:   1rem;
+     --radius-2xl:  1.375rem;  /* 22px — card default     */
+     --radius-3xl:  1.625rem;  /* 26px — auth card        */
+     --radius-pill: 9999px;
+   
+     /* --- Shadows ------------------------------------------------------------ */
+     --shadow-card:    0 20px 56px rgba(15, 23, 42, 0.10);
+     --shadow-card-lg: 0 28px 70px rgba(15, 23, 42, 0.12);
+     --shadow-brand:   0 10px 28px rgba(140, 106, 79, 0.30);
+     --shadow-blue:    0 10px 28px rgba(28, 74, 140, 0.30);
+
+     /* ... your existing colors ... */
+
+  /* Add these custom shadows for the "Professional Card" look */
+  --shadow-card: 0 20px 56px rgba(15, 23, 42, 0.08);
+  --shadow-card-lg: 0 28px 70px rgba(15, 23, 42, 0.15);
+  
+  /* Add brand-specific shadow */
+  --shadow-brand: 0 10px 28px rgba(140, 106, 79, 0.2);
+   
+   }
+   
+   /* ---------------------------------------------------------------------------
+      2.  CSS CUSTOM PROPERTIES  (runtime access for non-Tailwind usage)
+      --------------------------------------------------------------------------- */
+   :root {
+     /* Brand */
+     --brand-primary:          var(--color-brand-primary);
+     --brand-secondary:        var(--color-brand-secondary);
+     --brand-accent:           var(--color-brand-accent);
+   
+     /* Surface */
+     --page-bg:                var(--color-site-bg);
+     --surface:                var(--color-site-surface);
+     --text-base:              var(--color-site-text);
+     --text-muted:             var(--color-site-muted);
+   
+     /* Accent blue */
+     --accent-blue:            var(--color-blue-sky);
+     --accent-blue-dark:       var(--color-blue-sky-dark);
+   
+     /* Dividers */
+     --divider:                var(--color-divider-dark);
+     --divider-subtle:         var(--color-divider);
+   
+     /* Status */
+     --status-success:         var(--color-success);
+     --status-danger:          var(--color-danger);
+   }
+
+   /* ---------------------------------------------------------------------------
+   3.  BASE TYPOGRAPHY  — wires Next.js font variable to the document
+   --------------------------------------------------------------------------- */
+body {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--color-site-text);
+  background-color: var(--color-site-bg);
+}
+
+
+/* ---------------------------------------------------------------------------
+   4.  AUTH-NAV INJECTED ELEMENTS
+       .nav-user-pill and .btn-signout are written into .header-btn
+       dynamically by auth-nav.js — they need styles here.
+   --------------------------------------------------------------------------- */
+.nav-user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-brand-primary-muted);
+  color: var(--color-brand-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn-signout {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-brand-secondary);
+  color: var(--color-brand-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-signout:hover {
+  background-color: var(--color-brand-secondary);
+  color: var(--color-white);
+}

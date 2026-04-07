@@ -1,0 +1,280 @@
+/* Auth Pages Theme - Classic Church UI
+   Palette:
+   --primary: #2C3E50 (deep blue-gray)
+   --secondary: #8C6A4F (warm bronze)
+   --accent: #C9A66B (soft gold)
+   --bg: #F7F6F3 (warm off-white)
+   --surface: #FFFFFF
+   --text: #1F2937
+   --muted: #6B7280
+*/
+
+:root{
+  --auth-primary:#2C3E50;
+  --auth-secondary:#8C6A4F;
+  --auth-accent:#C9A66B;
+  --auth-bg:#F7F6F3;
+  --auth-surface:#FFFFFF;
+  --auth-text:#1F2937;
+  --auth-muted:#6B7280;
+  --auth-radius-lg:26px;
+  --auth-radius-sm:12px;
+  --auth-shadow-lg:0 28px 70px rgba(15,23,42,0.12);
+  --auth-shadow-card:0 20px 56px rgba(15,23,42,0.10);
+  --auth-border:1px solid rgba(15,23,42,0.08);
+}
+
+/* Page background with subtle decorative radial vignettes */
+.auth-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(40px,6vw,90px) 18px;
+  background:
+    radial-gradient(1200px 400px at 10% -10%, rgba(44,62,80,0.08), transparent 60%),
+    radial-gradient(1200px 400px at 110% 110%, rgba(201,166,107,0.10), transparent 60%),
+    var(--auth-bg);
+}
+
+/* If a fixed/absolute site header exists, push content down */
+.has-site-header .auth-page{
+  padding-top: clamp(110px, 10vw, 170px);
+}
+
+/* Auth pages: make the site header readable on light background */
+.has-site-header header.main-header{
+  position: fixed;
+  border-bottom: none;
+}
+.has-site-header header.main-header .header-sticky{
+  background: rgba(44,62,80,.96);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(14px);
+}
+.has-site-header .navbar{
+  padding: 18px 0;
+}
+.has-site-header .navbar-brand img{
+  max-width: 92px;
+}
+
+/* 2-column card layout (image/visual + form) */
+.auth-card{
+  width:min(1040px,100%);
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);
+  gap:24px;
+  align-items:stretch;
+}
+
+/* Single-column card variant (e.g., forgot/reset pages) */
+.auth-card.single{
+  width:min(560px,100%);
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+/* Form container as an elevated card */
+.auth-form{
+  padding:clamp(28px,4vw,52px);
+  background:var(--auth-surface);
+  border-radius:var(--auth-radius-lg);
+  box-shadow:var(--auth-shadow-lg);
+  border:var(--auth-border);
+}
+
+/* Header block inside auth cards */
+.auth-header{
+  margin-bottom: 18px;
+}
+.auth-header p{
+  margin: 0;
+}
+
+/* Optional inner spacing group */
+.auth-form-inner{ margin-top:8px; }
+
+/* Alerts (error/info/success) */
+.auth-alert{
+  border-radius: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(176, 42, 55, 0.22);
+  background: #fdecec;
+  color: #b02a37;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 10px 0 14px;
+}
+.auth-alert.info{
+  border-color: rgba(29, 78, 216, 0.22);
+  background: rgba(219, 234, 254, 0.95);
+  color: #1d4ed8;
+}
+.auth-alert.success{
+  border-color: rgba(21, 115, 71, 0.22);
+  background: #e9f9ee;
+  color: #157347;
+}
+.auth-alert a{
+  color: inherit;
+  font-weight: 800;
+  text-decoration: underline;
+}
+.auth-alert a:hover{
+  text-decoration: none;
+}
+
+/* Headings and text */
+.auth-form h1, .auth-form h2, .auth-form h3{
+  color:var(--auth-primary);
+  font-weight:800;
+  letter-spacing:-0.3px;
+  margin-bottom:8px;
+}
+.auth-form p{ color:var(--auth-muted); }
+
+/* Labels */
+.auth-form label{
+  display:inline-block;
+  font-size:13px;
+  color:var(--auth-muted);
+  margin-bottom:7px;
+  font-weight:600;
+}
+
+/* Inputs */
+.auth-form .verse-church{
+  width:100%;
+  border-radius:var(--auth-radius-sm);
+  padding:12px 14px;
+  border:1px solid #E5E7EB; /* slate-200 */
+  background:#FBFBFD;
+  color:var(--auth-text);
+  transition:border-color .18s, box-shadow .18s, background .18s;
+}
+.auth-form .verse-church:focus{
+  outline:0;
+  border-color:var(--auth-secondary);
+  box-shadow:0 0 0 3px rgba(140,106,79,0.16);
+  background:#FFFFFF;
+}
+
+/* Primary submit button */
+.btn-default.btn-block{
+  width:100%;
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:var(--auth-radius-sm);
+  background:linear-gradient(135deg, var(--auth-secondary), #7b5a43);
+  border:none;
+  color:#fff;
+  font-weight:700;
+  letter-spacing:.2px;
+  transition:transform .15s ease, box-shadow .2s ease, background .2s ease;
+}
+.btn-default.btn-block:hover{
+  background:linear-gradient(135deg, #7b5a43, #6f523e);
+  transform:translateY(-1px);
+  box-shadow:0 10px 24px rgba(140,106,79,0.28);
+}
+.btn-default.btn-block:active{
+  transform:none;
+  box-shadow:none;
+}
+
+/* Secondary actions/footer */
+.auth-footer{
+  margin-top:18px;
+  font-size:14px;
+  color:var(--auth-muted);
+}
+.auth-footer a{
+  color:var(--auth-secondary);
+  font-weight:700;
+  text-decoration:none;
+}
+.auth-footer a:hover{ text-decoration:underline; }
+
+/* Visual side card */
+.auth-visual{
+  border-radius:var(--auth-radius-lg);
+  box-shadow:0 28px 70px rgba(15,23,42,0.16);
+  overflow:hidden;
+  background:linear-gradient(160deg, rgba(44,62,80,0.9), rgba(44,62,80,0.6)), url('../images/join-worship-img-1.jpg') center/cover no-repeat;
+  position:relative;
+}
+.auth-visual::after{
+  content:"";
+  position:absolute; inset:0;
+  background:radial-gradient(600px 200px at 85% 15%, rgba(201,166,107,0.18), transparent 60%);
+}
+
+/* Visual side content */
+.auth-visual{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.auth-visual img{
+  position:relative;
+  z-index:1;
+  width:min(320px, 72%);
+  margin:26px auto 0;
+  opacity:.92;
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,.22));
+}
+.auth-visual-text{
+  position:relative;
+  z-index:1;
+  padding:26px 28px 28px;
+  color:#fff;
+}
+.auth-visual-text h3{
+  color:#fff;
+  font-weight:800;
+  margin:0 0 8px;
+  letter-spacing:-0.2px;
+}
+.auth-visual-text p{
+  margin:0;
+  color:rgba(255,255,255,.72);
+  line-height:1.65;
+}
+
+/* Field groups spacing */
+.auth-form .form-group{ margin-bottom:14px; }
+
+/* Small hints below fields */
+.auth-form .form-hint{
+  display:block;
+  margin-top:6px;
+  font-size:12px;
+  color:#9CA3AF;
+}
+
+/* Row for secondary links (e.g., forgot password) */
+.auth-row{
+  display:flex;
+  justify-content:flex-end;
+  margin: 6px 0 12px;
+}
+.auth-row a{
+  font-size: 13px;
+  color: var(--auth-secondary);
+  font-weight: 800;
+  text-decoration: none;
+}
+.auth-row a:hover{
+  text-decoration: underline;
+}
+
+/* Help/error text */
+.form-text, .invalid-feedback{ font-size:12px; color:#9CA3AF; }
+.is-invalid{ border-color:#C62828!important; box-shadow:0 0 0 3px rgba(198,40,40,0.12)!important; }
+
+/* Responsive */
+@media (max-width: 991px){
+  .auth-card{ grid-template-columns:1fr; max-width:600px; }
+  .auth-visual{ display:none; }
+}
