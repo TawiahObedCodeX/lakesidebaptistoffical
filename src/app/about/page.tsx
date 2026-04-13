@@ -147,60 +147,60 @@ const TABS = [
   },
 ];
 
-const FAQS = [
-  {
-    id: "one",
-    q: "Why is faith a core value?",
-    a: "Faith is the starting point of a relationship with God. In Christianity, for example, without faith it is impossible to please God (Hebrews 11:6).",
-  },
-  {
-    id: "two",
-    q: "How does the church demonstrate love?",
-    a: "Church leaders provide emotional and spiritual support during tough times - loss, illness, family problems.",
-  },
-  {
-    id: "three",
-    q: "How is community fostered within the church?",
-    a: "Coming together for worship, prayer, and teaching helps create a shared experience and spiritual unity.",
-  },
-  {
-    id: "four",
-    q: "What is the importance of spiritual growth?",
-    a: "As people grow spiritually, they come to know God more personally - not just through knowledge, but through experience, prayer, and trust.",
-  },
-  {
-    id: "five",
-    q: "How do these values shape church activities?",
-    a: "Visiting the sick, comforting the grieving, and supporting people in crisis flow from Christ-like love.",
-  },
-];
+// const FAQS = [
+//   {
+//     id: "one",
+//     q: "Why is faith a core value?",
+//     a: "Faith is the starting point of a relationship with God. In Christianity, for example, without faith it is impossible to please God (Hebrews 11:6).",
+//   },
+//   {
+//     id: "two",
+//     q: "How does the church demonstrate love?",
+//     a: "Church leaders provide emotional and spiritual support during tough times - loss, illness, family problems.",
+//   },
+//   {
+//     id: "three",
+//     q: "How is community fostered within the church?",
+//     a: "Coming together for worship, prayer, and teaching helps create a shared experience and spiritual unity.",
+//   },
+//   {
+//     id: "four",
+//     q: "What is the importance of spiritual growth?",
+//     a: "As people grow spiritually, they come to know God more personally - not just through knowledge, but through experience, prayer, and trust.",
+//   },
+//   {
+//     id: "five",
+//     q: "How do these values shape church activities?",
+//     a: "Visiting the sick, comforting the grieving, and supporting people in crisis flow from Christ-like love.",
+//   },
+// ];
 
-const COUNTERS = [
-  {
-    value: 350,
-    suffix: "+",
-    label: "Oldest Member",
-    desc: "Our oldest member is Mary Thompson, 95 years old, attending since 1945.",
-  },
-  {
-    value: 98,
-    suffix: "+",
-    label: "Youth Retreats",
-    desc: "Transformative annual retreats shaping the next generation of faithful leaders.",
-  },
-  {
-    value: 148,
-    suffix: "+",
-    label: "Tech Workshops",
-    desc: "Equipping our congregation with modern skills rooted in purpose.",
-  },
-  {
-    value: 58,
-    suffix: "+",
-    label: "Christmas Concerts",
-    desc: "Decades of joyful celebration bringing the community together.",
-  },
-];
+// const COUNTERS = [
+//   {
+//     value: 350,
+//     suffix: "+",
+//     label: "Oldest Member",
+//     desc: "Our oldest member is Mary Thompson, 95 years old, attending since 1945.",
+//   },
+//   {
+//     value: 98,
+//     suffix: "+",
+//     label: "Youth Retreats",
+//     desc: "Transformative annual retreats shaping the next generation of faithful leaders.",
+//   },
+//   {
+//     value: 148,
+//     suffix: "+",
+//     label: "Tech Workshops",
+//     desc: "Equipping our congregation with modern skills rooted in purpose.",
+//   },
+//   {
+//     value: 58,
+//     suffix: "+",
+//     label: "Christmas Concerts",
+//     desc: "Decades of joyful celebration bringing the community together.",
+//   },
+// ];
 
 const WHAT_WE_DO = [
   {
@@ -315,7 +315,7 @@ export default function AboutPage() {
             }}
             className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-[1.05] tracking-tight mb-8"
           >
-            About <span className="text-[var(--color-brand-accent)]">Us</span>
+            About <span className="text-brand-accent">Us</span>
           </motion.h1>
 
           <motion.p
@@ -347,7 +347,7 @@ export default function AboutPage() {
           2. ABOUT US
       ══════════════════════════ */}
       <section className="py-28 lg:py-36 bg-white relative overflow-hidden">
-        <Orb className="w-[480px] h-[480px] bg-[var(--color-brand-accent)]/6 -top-40 -right-40" />
+        <Orb className="w-[480px] h-[480px] bg-brand-accent/6 -top-40 -right-40" />
 
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 xl:gap-24 items-center">
@@ -391,10 +391,10 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ type: "spring", stiffness: 160, delay: 0.45 }}
-                  className="absolute top-[46%] right-[8%] bg-[var(--color-brand-primary)] text-white rounded-2xl p-5 shadow-2xl z-10 text-center"
+                  className="absolute top-[46%] right-[8%] bg-brand-primary text-white rounded-2xl p-5 shadow-2xl z-10 text-center"
                 >
-                  <p className="text-4xl font-bold text-[var(--color-brand-accent)] leading-none">
-                    50+
+                  <p className="text-4xl font-bold text-brand-accent leading-none">
+                    16
                   </p>
                   <p className="text-[10px] tracking-widest text-white/70 uppercase mt-2">
                     Years of Grace
@@ -406,20 +406,20 @@ export default function AboutPage() {
             {/* Content */}
             <div>
               <FadeUp>
-                <span className="inline-flex items-center gap-2 text-[var(--color-brand-secondary)] text-xs tracking-[4px] font-semibold uppercase mb-5">
-                  <span className="block h-px w-8 bg-[var(--color-brand-secondary)]" />
+                <span className="inline-flex items-center gap-2 text-brand-secondary text-xs tracking-[4px] font-semibold uppercase mb-5">
+                  <span className="block h-px w-8 bg-brand-secondary" />
                   About Us
                 </span>
-                <h2 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-[var(--color-brand-primary)] leading-[1.1] mb-6">
+                <h2 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-brand-primary leading-[1.1] mb-6">
                   Faith, hope, and love in{" "}
-                  <span className="text-[var(--color-brand-accent)]">
+                  <span className="text-brand-accent">
                     action every day
                   </span>
                 </h2>
               </FadeUp>
 
               <FadeUp delay={0.15}>
-                <p className="text-[var(--color-site-muted)] text-lg leading-relaxed mb-5">
+                <p className="text-site-muted text-lg leading-relaxed mb-5">
                   We are a vibrant community of believers dedicated to worship,
                   fellowship, and service. Our mission is to share God&apos;s
                   love, grow in faith, and make a positive impact in the world
@@ -561,7 +561,7 @@ export default function AboutPage() {
       <section className="py-24 bg-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(201,166,107,0.07),transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {COUNTERS.map((c, i) => (
               <FadeUp key={i} delay={i * 0.12}>
                 <motion.div
@@ -584,7 +584,7 @@ export default function AboutPage() {
                 </motion.div>
               </FadeUp>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -640,7 +640,7 @@ export default function AboutPage() {
       {/* ══════════════════════════
           6. OUR TEAM
       ══════════════════════════ */}
-      <section className="py-28 bg-white">
+      {/* <section className="py-28 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <FadeUp className="text-center mb-16">
             <span className="inline-flex items-center gap-2 text-[var(--color-brand-secondary)] text-xs tracking-[4px] font-semibold uppercase mb-4">
@@ -695,12 +695,12 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ══════════════════════════
           7. PASTOR'S MESSAGE
       ══════════════════════════ */}
-      <section className="py-28 bg-[var(--color-site-bg)] relative overflow-hidden">
+      <section className="py-28 bg-site-bg relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <FadeUp className="relative">
@@ -710,14 +710,14 @@ export default function AboutPage() {
                   alt="Pastor"
                   className="w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-brand-primary)]/30 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-brand-primary/30 to-transparent" />
               </div>
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", delay: 0.3 }}
-                className="absolute -top-5 -right-5 w-20 h-20 rounded-2xl bg-[var(--color-brand-accent)] flex items-center justify-center text-[var(--color-brand-primary)] text-5xl font-serif shadow-xl leading-none"
+                className="absolute -top-5 -right-5 w-20 h-20 rounded-2xl bg-brand-accent flex items-center justify-center text-brand-primary text-5xl font-serif shadow-xl leading-none"
               >
                 &ldquo;
               </motion.div>
@@ -725,24 +725,24 @@ export default function AboutPage() {
 
             <div>
               <FadeUp>
-                <span className="inline-flex items-center gap-2 text-[var(--color-brand-secondary)] text-xs tracking-[4px] font-semibold uppercase mb-5">
-                  <span className="block h-px w-8 bg-[var(--color-brand-secondary)]" />
+                <span className="inline-flex items-center gap-2 text-brand-secondary text-xs tracking-[4px] font-semibold uppercase mb-5">
+                  <span className="block h-px w-8 bg-brand-secondary" />
                   Pastor&apos;s Message
                 </span>
-                <h2 className="text-4xl sm:text-5xl font-bold text-[var(--color-brand-primary)] leading-tight mb-8">
+                <h2 className="text-4xl sm:text-5xl font-bold text-brand-primary leading-tight mb-8">
                   Your generosity makes a{" "}
-                  <span className="text-[var(--color-brand-accent)]">
+                  <span className="text-brand-accent">
                     profound impact
                   </span>
                 </h2>
               </FadeUp>
 
               <FadeUp delay={0.15}>
-                <p className="text-[var(--color-brand-primary)] font-semibold text-xl leading-relaxed mb-6">
+                <p className="text-brand-primary font-semibold text-xl leading-relaxed mb-6">
                   Our mission is to share God&apos;s love, foster spiritual
                   growth, and serve our community with compassion and purpose.
                 </p>
-                <p className="text-[var(--color-site-muted)] text-lg leading-relaxed mb-12">
+                <p className="text-site-muted text-lg leading-relaxed mb-12">
                   We would love to get to know you better. Feel free to reach
                   out to us through our Contact Us page, or join us for one of
                   our upcoming services or events. Our doors are always open,
@@ -758,10 +758,10 @@ export default function AboutPage() {
                     className="h-14 opacity-70"
                   />
                   <div>
-                    <p className="text-[var(--color-brand-primary)] font-bold">
+                    <p className="text-brand-primary font-bold">
                       Senior Pastor
                     </p>
-                    <p className="text-[var(--color-site-muted)] text-sm">
+                    <p className="text-site-muted text-sm">
                       Lakeside Baptist Church
                     </p>
                   </div>
@@ -771,7 +771,7 @@ export default function AboutPage() {
               <FadeUp delay={0.35}>
                 <Link
                   href="/pastor"
-                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-[var(--color-brand-primary)] text-white font-semibold hover:bg-[var(--color-brand-primary-dark)] transition-colors duration-300 shadow-lg"
+                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-brand-primary text-white font-semibold hover:bg-brand-primary-dark transition-colors duration-300 shadow-lg"
                 >
                   Meet Our Pastor &rarr;
                 </Link>
@@ -784,8 +784,8 @@ export default function AboutPage() {
       {/* ══════════════════════════
           8. CORE VALUES
       ══════════════════════════ */}
-      <section className="py-28 bg-[var(--color-brand-primary)] relative overflow-hidden">
-        <Orb className="w-[500px] h-[500px] bg-[var(--color-brand-secondary)]/15 -bottom-40 -left-40" />
+      <section className="py-28 bg-brand-primary relative overflow-hidden">
+        <Orb className="w-[500px] h-[500px] bg-brand-secondary/15 -bottom-40 -left-40" />
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -798,14 +798,14 @@ export default function AboutPage() {
           <FadeUp className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-bold text-white">
               Foundations of Our Faith and{" "}
-              <span className="text-[var(--color-brand-accent)]">
+              <span className="text-brand-accent">
                 Community Life
               </span>
             </h2>
           </FadeUp>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <FadeUp>
+            {/* <FadeUp>
               <div className="space-y-3">
                 {FAQS.map((faq) => (
                   <motion.div
@@ -853,7 +853,7 @@ export default function AboutPage() {
                   </motion.div>
                 ))}
               </div>
-            </FadeUp>
+            </FadeUp> */}
 
             {/* <FadeUp delay={0.2}>
               <div className="relative h-[380px] sm:h-[500px]">
