@@ -362,7 +362,7 @@ export default function AboutPage() {
                   className="absolute top-0 left-0 w-[75%] h-[75%] rounded-3xl overflow-hidden shadow-2xl"
                 >
                   <ParallaxImage
-                    src="/images/REV EDGAR.jpg"
+                    src="/images/aboutimg2.png"
                     alt="Church community"
                     className="w-full h-full"
                   />
@@ -380,7 +380,7 @@ export default function AboutPage() {
                   className="absolute bottom-0 right-0 w-[65%] h-[65%] rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
                 >
                   <ParallaxImage
-                    src="/images/girls.jpg"
+                    src="/images/aboutimg1.png"
                     alt="Girls"
                     className="w-full h-full"
                   />
