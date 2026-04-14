@@ -51,7 +51,7 @@ const sermons = [
     preacher: `REV. EDGAR NASHIEF`,
     category: "Transformation",
     time: "9:50 AM",
-    img: "REV EDGAR.jpg",
+    img: "/images/pastorimg.jpg",
   },
   {
     id: 2,
@@ -61,7 +61,7 @@ const sermons = [
     preacher: "Deacon Tei-Muno",
     category: "Resilience",
     time: "9:50 AM",
-    img: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1000&auto=format&fit=crop",
+    img: "/images/pastorimg.jpg",
   },
   {
     id: 3,
@@ -71,7 +71,7 @@ const sermons = [
     preacher: "REV Edgar Nashief",
     category: "Vision",
     time: "9:50 AM",
-    img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=1000&auto=format&fit=crop",
+    img: "/images/pastorimg.jpg",
   },
   // {
   //   id: 4,
