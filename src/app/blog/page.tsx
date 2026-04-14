@@ -43,7 +43,7 @@ const blogSections = [
       "Even 10 minutes a day can transform your perspective, helping you approach challenges with faith and confidence.",
       "We provide easy steps to integrate these practices into your busy life."
     ],
-    image: "/images/borga.jpg",
+    image: "/images/aboutimg3.jpg",
     date: "Jan 10, 2026",
     readTime: "5 min read"
   },
