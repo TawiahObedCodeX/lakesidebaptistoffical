@@ -83,7 +83,7 @@ const sectionVariants = {
 
 export default function BlogPage() {
   return (
-    <main className="bg-[var(--color-site-bg)]">
+    <main className="bg-site-bg">
 
       {/* NAVBAR */}
       <SiteHeader />
@@ -97,7 +97,7 @@ export default function BlogPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[var(--color-overlay-primary)]" />
+          <div className="absolute inset-0 bg-overlay-primary" />
         </div>
         <div className="relative z-10 px-6">
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
@@ -124,7 +124,7 @@ export default function BlogPage() {
             }`}
           >
             {/* IMAGE */}
-            <div className="relative w-full md:w-1/2 h-64 md:h-96 rounded-3xl  b overflow-hidden shadow-[var(--shadow-card)]">
+            <div className="relative w-full md:w-1/2 h-64 md:h-96 rounded-3xl  b overflow-hidden shadow-(--shadow-card)">
               <Image
                 src={section.image}
                 alt={section.title}
@@ -135,24 +135,24 @@ export default function BlogPage() {
 
             {/* TEXT */}
             <div className="w-full md:w-1/2">
-              <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-brand-primary)] mb-3">
+              <h2 className="text-3xl md:text-4xl font-bold text-brand-primary mb-3">
                 {section.title}
               </h2>
-              <h3 className="text-lg md:text-xl font-medium text-[var(--color-brand-secondary)] mb-6">
+              <h3 className="text-lg md:text-xl font-medium text-brand-secondary mb-6">
                 {section.subtitle}
               </h3>
               {section.content.map((paragraph, i) => (
-                <p key={i} className="mb-4 text-[var(--color-site-text)] text-base md:text-lg leading-relaxed">
+                <p key={i} className="mb-4 text-site-text text-base md:text-lg leading-relaxed">
                   {paragraph}
                 </p>
               ))}
-              <div className="flex items-center gap-4 mt-4 text-[var(--color-site-muted)] text-sm">
+              <div className="flex items-center gap-4 mt-4 text-site-muted text-sm">
                 <span className="flex items-center gap-1"><HiCalendar /> {section.date}</span>
                 <span className="flex items-center gap-1"><HiClock /> {section.readTime}</span>
               </div>
               <Link
                 href={`/blog/${section.id}`}
-                className="mt-6 inline-block bg-[var(--color-brand-accent)] text-[var(--color-brand-primary)] px-6 py-3 rounded-full font-bold hover:scale-105 transition"
+                className="mt-6 inline-block bg-brand-accent text-brand-primary px-6 py-3 rounded-full font-bold hover:scale-105 transition"
               >
                 Read Full Story
               </Link>
@@ -162,7 +162,7 @@ export default function BlogPage() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="bg-[var(--color-brand-secondary)] py-20 text-center">
+      <section className="bg-brand-secondary py-20 text-center">
   <h2 className="text-3xl font-bold mb-4 text-white">
     Stay Connected & Inspired
   </h2>
@@ -171,7 +171,7 @@ export default function BlogPage() {
   </p>
   <Link
     href="/sermons"
-    className="inline-block bg-[var(--color-brand-accent)] text-[var(--color-brand-primary)] px-8 py-3 rounded-full font-bold hover:scale-105 transition"
+    className="inline-block bg-brand-accent text-brand-primary px-8 py-3 rounded-full font-bold hover:scale-105 transition"
   >
     Explore Sermons
   </Link>

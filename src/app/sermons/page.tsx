@@ -55,13 +55,13 @@ const sermons = [
   },
   {
     id: 2,
-    day: "18",
-    month: "MAR",
-    title: "Obedience that provoke God",
-    preacher: "Deacon Tei-Muno",
+    day: "12",
+    month: "Apr ",
+    title: `THE SACRIFICE OF THANKSGIVING`,
+    preacher: " REV OLUWATOYIN LAWAL",
     category: "Resilience",
     time: "9:50 AM",
-    img: "/images/pastorimg.jpg",
+    img: "/images/MRLAWAL.jpg",
   },
   {
     id: 3,
