@@ -706,7 +706,7 @@ export default function AboutPage() {
             <FadeUp className="relative">
               <div className="relative rounded-3xl overflow-hidden h-[460px] lg:h-[580px]">
                 <ParallaxImage
-                  src="/images/lol1 (2).jpg"
+                  src="/images/pastorimg.jpg"
                   alt="Pastor"
                   className="w-full h-full"
                 />
