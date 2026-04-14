@@ -160,7 +160,7 @@ export default function ServicesPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               "/images/khady.jpg",
-              "/images/nabila.jpg",
+              "/images/lbcwomen.jpeg",
               "/images/use.jpg",
             ].map((src, i) => (
               <motion.div
