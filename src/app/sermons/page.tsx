@@ -61,17 +61,18 @@ const sermons = [
     preacher: " REV OLUWATOYIN LAWAL",
     category: "Resilience",
     time: "9:50 AM",
-    img: "/images/MRLAWAL.jpg",
+    img: "/images/pastorimg.jpg",
   },
   {
     id: 3,
     day: "25",
     month: "MAR",
-    title: "the  reward of obedience ",
+    title: "THE POWER OF THE SEED",
     preacher: "REV Edgar Nashief",
     category: "Vision",
     time: "9:50 AM",
     img: "/images/pastorimg.jpg",
+    url:"https://www.youtube.com/live/_4PKOR7v5x0?si=920YtIOJJrO4itEx"
   },
   // {
   //   id: 4,
