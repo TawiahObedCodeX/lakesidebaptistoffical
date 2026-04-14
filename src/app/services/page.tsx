@@ -58,7 +58,7 @@ export default function ServicesPage() {
               className="relative h-[420px] md:h-[560px] rounded-3xl overflow-hidden shadow-2xl border-8 border-white"
             >
               <Image
-                src="/images/C2.jpg"
+                src="/images/Paula.jpg"
                 alt="Vibrant worship service in progress"
                 fill
                 className="object-cover"
