@@ -45,13 +45,13 @@ const CalendarIcon = () => (
 const sermons = [
   {
     id: 1,
-    day: "15",
-    month: " MAR",
-    title: "Obedience in the hidden place",
-    preacher: "Deacon Charles AShitey",
+    day: "28",
+    month: "Dec ",
+    title: "A THANKFUL HEART",
+    preacher: `REV. EDGAR NASHIEF`,
     category: "Transformation",
     time: "9:50 AM",
-    img: "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1000&auto=format&fit=crop",
+    img: "lol1 (2).jpg",
   },
   {
     id: 2,
@@ -132,9 +132,9 @@ function SermonCard({ sermon, index }: { sermon: typeof sermons[0]; index: numbe
         </div>
 
         {/* Category: Floating pill */}
-        <div className="absolute bottom-5 left-5 bg-amber-400 text-[#1a2530] text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full">
+        {/* <div className="absolute bottom-5 left-5 bg-amber-400 text-[#1a2530] text-[10px] font-black uppercase tracking-wider px-4 py-1.5 rounded-full">
           {sermon.category}
-        </div>
+        </div> */}
       </div>
 
       {/* Content */}
