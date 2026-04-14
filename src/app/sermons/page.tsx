@@ -51,7 +51,7 @@ const sermons = [
     preacher: `REV. EDGAR NASHIEF`,
     category: "Transformation",
     time: "9:50 AM",
-    img: "lol1 (2).jpg",
+    img: "REV EDGAR.jpg",
   },
   {
     id: 2,
