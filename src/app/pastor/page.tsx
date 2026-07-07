@@ -28,26 +28,98 @@ const team = [
   {
     name: "Rev. Edgar Nashief",
     role: "Head Pastor",
-    img: "/images/lol1 (2).jpg",
+    img: "/images/pastorimg.jpg",
     bio: "Leading our community with over 20 years of theological expertise and a heart for restorative grace.",
     featured: true,
   },
   {
-    name: "Dede Simmons",
+    name: "Pastor Lawal",
     role: "Associate Pastor",
-    img: "/images/lol1 (6).jpg",
+    img: "/images/MRLAWAL.JPG",
+    bio: "Dedicated to spiritual nurturing and pastoral care for our church community.",
+    featured: true,
+  },
+];
+
+const deacons = [
+  {
+    name: "Deacon Edward Annan",
+    role: "Chairman of the Body of Deacons",
+    focus: "Leads the deacon board in managing the church's physical and administrative needs, coordinating benevolent care for the congregation, and supporting pastoral leadership.",
+    img: "/images/team-1.jpg",
   },
   {
-    name: "Ashitey Nguyen",
-    role: "Director of Worship",
-    img: "/images/lol1 (4).jpg",
+    name: "Deacon Joseph Tei-Muno",
+    role: "Estate Committee",
+    focus: "Oversees the management, maintenance, development, and security of church property and land assets.",
+    img: "/images/team-2.jpg",
   },
   {
-    name: "Jayden Wilson",
-    role: "Worship Leader",
-    img: "/images/lol1 (5).jpg",
+    name: "Deacon Charles Ashitey",
+    role: "Head of Music and Media",
+    focus: "Directs the musical vision by managing rehearsals, selecting repertoire, and guiding performers for cohesive worship experiences.",
+    img: "/images/team-3.jpg",
   },
-  { name: "Lemuella Hawkins", role: "Youth Ministry", img: "/images/lem.jpg" },
+  {
+    name: "Deacon Joseph Yendork",
+    role: "Youth Patron",
+    focus: "Empowers young people through mentorship, sponsorship, and leadership development.",
+    img: "/images/yendork.JPG",
+  },
+  {
+    name: "Deacon Bincent Amuh",
+    role: "come to that later",
+    focus: "Supports the deacon board with administration, communications, and care coordination.",
+    img: "/images/team-4.jpg",
+  },
+  {
+    name: "Deacon Kwadwo Anim",
+    role: "Christian Education",
+    focus: "designing and delivering educational curricula, training instructors, and coordinating study programs to deepen the congregation's spiritual growth and doctrinal understanding.",
+    img: "/images/team-5.jpg",
+  },
+  {
+    name: "Deacon Kwame Ntim Gyakari",
+    role: "Finance Committee",
+    focus: "managing the organization's financial health by overseeing budgets, tracking income and expenditures, and ensuring strict accountability to responsibly support its mission and strategic goals.",
+    img: "/images/team-6.jpg",
+  },
+  {
+    name: "Deaconess Comfort Manu-Marfo",
+    role: "HR Committee",
+    focus: "managing the organization's personnel and volunteers by overseeing recruitment, developing employment policies, and supporting staff welfare to ensure a productive and harmonious working environment.",
+    img: "/images/team-7.jpg",
+  },
+  {
+    name: "Deacon Albert Tsibu",
+    role: "Sheepfold Coordinator",
+    focus: "overseeing the church's small-group pastoral care network by organizing members into designated FOLD's tracking their spiritual and physical well-being, and ensuring effective communication between group leaders and pastoral staff.",
+    img: "/images/team-8.jpg",
+  },
+  {
+    name: "Deacon Williams Andrews",
+    role: "Nominating Committee",
+    focus: "identifying, vetting, and recommending qualified candidates to fill open leadership roles and committee vacancies within the organization.",
+    img: "/images/Paula.jpg",
+  },
+  {
+    name: "Deacon Kingsly Asante",
+    img: "/images/choir.jpg",
+  },
+  {
+    name: "Deaconess Linda Adams-Ashun",
+    role: "Secretary",
+    focus: "maintaining administrative order by documenting meetings, managing official correspondence, and organizing institutional records to ensure seamless communication and continuity within the organization.",
+    img: "/images/Afia.jpg",
+  },
+  {
+    name: "Deaconess Anita Lawal",
+    img: "/images/pappoe.jpg",
+  },
+  {
+    name: "Deacon Elinda Agyei",
+    img: "/images/nabila.JPG",
+  },
 ];
 
 function MemberCard({
@@ -106,9 +178,6 @@ export default function LeadershipPage() {
         </div>
 
         <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto">
-          <span className="inline-block px-4 py-1 mb-6 text-[11px] font-black uppercase tracking-[0.4em] text-brand-accent border border-brand-accent/30 rounded-full">
-            Est. 2004 — Our Leadership
-          </span>
           <h1 className="font-serif text-5xl md:text-8xl font-bold text-white leading-[0.9] tracking-tighter mb-8">
             The Hearts Behind <br />
             <em className="text-brand-accent italic font-normal">
@@ -157,7 +226,7 @@ export default function LeadershipPage() {
           </div>
           <div className="w-full lg:w-1/2">
             <h4 className="text-brand-secondary text-sm font-bold uppercase tracking-[0.2em] mb-4">
-              Visionary Leadership
+              Head Pastor
             </h4>
             <h2 className="text-brand-primary font-serif text-4xl md:text-5xl font-bold mb-6">
               {team[0].name}
@@ -188,32 +257,92 @@ export default function LeadershipPage() {
         </div>
       </section>
 
-      {/* --- TEAM GRID --- */}
-      <section className="bg-white py-24 px-6 border-y border-divider-dark">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="max-w-md">
-              <h2 className="text-brand-primary font-serif text-4xl font-bold mb-4">
-                Our Pastoral Team
-              </h2>
-              <p className="text-site-muted">
-                A diverse team of leaders equipped to serve our congregation
-                across all generations.
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <div className="w-12 h-px bg-brand-accent self-center" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-secondary">
-                Core Leadership
-              </span>
+      {/* --- SECOND FEATURED LEADER --- */}
+      <section className="max-w-6xl mx-auto px-6 py-28">
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+          <div className="w-full lg:w-1/2">
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-brand-accent/10 rounded-[2rem] scale-95 group-hover:scale-100 transition-transform duration-700" />
+              <img
+                src={team[1]?.img}
+                className="relative rounded-2xl w-full aspect-[4/5] object-cover shadow-brand"
+                alt={team[1]?.name}
+              />
             </div>
           </div>
+          <div className="w-full lg:w-1/2">
+            <h4 className="text-brand-secondary text-sm font-bold uppercase tracking-[0.2em] mb-4">
+              Associate Pastor
+            </h4>
+            <h2 className="text-brand-primary font-serif text-4xl md:text-5xl font-bold mb-6">
+              {team[1]?.name}
+            </h2>
+            <div className="h-1 w-20 bg-brand-accent mb-8" />
+            <p className="text-site-text text-lg leading-loose mb-8 italic">
+              "{team[1]?.bio}"
+            </p>
+            <div className="grid grid-cols-2 gap-8 border-t border-divider-dark pt-8">
+              <div>
+                <h5 className="text-[11px] font-black uppercase text-brand-primary mb-1">
+                  Focus
+                </h5>
+                <p className="text-site-muted text-sm">
+                  Discipleship & Community Care
+                </p>
+              </div>
+              <div>
+                <h5 className="text-[11px] font-black uppercase text-brand-primary mb-1">
+                  Education
+                </h5>
+                <p className="text-site-muted text-sm">
+                  Bachelor of Theology (B.Th)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10">
-            {team.slice(1).map((member, i) => (
-              <MemberCard key={member.name} member={member} index={i} />
-            ))}
-          </div>
+      {/* --- DEACONS --- */}
+      <section className="max-w-6xl mx-auto px-6 py-24">
+        <div className="text-center mb-14">
+          <h2 className="text-brand-primary font-serif text-4xl font-bold mb-4">
+            Our Deacons
+          </h2>
+          <p className="text-site-muted max-w-2xl mx-auto">
+            Our deacons serve faithfully behind the scenes, supporting the church family with humility, care, and dedication.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+          {deacons.map((deacon, index) => (
+            <div
+              key={index}
+              className="rounded-3xl border border-divider-dark bg-white overflow-hidden shadow-sm hover:shadow-brand transition-all duration-300"
+            >
+              <div className="relative aspect-[3/4] overflow-hidden bg-brand-primary-muted">
+                <img
+                  src={deacon.img}
+                  alt={deacon.name}
+                  className="h-full w-full object-cover grayscale-[30%] transition-all duration-700 hover:scale-105 hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent opacity-60 hover:opacity-90 transition-opacity" />
+                <div className="absolute bottom-0 p-5 text-white w-full">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent-light">
+                    {deacon.role}
+                  </p>
+                  <h3 className="font-serif text-lg font-bold leading-tight mt-1">
+                    {deacon.name}
+                  </h3>
+                </div>
+              </div>
+              <div className="p-5">
+                <p className="text-site-muted text-sm leading-relaxed">
+                  {deacon.focus}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

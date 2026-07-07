@@ -94,12 +94,12 @@ function ParallaxImage({ src, alt, className = "" }: ParallaxImageProps) {
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
-    <div ref={ref} className={`overflow-hidden ${className}`}>
+    <div ref={ref} className={`relative overflow-hidden ${className}`}>
       <motion.img
         src={src}
         alt={alt}
         style={{ y }}
-        className="w-full h-full object-cover scale-110"
+        className="absolute inset-0 w-full h-full object-cover"
       />
     </div>
   );
@@ -391,7 +391,7 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ type: "spring", stiffness: 160, delay: 0.45 }}
-                  className="absolute top-[46%] right-[8%] bg-brand-primary text-white rounded-2xl p-5 shadow-2xl z-10 text-center"
+                  className="absolute bottom-6 right-6 bg-brand-primary text-white rounded-2xl p-5 shadow-2xl z-10 text-center"
                 >
                   <p className="text-4xl font-bold text-brand-accent leading-none">
                     16

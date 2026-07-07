@@ -124,7 +124,7 @@ export default function BlogPage() {
             }`}
           >
             {/* IMAGE */}
-            <div className="relative w-full md:w-1/2 h-64 md:h-96 rounded-3xl  b overflow-hidden shadow-(--shadow-card)">
+            <div className="relative w-full md:w-1/2 h-[60vh] md:h-screen rounded-3xl overflow-hidden shadow-card">
               <Image
                 src={section.image}
                 alt={section.title}

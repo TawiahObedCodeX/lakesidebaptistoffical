@@ -39,10 +39,10 @@ export function HomeHero() {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 8500);
     return () => clearInterval(timer);
-  }, [index]);
+  }, []);
 
   return (
-    <section className="relative h-[100svh] w-full overflow-hidden bg-brand-primary">
+    <section className="relative min-h-screen w-full overflow-hidden bg-brand-primary">
       {/* Background Section */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -69,7 +69,7 @@ export function HomeHero() {
       </AnimatePresence>
 
       {/* CENTERED CONTENT BOX */}
-      <div className="relative z-20 flex h-full items-center justify-center px-4 sm:px-6 text-center">
+      <div className="relative z-20 flex h-full items-center justify-center px-4 sm:px-6 text-center pt-32 sm:pt-40">
         <div className="w-full max-w-5xl">
           <AnimatePresence mode="wait">
             <motion.div

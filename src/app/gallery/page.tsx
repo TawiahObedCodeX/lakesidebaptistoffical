@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { BodyClass } from "@/components/BodyClass";
 import Link from "next/link";
+import { useEffect } from "react";
 
 /* ─── Image data ─────────────────────────────────────────────────────────── */
 const IMAGES = [
@@ -51,7 +52,60 @@ const TAG_COLORS: Record<string, string> = {
 
 export default function GalleryPage() {
   const [active, setActive] = useState('All');
+  const [selectedImage, setSelectedImage] = useState<typeof IMAGES[0] | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const filtered = useMemo(() => active === 'All' ? IMAGES : IMAGES.filter(i => i.tag === active), [active]);
+
+  const openImage = (image: typeof IMAGES[0], index: number) => {
+    setSelectedImage(image);
+    setSelectedIndex(index);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
+
+  const nextImage = () => {
+    if (selectedIndex < filtered.length - 1) {
+      const next = filtered[selectedIndex + 1];
+      openImage(next, selectedIndex + 1);
+    }
+  };
+
+  const prevImage = () => {
+    if (selectedIndex > 0) {
+      const prev = filtered[selectedIndex - 1];
+      openImage(prev, selectedIndex - 1);
+    }
+  };
+
+  const downloadImage = async (src: string, title: string) => {
+    try {
+      const response = await fetch(src);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${title.replace(/\s+/g, '-')}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('Download failed:', err);
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedImage) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, selectedIndex, filtered]);
 
   return (
     <>
@@ -125,18 +179,85 @@ export default function GalleryPage() {
 
         <div className="gl-masonry" key={active}>
           {filtered.map((img, i) => (
-            <div key={`${img.src}-${i}`} className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500`}>
+            <div key={`${img.src}-${i}`} className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer`} onClick={() => openImage(img, i)}>
               <figure className="gl-card-fig">
                 <img src={img.src} alt={img.title} loading="lazy" />
               </figure>
               <div className="gl-card-overlay">
                 <span className="gl-card-tag" style={{ background: `${TAG_COLORS[img.tag]}22`, color: TAG_COLORS[img.tag] }}>{img.tag}</span>
                 <h3 className="gl-card-title text-white">{img.title}</h3>
+                <p className="gl-card-meta text-white/80 text-sm mt-2">Click to view · Download available</p>
               </div>
             </div>
           ))}
         </div>
       </section>
+
+      {/* ── Image Viewer Modal ─────────────────────────────────────────────── */}
+      {selectedImage && (
+        <div className="gl-modal-overlay" onClick={closeModal}>
+          <div className="gl-modal-content" onClick={(e) => e.stopPropagation()}>
+            {/* Close Button */}
+            <button onClick={closeModal} className="gl-modal-close" aria-label="Close">
+              ✕
+            </button>
+
+            {/* Main Image */}
+            <div className="gl-modal-image-container">
+              <img src={selectedImage.src} alt={selectedImage.title} />
+            </div>
+
+            {/* Info & Actions */}
+            <div className="gl-modal-info">
+              <div className="gl-modal-text">
+                <span className="gl-modal-tag" style={{ color: TAG_COLORS[selectedImage.tag] }}>
+                  {selectedImage.tag}
+                </span>
+                <h2 className="gl-modal-title">{selectedImage.title}</h2>
+                <p className="gl-modal-meta">{selectedImage.meta}</p>
+              </div>
+
+              <div className="gl-modal-actions">
+                <button 
+                  onClick={() => downloadImage(selectedImage.src, selectedImage.title)}
+                  className="gl-modal-btn gl-modal-btn-primary"
+                >
+                  ⬇ Download
+                </button>
+                <button 
+                  onClick={closeModal}
+                  className="gl-modal-btn gl-modal-btn-secondary"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <div className="gl-modal-nav">
+              <button 
+                onClick={prevImage} 
+                disabled={selectedIndex === 0}
+                className="gl-nav-btn gl-nav-prev"
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+              <span className="gl-nav-counter">
+                {selectedIndex + 1} / {filtered.length}
+              </span>
+              <button 
+                onClick={nextImage}
+                disabled={selectedIndex === filtered.length - 1}
+                className="gl-nav-btn gl-nav-next"
+                aria-label="Next image"
+              >
+                ›
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -194,10 +315,118 @@ function GalleryStyles() {
       .gl-card:hover .gl-card-overlay { opacity: 1; }
       .gl-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; }
       .gl-card-tag { font-size: 0.6rem; text-transform: uppercase; font-weight: 800; padding: 5px 12px; border-radius: 6px; align-self: flex-start; margin-bottom: 10px; letter-spacing: 0.1em; }
+      .gl-card-meta { display: none; }
+      .gl-card:hover .gl-card-meta { display: block; }
       
+      /* ── Modal Styles ────────────────────────────────────────────────── */
+      .gl-modal-overlay { 
+        position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
+        display: flex; align-items: center; justify-content: center; 
+        z-index: 1000; padding: 20px; 
+        animation: gl-fade-in 0.3s ease;
+      }
+
+      .gl-modal-content {
+        background: white; border-radius: 20px; max-width: 900px; 
+        width: 100%; max-height: 90vh; overflow-y: auto;
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        position: relative;
+        animation: gl-slide-up 0.4s ease;
+      }
+
+      .gl-modal-close {
+        position: absolute; top: 20px; right: 20px; 
+        background: rgba(0,0,0,0.7); color: white; 
+        border: none; width: 40px; height: 40px; 
+        border-radius: 50%; font-size: 24px; 
+        cursor: pointer; display: flex; align-items: center; 
+        justify-content: center; transition: all 0.3s ease;
+        z-index: 10;
+      }
+      .gl-modal-close:hover { background: rgba(0,0,0,0.9); }
+
+      .gl-modal-image-container {
+        width: 100%; max-height: 500px; overflow: hidden;
+        border-radius: 20px 20px 0 0;
+      }
+      .gl-modal-image-container img {
+        width: 100%; height: 100%; object-fit: contain;
+      }
+
+      .gl-modal-info {
+        padding: 40px; display: flex; 
+        justify-content: space-between; align-items: flex-start; 
+        gap: 40px; flex-wrap: wrap;
+      }
+
+      .gl-modal-text { flex: 1; min-width: 250px; }
+      .gl-modal-tag {
+        font-size: 0.7rem; font-weight: 800; 
+        text-transform: uppercase; letter-spacing: 0.1em;
+      }
+      .gl-modal-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2.5rem; font-weight: 700; 
+        margin: 12px 0; color: #2C3E50;
+      }
+      .gl-modal-meta { 
+        color: #6B7280; font-size: 1rem; margin-top: 10px;
+      }
+
+      .gl-modal-actions {
+        display: flex; gap: 12px; flex-wrap: wrap;
+      }
+      .gl-modal-btn {
+        padding: 12px 28px; border: none; 
+        border-radius: 50px; font-weight: 700; 
+        cursor: pointer; font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+      .gl-modal-btn-primary {
+        background: #C9A66B; color: white;
+      }
+      .gl-modal-btn-primary:hover { background: #A88B5C; transform: translateY(-2px); }
+      .gl-modal-btn-secondary {
+        background: #F3F4F6; color: #374151; 
+        border: 1px solid #E5E7EB;
+      }
+      .gl-modal-btn-secondary:hover { background: #E5E7EB; }
+
+      .gl-modal-nav {
+        padding: 20px 40px; display: flex; 
+        align-items: center; justify-content: center; 
+        gap: 30px; border-top: 1px solid #E5E7EB;
+        background: #F9FAFB;
+        border-radius: 0 0 20px 20px;
+      }
+      .gl-nav-btn {
+        background: #2C3E50; color: white; 
+        border: none; width: 45px; height: 45px; 
+        border-radius: 50%; font-size: 24px; 
+        cursor: pointer; transition: all 0.3s ease;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .gl-nav-btn:hover:not(:disabled) { background: #C9A66B; transform: scale(1.1); }
+      .gl-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+      .gl-nav-counter {
+        font-weight: 700; color: #6B7280; 
+        font-size: 0.95rem; min-width: 80px; text-align: center;
+      }
+
+      @keyframes gl-fade-in { from{opacity:0} to{opacity:1} }
+      @keyframes gl-slide-up { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
       @keyframes gl-fade-up { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
       .gl-anim-1 { animation: gl-fade-up 1s ease forwards; }
       .gl-anim-2 { animation: gl-fade-up 1s ease 0.2s forwards; opacity: 0; }
+
+      /* Responsive adjustments */
+      @media(max-width: 768px) {
+        .gl-modal-info { padding: 24px; gap: 20px; }
+        .gl-modal-title { font-size: 1.8rem; }
+        .gl-modal-nav { padding: 16px 24px; gap: 16px; }
+        .gl-nav-btn { width: 40px; height: 40px; font-size: 20px; }
+      }
+      
     `}</style>
   );
 }

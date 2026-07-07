@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { HomeHero } from "@/components/HomeHero";   // ← Import the new hero
+import { HomeHero } from "@/components/HomeHero";
 
 export default function HomePage() {
   return (
@@ -27,7 +27,7 @@ export default function HomePage() {
       </div>
 
       {/* About Us Section - Enhanced */}
-      <section id="home-about" className="py-24 bg-white">
+      <section id="home-about" className="scroll-mt-28 py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
