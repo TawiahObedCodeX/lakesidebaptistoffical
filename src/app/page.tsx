@@ -11,7 +11,7 @@ export default function HomePage() {
       <HomeHero />
 
       {/* Scrolling Ticker */}
-      <div className="bg-[var(--color-brand-primary)] py-4 overflow-hidden border-b border-[var(--color-brand-primary-dark)]">
+      <div className="bg-brand-primary py-4 overflow-hidden border-b border-brand-primary-dark">
         <div className="flex whitespace-nowrap animate-marquee text-white/90 text-sm font-medium">
           {Array.from({ length: 8 }).map((_, i) => (
             <span key={i} className="mx-16 flex items-center gap-4">
@@ -36,7 +36,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl"
+                  className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl"
                 >
                   <img src="/images/lem.jpg" alt="Church community" className="w-full h-full object-cover" />
                 </motion.div>
@@ -45,7 +45,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.15 }}
-                  className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl mt-12"
+                  className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl mt-12"
                 >
                   <img src="/images/use.jpg" alt="Worship moment" className="w-full h-full object-cover" />
                 </motion.div>
@@ -53,13 +53,13 @@ export default function HomePage() {
             </div>
 
             <div>
-              <div className="uppercase tracking-[3px] text-sm text-[var(--color-brand-secondary)] font-medium mb-4">WELCOME TO LAKESIDE</div>
+              <div className="uppercase tracking-[3px] text-sm text-brand-secondary font-medium mb-4">WELCOME TO LAKESIDE</div>
               
-              <h2 className="text-5xl md:text-6xl leading-tight font-bold text-[var(--color-brand-primary)] mb-8">
-                Faith, hope, and love in <span className="text-[var(--color-brand-accent)]">action every day</span>
+              <h2 className="text-5xl md:text-6xl leading-tight font-bold text-brand-primary mb-8">
+                Faith, hope, and love in <span className="text-brand-accent">action every day</span>
               </h2>
 
-              <div className="space-y-6 text-[var(--color-site-text)] text-[17px] leading-relaxed">
+              <div className="space-y-6 text-site-text text-[17px] leading-relaxed">
                 <p>We are a vibrant community of believers dedicated to worship, fellowship, and service. Our mission is to share God&apos;s love, grow in faith, and make a positive impact in the world through compassionate outreach and meaningful connections.</p>
                 <p>Our church is a welcoming place where everyone can find support, inspiration, and a sense of belonging. Together, we strive to live out our faith and make a difference.</p>
               </div>
@@ -79,17 +79,17 @@ export default function HomePage() {
                     transition={{ delay: i * 0.1 }}
                     className="flex gap-5"
                   >
-                    <div className="mt-1 w-9 h-9 rounded-2xl bg-[var(--color-brand-accent-muted)] flex items-center justify-center flex-shrink-0">
-                      <span className="text-[var(--color-brand-accent)] text-xl">✦</span>
+                    <div className="mt-1 w-9 h-9 rounded-2xl bg-brand-accent-muted flex items-center justify-center shrink-0">
+                      <span className="text-brand-accent text-xl">✦</span>
                     </div>
-                    <h4 className="font-semibold text-xl text-[var(--color-brand-primary)]">{text}</h4>
+                    <h4 className="font-semibold text-xl text-brand-primary">{text}</h4>
                   </motion.div>
                 ))}
               </div>
 
               <Link
                 href="/about"
-                className="mt-14 inline-block px-10 py-4 border-2 border-[var(--color-brand-primary)] hover:bg-[var(--color-brand-primary)] hover:text-white rounded-full font-semibold text-lg transition-all duration-300"
+                className="mt-14 inline-block px-10 py-4 border-2 border-brand-primary hover:bg-brand-primary hover:text-white rounded-full font-semibold text-lg transition-all duration-300"
               >
                 Read More About Us →
               </Link>
