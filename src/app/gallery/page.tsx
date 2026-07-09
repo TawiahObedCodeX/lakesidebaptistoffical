@@ -7,7 +7,6 @@ import { useEffect } from "react";
 
 /* ─── Image data ─────────────────────────────────────────────────────────── */
 const IMAGES = [
-  { src: '/images/lol1 (2).jpg',      tag: 'Worship',     title: 'Sunday Celebration',   meta: 'Praise · Community',   size: 'tall' },
   { src: '/images/lol1 (1).jpg',      tag: 'Faith',       title: 'Hearts In Unity',       meta: 'Congregation · Hope',  size: 'wide' },
   { src: '/images/lol1 (4).jpg',      tag: 'Music',       title: 'Voices Of Hope',        meta: 'Choir · Harmony',      size: 'square' },
   { src: '/images/lol1 (5).jpg',      tag: 'Prayer',      title: 'Moments Of Prayer',     meta: 'Reflection · Peace',   size: 'tall' },
@@ -53,59 +52,24 @@ const TAG_COLORS: Record<string, string> = {
 export default function GalleryPage() {
   const [active, setActive] = useState('All');
   const [selectedImage, setSelectedImage] = useState<typeof IMAGES[0] | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const filtered = useMemo(() => active === 'All' ? IMAGES : IMAGES.filter(i => i.tag === active), [active]);
 
-  const openImage = (image: typeof IMAGES[0], index: number) => {
+  const openImage = (image: typeof IMAGES[0]) => {
     setSelectedImage(image);
-    setSelectedIndex(index);
   };
 
   const closeModal = () => {
     setSelectedImage(null);
   };
 
-  const nextImage = () => {
-    if (selectedIndex < filtered.length - 1) {
-      const next = filtered[selectedIndex + 1];
-      openImage(next, selectedIndex + 1);
-    }
-  };
-
-  const prevImage = () => {
-    if (selectedIndex > 0) {
-      const prev = filtered[selectedIndex - 1];
-      openImage(prev, selectedIndex - 1);
-    }
-  };
-
-  const downloadImage = async (src: string, title: string) => {
-    try {
-      const response = await fetch(src);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${title.replace(/\s+/g, '-')}.jpg`;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    } catch (err) {
-      console.error('Download failed:', err);
-    }
-  };
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedImage) return;
       if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, selectedIndex, filtered]);
+  }, [selectedImage]);
 
   return (
     <>
@@ -179,7 +143,7 @@ export default function GalleryPage() {
 
         <div className="gl-masonry" key={active}>
           {filtered.map((img, i) => (
-            <div key={`${img.src}-${i}`} className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer`} onClick={() => openImage(img, i)}>
+            <div key={`${img.src}-${i}`} className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer`} onClick={() => openImage(img)}>
               <figure className="gl-card-fig">
                 <img src={img.src} alt={img.title} loading="lazy" />
               </figure>
@@ -207,53 +171,15 @@ export default function GalleryPage() {
               <img src={selectedImage.src} alt={selectedImage.title} />
             </div>
 
-            {/* Info & Actions */}
-            <div className="gl-modal-info">
-              <div className="gl-modal-text">
-                <span className="gl-modal-tag" style={{ color: TAG_COLORS[selectedImage.tag] }}>
-                  {selectedImage.tag}
-                </span>
-                <h2 className="gl-modal-title">{selectedImage.title}</h2>
-                <p className="gl-modal-meta">{selectedImage.meta}</p>
-              </div>
-
-              <div className="gl-modal-actions">
-                <button 
-                  onClick={() => downloadImage(selectedImage.src, selectedImage.title)}
-                  className="gl-modal-btn gl-modal-btn-primary"
-                >
-                  ⬇ Download
-                </button>
-                <button 
-                  onClick={closeModal}
-                  className="gl-modal-btn gl-modal-btn-secondary"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <div className="gl-modal-nav">
-              <button 
-                onClick={prevImage} 
-                disabled={selectedIndex === 0}
-                className="gl-nav-btn gl-nav-prev"
-                aria-label="Previous image"
+            {/* Actions */}
+            <div className="gl-modal-actions gl-modal-actions-center">
+              <a
+                href={selectedImage.src}
+                download={`${selectedImage.title.replace(/\s+/g, '-')}.jpg`}
+                className="gl-modal-btn gl-modal-btn-primary"
               >
-                ‹
-              </button>
-              <span className="gl-nav-counter">
-                {selectedIndex + 1} / {filtered.length}
-              </span>
-              <button 
-                onClick={nextImage}
-                disabled={selectedIndex === filtered.length - 1}
-                className="gl-nav-btn gl-nav-next"
-                aria-label="Next image"
-              >
-                ›
-              </button>
+                ⬇ Download
+              </a>
             </div>
           </div>
         </div>

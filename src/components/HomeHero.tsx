@@ -9,8 +9,8 @@ import { HiArrowRight, HiArrowLeft } from "react-icons/hi";
 const slides = [
   {
     image: "/images/lbcimg5.jpeg",
-    title: "Loving God",
-    subtitle: "Loving Others",
+    title: "KNOWING CHRIST &",
+    subtitle: "MAKING HIM KNOWN",
     highlight: "Serving the World",
     description: "Experience God's love and grace in a welcoming community where faith grows, hope thrives, and everyone is cherished.",
   },

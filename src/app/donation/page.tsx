@@ -49,6 +49,18 @@ export default function DonationPage() {
             <DonationForm />
           </div>
 
+          <div className="mt-8 text-center">
+            <p className="text-sm text-slate-300 mb-4">
+              Prefer to donate by bank transfer? Use our secure bank payment page for direct gifting.
+            </p>
+            <a
+              href="/donation/bank"
+              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+            >
+              Pay via Bank Transfer
+            </a>
+          </div>
+
           {/* Footer Branding */}
           <div className="mt-12 flex flex-col items-center gap-6">
             <div className="flex items-center gap-8 opacity-40 grayscale contrast-125">

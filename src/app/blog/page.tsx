@@ -93,7 +93,7 @@ export default function BlogPage() {
         <div className="absolute inset-0">
           <Image
             src="/images/church-hero.jpg"
-            alt="Blog Hero"
+            alt=""
             fill
             className="object-cover"
           />
@@ -109,55 +109,82 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* BLOG SECTIONS */}
-      <section className="max-w-7xl mx-auto px-6 py-16 space-y-32">
-        {blogSections.map((section, idx) => (
-          <motion.div
-            key={section.id}
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className={`flex flex-col md:flex-row items-center gap-8 md:gap-16 ${
-              idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-            }`}
-          >
-            {/* IMAGE */}
-            <div className="relative w-full md:w-1/2 h-[60vh] md:h-screen rounded-3xl overflow-hidden shadow-card">
-              <Image
-                src={section.image}
-                alt={section.title}
-                fill
-                className="object-cover"
-              />
+      {/* EVENTS SECTIONS */}
+      <section className="max-w-7xl mx-auto px-6 py-16 space-y-16">
+        {[
+          {
+            title: "Past Events",
+            description: "A look back at the inspiring gatherings, services, and moments we have already shared.",
+            badge: "Past Event",
+            accent: "bg-brand-accent/15 text-brand-primary",
+          },
+          {
+            title: "Upcoming Events",
+            description: "The next opportunities to gather, worship, and grow together with the church family.",
+            badge: "Upcoming Event",
+            accent: "bg-brand-secondary/15 text-brand-secondary",
+          },
+        ].map((group, groupIndex) => (
+          <div key={group.title} className="space-y-8">
+            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-brand-accent">
+                  Events
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold text-brand-primary">
+                  {group.title}
+                </h2>
+                <p className="mt-2 max-w-2xl text-site-text">
+                  {group.description}
+                </p>
+              </div>
+              <div className="rounded-full border border-brand-primary/10 bg-white px-4 py-2 text-sm font-semibold text-brand-primary shadow-sm">
+                {groupIndex === 0 ? "Recent Highlights" : "Coming Soon"}
+              </div>
             </div>
 
-            {/* TEXT */}
-            <div className="w-full md:w-1/2">
-              <h2 className="text-3xl md:text-4xl font-bold text-brand-primary mb-3">
-                {section.title}
-              </h2>
-              <h3 className="text-lg md:text-xl font-medium text-brand-secondary mb-6">
-                {section.subtitle}
-              </h3>
-              {section.content.map((paragraph, i) => (
-                <p key={i} className="mb-4 text-site-text text-base md:text-lg leading-relaxed">
-                  {paragraph}
-                </p>
+            <div className="grid gap-8">
+              {blogSections.map((section) => (
+                <motion.article
+                  key={`${group.title}-${section.id}`}
+                  variants={sectionVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="flex flex-col overflow-hidden rounded-[2rem] border border-brand-primary/10 bg-white shadow-card md:flex-row"
+                >
+                  <div className="relative h-[260px] w-full md:h-auto md:w-[38%]">
+                    <Image src={section.image} alt={section.title} fill className="object-cover" />
+                  </div>
+                  <div className="flex-1 p-8 md:p-10">
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] ${group.accent}`}>
+                      {group.badge}
+                    </span>
+                    <h3 className="mt-4 text-2xl md:text-3xl font-bold text-brand-primary">
+                      {section.title}
+                    </h3>
+                    <h4 className="mt-2 text-lg font-medium text-brand-secondary">
+                      {section.subtitle}
+                    </h4>
+                    <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-site-muted">
+                      <span className="flex items-center gap-1"><HiCalendar /> {section.date}</span>
+                      <span className="flex items-center gap-1"><HiClock /> {section.readTime}</span>
+                    </div>
+                    <p className="mt-5 text-site-text leading-relaxed">
+                      {section.content[0]}
+                    </p>
+                    <Link
+                      href={`/blog/${section.id}`}
+                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 font-bold text-brand-primary transition hover:scale-105"
+                    >
+                      View Event <HiArrowRight />
+                    </Link>
+                  </div>
+                </motion.article>
               ))}
-              <div className="flex items-center gap-4 mt-4 text-site-muted text-sm">
-                <span className="flex items-center gap-1"><HiCalendar /> {section.date}</span>
-                <span className="flex items-center gap-1"><HiClock /> {section.readTime}</span>
-              </div>
-              <Link
-                href={`/blog/${section.id}`}
-                className="mt-6 inline-block bg-brand-accent text-brand-primary px-6 py-3 rounded-full font-bold hover:scale-105 transition"
-              >
-                Read Full Story
-              </Link>
             </div>
-          </motion.div>
+          </div>
         ))}
       </section>
 

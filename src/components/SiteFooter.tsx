@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion, Variants, easeOut } from "framer-motion";
+import { Icon } from "./Icon";
 
 export function SiteFooter() {
   const containerVariants: Variants = {
@@ -58,18 +59,21 @@ export function SiteFooter() {
             </p>
 
             <div className="flex gap-3">
-              {[
-                { name: "FaceBook", url: "https://web.facebook.com/lbcghana" },
-                { name: "Youtube", url: "http://www.youtube.com/@lakesidebaptistchurchab1" },
-                { name: "Tiktok", url: "https://www.tiktok.com/@lakeside.baptist" },
-                { name: "Instagram", url: "https://www.instagram.com/lakesidebaptistchurchab" }
-              ].map((social) => (
+              {(
+                [
+                  { name: "facebook", url: "https://web.facebook.com/lbcghana" },
+                  { name: "youtube", url: "http://www.youtube.com/@lakesidebaptistchurchab1" },
+                  { name: "tiktok", url: "https://www.tiktok.com/@lakeside.baptist" },
+                  { name: "instagram", url: "https://www.instagram.com/lakesidebaptistchurchab" },
+                ] as const
+              ).map((social) => (
                 <a
                   key={social.name}
                   href={social.url}
-                  className="w-10 h-10 flex items-center justify-center rounded-md transition-all duration-300 text-[12px] font-bold"
+                  className="w-10 h-10 flex items-center justify-center rounded-md bg-white/5 text-white transition-all duration-300 hover:bg-white/15"
+                  aria-label={social.name}
                 >
-                  {social.name}
+                  <Icon name={social.name} className="h-5 w-5" />
                 </a>
               ))}
             </div>
