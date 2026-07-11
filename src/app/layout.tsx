@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${fira.variable} antialiased bg-[var(--color-site-bg)] text-[var(--color-site-text)]`}
+        className={`${fira.variable} antialiased bg-site-bg text-site-text`}
       >
         {/* Preloader MUST be first so it renders before SiteHeader */}
         <Preloader />

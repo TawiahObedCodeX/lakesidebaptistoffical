@@ -1,3 +1,14 @@
+/**
+ * app/(routes)/thank-you/thank-you-content.tsx
+ * ──────────────────────────────────────────────────────────────
+ * Shown after the giver returns from Paystack. Calls the verify
+ * proxy, which forwards to the Church Backend API.
+ *
+ * No Supabase. No Paystack secret keys. The backend handles
+ * verification, database updates, and receipt emails.
+ * ──────────────────────────────────────────────────────────────
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -17,13 +28,17 @@ export function ThankYouContent() {
       return;
     }
 
-    fetch("/api/payments/verify", {
+    console.log("🔵 Verifying payment reference:", reference);
+
+    // Call the verify proxy → forwards to Church Backend API
+    fetch("/api/payments/paystack/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ reference }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("Verification response:", data);
         if (data.ok) {
           setStatus("success");
           setMessage(data.message || "Thank you for your generous donation!");
@@ -32,7 +47,8 @@ export function ThankYouContent() {
           setMessage(data.error || "Payment verification failed. Please contact support.");
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Verification error:", err);
         setStatus("error");
         setMessage("Something went wrong. Please try again later.");
       });
@@ -40,7 +56,7 @@ export function ThankYouContent() {
 
   if (status === "loading") {
     return (
-      <main className="min-h-dvh bg-[#0F172A] flex items-center justify-center">
+      <main className="min-h-dvh bg-neutral-900 flex items-center justify-center">
         <div className="text-center space-y-6">
           <div className="relative mx-auto h-12 w-12">
             <div className="absolute inset-0 rounded-full border-2 border-brand-accent/20"></div>
@@ -56,36 +72,43 @@ export function ThankYouContent() {
 
   return (
     <main className="min-h-dvh bg-[#0F172A] relative overflow-hidden flex items-center justify-center p-6">
-      {/* Background Decorative Element */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-primary/20 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-[480px] w-full">
         <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden text-center">
-          {/* Status Top Bar */}
-          <div className={`h-2 w-full ${status === "success" ? 'bg-brand-accent' : 'bg-red-500'}`} />
-          
+          <div
+            className={`h-2 w-full ${
+              status === "success" ? "bg-brand-accent" : "bg-red-500"
+            }`}
+          />
+
           <div className="p-10 md:p-14">
             {status === "success" ? (
               <>
                 <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-neutral-50 border border-brand-accent/20 shadow-sm">
                   <span className="text-4xl text-brand-accent">✦</span>
                 </div>
-                
+
                 <h1 className="text-4xl font-serif font-bold text-brand-primary mb-4 leading-tight">
-                  Generosity <br /> <span className="italic text-brand-secondary">Received</span>
+                  Generosity <br />
+                  <span className="italic text-brand-secondary">Received</span>
                 </h1>
-                
+
                 <p className="text-slate-600 font-medium mb-8 leading-relaxed">
                   {message}
                 </p>
-                
+
                 <div className="bg-neutral-50 rounded-2xl p-5 mb-10 border border-neutral-100">
-                  <p className="text-[11px] text-neutral-400 uppercase tracking-widest font-bold mb-1">Reference ID</p>
-                  <p className="text-sm font-mono text-brand-primary break-all">{reference}</p>
+                  <p className="text-[11px] text-neutral-400 uppercase tracking-widest font-bold mb-1">
+                    Reference ID
+                  </p>
+                  <p className="text-sm font-mono text-brand-primary break-all">
+                    {reference}
+                  </p>
                 </div>
 
                 <Link
-                  href="/donation"
+                  href="/"
                   className="inline-block w-full py-5 rounded-xl bg-brand-primary text-white font-bold hover:bg-brand-primary-dark transition-all shadow-xl shadow-brand-primary/20"
                 >
                   Return to Home
@@ -96,11 +119,11 @@ export function ThankYouContent() {
                 <div className="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-3xl bg-red-50 border border-red-100">
                   <span className="text-4xl">!</span>
                 </div>
-                
+
                 <h1 className="text-3xl font-serif font-bold text-slate-800 mb-4">
                   Action Required
                 </h1>
-                
+
                 <p className="text-slate-600 mb-10 leading-relaxed text-sm">
                   {message}
                 </p>
@@ -116,7 +139,6 @@ export function ThankYouContent() {
           </div>
         </div>
 
-        {/* Footer Support Info */}
         <p className="mt-8 text-center text-xs text-slate-500 font-medium uppercase tracking-widest">
           A receipt has been sent to your email
         </p>

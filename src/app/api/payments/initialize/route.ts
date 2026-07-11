@@ -1,86 +1,92 @@
+/**
+ * app/api/payments/initialize/route.ts
+ * ──────────────────────────────────────────────────────────────
+ * Thin proxy: receives payment details from the donation form,
+ * forwards them to the Church Backend API, returns the Paystack
+ * authorization URL to the frontend.
+ *
+ * This file is a Next.js API route (runs on the server), so it
+ * CAN safely communicate with the backend. The backend handles
+ * all Paystack communication and database operations.
+ *
+ * FLOW:
+ *   1. Donation form collects: amount, purpose, name, email
+ *   2. Form POSTs to /api/payments/initialize (this file)
+ *   3. This file forwards to POST {BACKEND_URL}/api/v1/payments/initiate
+ *   4. Backend creates Payment record + calls Paystack
+ *   5. Backend returns { authorizationUrl, reference }
+ *   6. Frontend redirects user to authorizationUrl
+ * ──────────────────────────────────────────────────────────────
+ */
+
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { supabaseAdmin } from "@/lib/supabase";
 import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
 
+// Validation schema — the same shape the backend expects
 const schema = z.object({
-  donationId: z.number().positive(),
+  amount: z.number().positive("Amount must be greater than zero"),
+  purpose: z
+    .enum(["TITHE", "OFFERING", "DONATION", "EVENT_TICKET"])
+    .default("DONATION"),
+  giverName: z.string().trim().min(1, "Name is required").max(120),
+  giverEmail: z.string().email("Valid email is required"),
+  currency: z.string().length(3).default("GHS"),
+  metadata: z.record(z.any()).optional(),
 });
 
 export async function POST(req: Request) {
   try {
     const json = await req.json();
-    const { donationId } = schema.parse(json);
+    const body = schema.parse(json);
 
-    const { data: donation, error: fetchError } = await supabaseAdmin
-      .from("donations")
-      .select("id, amount, email, name")
-      .eq("id", donationId)
-      .single();
+    console.log("🔵 Payment initialize proxy → forwarding to backend", {
+      amount: body.amount,
+      purpose: body.purpose,
+    });
 
-    if (fetchError || !donation) {
-      console.error("Donation fetch error:", fetchError);
-      return NextResponse.json(
-        { ok: false, error: "Donation not found" },
-        { status: 404 }
-      );
-    }
+    // Forward the request to the Church Backend API
+    // The backend has the Paystack SECRET key and handles everything
+    const backendUrl = `${env.BACKEND_API_URL}/api/v1/payments/initiate`;
 
-    if (donation.amount <= 0) {
-      return NextResponse.json(
-        { ok: false, error: "Invalid donation amount" },
-        { status: 400 }
-      );
-    }
-
-    const reference = `don_${donation.id}_${Date.now()}`;
-    const baseUrl = env.BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
-    const payload = {
-      email: donation.email,
-      amount: Math.round(donation.amount * 100),
-      currency: "GHS",
-      reference,
-      metadata: {
-        donation_id: donation.id,
-        donor_name: donation.name,
-      },
-      callback_url: `${baseUrl}/thank-you?ref=${reference}`,
-    };
-
-    const res = await fetch("https://api.paystack.co/transaction/initialize", {
+    const res = await fetch(backendUrl, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.PAYSTACK_SECRET_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
 
     const data = await res.json();
 
-    if (!res.ok || !data.status) {
-      console.error("Paystack initialize failed:", data);
+    if (!res.ok) {
+      console.error("❌ Backend payment initiation failed:", data);
       return NextResponse.json(
-        { ok: false, error: data.message || "Payment initialization failed" },
-        { status: 400 }
+        {
+          ok: false,
+          error: data.message || "Payment initialization failed",
+        },
+        { status: res.status }
       );
     }
 
-    await supabaseAdmin
-      .from("donations")
-      .update({ status: "processing" })
-      .eq("id", donation.id);
+    console.log("✅ Backend returned authorization URL");
 
     return NextResponse.json({
       ok: true,
-      authorization_url: data.data.authorization_url,
+      authorization_url: data.data.authorizationUrl,
       reference: data.data.reference,
     });
   } catch (err: any) {
     console.error("[PAYMENTS_INITIALIZE] Error:", err);
+
+    if (err instanceof z.ZodError) {
+      return NextResponse.json(
+        { ok: false, error: err.errors.map((e) => e.message).join(", ") },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { ok: false, error: "Server error occurred" },
       { status: 500 }

@@ -1,12 +1,33 @@
+/**
+ * app/(routes)/donation/donation-form.tsx
+ * ──────────────────────────────────────────────────────────────
+ * The donation form. Collects amount, purpose, name, email and
+ * sends directly to POST /api/payments/initialize (which proxies
+ * to the Church Backend API).
+ *
+ * On success, redirects the user to Paystack's hosted checkout.
+ * No more two-step flow (initiate → payment page). No Supabase.
+ * No Paystack secret keys in the frontend.
+ * ──────────────────────────────────────────────────────────────
+ */
+
 "use client";
 import { useMemo, useState } from "react";
 import { Alert } from "@/components/ui/Alert";
 
 const PRESETS = [100, 200, 300, 400, 500, 600] as const;
 
+const PURPOSES = [
+  { value: "TITHE", label: "Tithe" },
+  { value: "OFFERING", label: "Offering" },
+  { value: "DONATION", label: "Donation" },
+  { value: "EVENT_TICKET", label: "Event Ticket" },
+] as const;
+
 export function DonationForm() {
   const [selectedPreset, setSelectedPreset] = useState<number>(PRESETS[0]);
   const [customAmount, setCustomAmount] = useState("");
+  const [purpose, setPurpose] = useState<string>("DONATION");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,6 +39,7 @@ export function DonationForm() {
   async function onSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
+
     const firstName = String(formData.get("firstName") ?? "").trim();
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
@@ -36,36 +58,37 @@ export function DonationForm() {
     }
 
     try {
-      const initiateRes = await fetch("/api/donations/initiate", {
+      const giverName = `${firstName} ${lastName}`.trim();
+
+      // Single API call → the proxy forwards to the backend,
+      // backend creates the Payment record + calls Paystack,
+      // returns the authorization URL
+      const res = await fetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: resolvedAmount,
-          firstName,
-          lastName,
-          email,
-          note: note || undefined,
+          purpose,
+          giverName,
+          giverEmail: email,
+          currency: "GHS",
+          metadata: {
+            note: note || undefined,
+            source: "donation_page",
+          },
         }),
       });
-      const initiateData = await initiateRes.json();
-      if (!initiateData.ok || !initiateData.donationId) {
-        throw new Error(initiateData.error || "Failed to start donation");
+
+      const data = await res.json();
+
+      if (!data.ok || !data.authorization_url) {
+        throw new Error(data.error || "Failed to initialize payment");
       }
 
-      const payRes = await fetch("/api/payments/initialize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ donationId: initiateData.donationId }),
-      });
-      const payData = await payRes.json();
-
-      if (!payData.ok || !payData.authorization_url) {
-        throw new Error(payData.error || "Payment initialization failed");
-      }
-      window.location.href = payData.authorization_url;
+      // Redirect to Paystack's hosted checkout page
+      window.location.href = data.authorization_url;
     } catch (err: any) {
       setError(err.message || "Something went wrong. Please try again.");
-    } finally {
       setLoading(false);
     }
   }
@@ -74,10 +97,35 @@ export function DonationForm() {
     <form action={onSubmit} className="space-y-10">
       {error && <Alert kind="error">{error}</Alert>}
 
-      {/* Amount Selection */}
+      {/* ── Purpose ────────────────────────────────────────── */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60 border-b border-brand-primary/10 pb-4">
+          Giving Purpose
+        </h3>
+        <div className="grid grid-cols-2 gap-3">
+          {PURPOSES.map((p) => (
+            <button
+              key={p.value}
+              type="button"
+              onClick={() => setPurpose(p.value)}
+              className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 border text-sm ${
+                purpose === p.value
+                  ? "bg-brand-primary border-brand-primary text-white shadow-lg"
+                  : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Amount ─────────────────────────────────────────── */}
       <div className="space-y-6">
         <div className="flex items-baseline justify-between border-b border-brand-primary/10 pb-4">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60">Select Amount</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60">
+            Select Amount
+          </h2>
           <div className="flex items-baseline gap-1">
             <span className="text-xs font-bold text-brand-secondary">GH₵</span>
             <span className="text-5xl font-light text-brand-primary tracking-tighter">
@@ -121,7 +169,7 @@ export function DonationForm() {
         </div>
       </div>
 
-      {/* Personal Info */}
+      {/* ── Donor Details ──────────────────────────────────── */}
       <div className="space-y-6">
         <h3 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60 border-b border-brand-primary/10 pb-4">
           Donor Details
@@ -157,6 +205,7 @@ export function DonationForm() {
         />
       </div>
 
+      {/* ── Submit ─────────────────────────────────────────── */}
       <div className="space-y-4">
         <button
           type="submit"

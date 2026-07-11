@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, Variants, easeOut } from "framer-motion";
 import { Icon } from "./Icon";
+import { NewsletterSubscribe } from "@/components/NewsletterSubscribe";
 
 export function SiteFooter() {
   const containerVariants: Variants = {
@@ -23,9 +24,9 @@ export function SiteFooter() {
   };
 
   return (
-    <footer className="relative bg-[var(--color-brand-primary)] text-white overflow-hidden border-t border-white/5">
+    <footer className="relative bg-brand-primary text-white overflow-hidden border-t border-white/5">
       {/* Subtle Ambient Glow */}
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-[var(--color-brand-accent)] opacity-[0.04] rounded-full blur-[120px] -translate-y-1/2" />
+      <div className="absolute top-0 left-1/4 w-100 h-100 bg-brand-accent opacity-[0.04] rounded-full blur-[120px] -translate-y-1/2" />
 
       <motion.div
         className="max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-10"
@@ -47,7 +48,7 @@ export function SiteFooter() {
                 <span className="text-xl font-bold tracking-tight leading-none text-white">
                   Lakeside
                 </span>
-                <span className="text-sm font-medium tracking-[0.2em] text-[var(--color-brand-accent)] uppercase mt-1">
+                <span className="text-sm font-medium tracking-[0.2em] text-brand-accent uppercase mt-1">
                   Baptist Church
                 </span>
               </div>
@@ -127,6 +128,20 @@ export function SiteFooter() {
                   </p>
                 </div>
               </div>
+
+              {/* // Find the "Connect" section (lg:col-span-4) and add the newsletter
+// form AFTER the contact info. Add this inside the motion.div: */}
+
+{/* Newsletter Subscribe — ADD THIS inside the Connect section */}
+<div className="mt-8 pt-6 border-t border-white/5">
+  <h4 className="text-white text-sm font-bold mb-3 tracking-wider uppercase">
+    Newsletter
+  </h4>
+  <p className="text-white/40 text-xs mb-4 leading-relaxed">
+    Get weekly updates and announcements delivered to your inbox.
+  </p>
+  <NewsletterSubscribe variant="inline" />
+</div>
 
               <div className="flex items-start gap-4">
                 <span className="text-[var(--color-brand-accent)] text-lg">✦</span>
