@@ -48,7 +48,7 @@ body {
    @theme {
    
      /* --- Brand: Primary (deep blue-gray) ------------------------------------ */
-     --color-brand-primary:         #2C3E50;
+     --color-brand-primary:         rgba(0, 0, 0, 0.60);
      --color-brand-primary-dark:    #213243;
      --color-brand-primary-light:   #31475A;
      --color-brand-primary-muted:   rgba(44, 62, 80, 0.16);

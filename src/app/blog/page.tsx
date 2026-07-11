@@ -89,7 +89,7 @@ export default function BlogPage() {
       <SiteHeader />
 
       {/* HERO */}
-      <section className="relative h-[55vh] flex items-center justify-center text-center overflow-hidden">
+      <section className="relative h-[70vh] flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/church-hero.jpg"
@@ -97,15 +97,21 @@ export default function BlogPage() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-overlay-primary" />
+          <div className="absolute inset-0 bg-blue-900" />
         </div>
         <div className="relative z-10 px-6">
-          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold font-serif text-white leading-tight">
             Inspiring Stories & Sermons
           </h1>
-          <p className="mt-4 text-white/80 max-w-2xl mx-auto">
+          <p className="mt-4 text-white/80 max-w-2xl mx-auto text-xl">
             Dive into our latest sermons, church events, and faith-building insights. Explore, reflect, and grow with us.
           </p>
+        </div>
+           {/* Section Divider Curve */}
+        <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+            </svg>
         </div>
       </section>
 
@@ -152,7 +158,7 @@ export default function BlogPage() {
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ duration: 0.6 }}
-                  className="flex flex-col overflow-hidden rounded-[2rem] border border-brand-primary/10 bg-white shadow-card md:flex-row"
+                  className="flex flex-col overflow-hidden rounded-4xl border border-brand-primary/10 bg-white shadow-card md:flex-row"
                 >
                   <div className="relative h-[260px] w-full md:h-auto md:w-[38%]">
                     <Image src={section.image} alt={section.title} fill className="object-cover" />

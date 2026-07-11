@@ -12,7 +12,7 @@ interface PageHeroProps {
 
 export function PageHero({ eyebrow, title, subtitle, imageSrc }: PageHeroProps) {
   return (
-    <section className="relative h-[85vh] min-h-[620px] w-full flex items-center justify-center overflow-hidden">
+    <section className="relative h-[70vh] min-h-155 w-full flex items-center justify-center overflow-hidden">
       {/* Background Image with gentle continuous zoom */}
       <motion.div
         initial={{ scale: 1.08 }}
@@ -33,7 +33,7 @@ export function PageHero({ eyebrow, title, subtitle, imageSrc }: PageHeroProps) 
           className="object-cover"
         />
         {/* Strong gradient overlay for excellent text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-black/80" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/75 via-black/50 to-black/80" />
       </motion.div>
 
       <div className="relative z-10 w-full max-w-5xl px-6 text-center">
@@ -77,6 +77,12 @@ export function PageHero({ eyebrow, title, subtitle, imageSrc }: PageHeroProps) 
         >
         </motion.div>
       </div>
+       {/* Section Divider Curve */}
+        <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+            </svg>
+        </div>
     </section>
   );
 }

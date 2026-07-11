@@ -238,15 +238,15 @@ const TEAM = [
   },
 ];
 
-const ABOUT_LIST = [
-  { icon: "/images/icon-about-list-1.svg", label: "Share God's Love" },
-  { icon: "/images/icon-about-list-2.svg", label: "Foster Spiritual Growth" },
-  { icon: "/images/icon-about-list-3.svg", label: "Serve Our Community" },
-  {
-    icon: "/images/icon-about-list-4.svg",
-    label: "Build Strong Relationships",
-  },
-];
+// const ABOUT_LIST = [
+//   { icon: "/images/icon-about-list-1.svg", label: "Share God's Love" },
+//   { icon: "/images/icon-about-list-2.svg", label: "Foster Spiritual Growth" },
+//   { icon: "/images/icon-about-list-3.svg", label: "Serve Our Community" },
+//   {
+//     icon: "/images/icon-about-list-4.svg",
+//     label: "Build Strong Relationships",
+//   },
+// ];
 
 const SOCIALS = ["facebook", "linkedin", "instagram", "twitter"] as const;
 const CORE_IMAGES = ["/images/mimi.JPG", "/images/old.JPG", "/images/ga.JPG"];
@@ -274,7 +274,7 @@ export default function AboutPage() {
       ══════════════════════════ */}
       <section
         ref={heroRef}
-        className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
+        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#1a2530] px-6 py-20"
       >
         <motion.div style={{ y: heroY }} className="absolute inset-0 scale-110">
           <img
@@ -282,11 +282,10 @@ export default function AboutPage() {
             alt=""
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-brand-primary/75 via-brand-primary/55 to-brand-primary/85" />
+          <div className="absolute inset-0 bg-blue-900" />
         </motion.div>
 
-        <Orb className="w-96 h-96 bg-brand-accent/20 top-1/4 -left-24" />
-        <Orb className="w-80 h-80 bg-brand-secondary/20 bottom-1/4 -right-20" />
+      
 
         <motion.div
           style={{ opacity: heroOpacity }}
@@ -299,7 +298,7 @@ export default function AboutPage() {
             className="inline-flex items-center gap-3 mb-6"
           >
             <div className="h-px w-12 bg-brand-accent" />
-            <span className="text-brand-accent tracking-[4px] text-xs font-semibold uppercase">
+            <span className="text-brand-accent  text-sm font-bold  tracking-[0.25em] uppercase  font-semibold ">
               Our Story
             </span>
             <div className="h-px w-12 bg-brand-accent" />
@@ -313,7 +312,7 @@ export default function AboutPage() {
               delay: 0.35,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-[1.05] tracking-tight mb-8"
+            className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] tracking-tight mb-8"
           >
             About <span className="text-brand-accent">Us</span>
           </motion.h1>
@@ -327,33 +326,25 @@ export default function AboutPage() {
             A vibrant community of believers dedicated to worship, fellowship,
             and service &mdash; sharing God&apos;s love every single day.
           </motion.p>
-
-          {/* <motion.nav
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.85 }}
-            className="mt-10 flex items-center justify-center gap-2 text-white/50 text-sm"
-          >
-            <Link href="/" className="hover:text-[var(--color-brand-accent)] transition-colors">
-              Home
-            </Link>
-            <span>/</span>
-            <span className="text-[var(--color-brand-accent)]">About Us</span>
-          </motion.nav> */}
         </motion.div>
+         <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+            </svg>
+        </div>
       </section>
 
       {/* ══════════════════════════
           2. ABOUT US
       ══════════════════════════ */}
       <section className="py-28 lg:py-36 bg-white relative overflow-hidden">
-        <Orb className="w-[480px] h-[480px] bg-brand-accent/6 -top-40 -right-40" />
+        <Orb className="w-120 h-120 bg-brand-accent/6 -top-40 -right-40" />
 
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 xl:gap-24 items-center">
             {/* Images */}
             <FadeUp className="relative">
-              <div className="relative h-[520px] lg:h-[620px]">
+              <div className="relative h-130 lg:h-155">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.92, rotate: -3 }}
                   whileInView={{ opacity: 1, scale: 1, rotate: -2 }}
@@ -432,27 +423,7 @@ export default function AboutPage() {
                 </p>
               </FadeUp>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {ABOUT_LIST.map((item, i) => (
-                  <FadeUp key={i} delay={0.2 + i * 0.1}>
-                    <motion.div
-                      whileHover={{
-                        x: 6,
-                        backgroundColor: "rgba(201,166,107,0.08)",
-                      }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                      className="flex items-center gap-4 p-4 rounded-2xl border border-divider-dark cursor-default"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-brand-accent-muted flex items-center justify-center shrink-0">
-                        <img src={item.icon} alt="" className="w-6 h-6" />
-                      </div>
-                      <h4 className="font-semibold text-brand-primary text-[15px]">
-                        {item.label}
-                      </h4>
-                    </motion.div>
-                  </FadeUp>
-                ))}
-              </div>
+            
             </div>
           </div>
         </div>
@@ -461,8 +432,8 @@ export default function AboutPage() {
       {/* ══════════════════════════
           3. VISION / MISSION / APPROACH
       ══════════════════════════ */}
-      <section className="py-28 bg-brand-primary relative overflow-hidden">
-        <Orb className="w-[600px] h-[600px] bg-brand-accent/10 -top-32 left-1/2 -translate-x-1/2" />
+      <section className="py-28 bg-blue-900 relative overflow-hidden">
+        <Orb className="w-150 h-150 bg-brand-accent/10 -top-32 left-1/2 -translate-x-1/2" />
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -527,21 +498,10 @@ export default function AboutPage() {
                   <p className="text-white/60 text-base leading-relaxed">
                     {tab.body}
                   </p>
-                  <Link
-                    href="/services"
-                    className="mt-10 inline-flex items-center gap-3 text-brand-accent font-semibold"
-                  >
-                    Learn More
-                    <motion.span
-                      animate={{ x: [0, 6, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      &rarr;
-                    </motion.span>
-                  </Link>
+                
                 </div>
 
-                <div className="relative h-72 sm:h-96 lg:h-[460px] rounded-3xl overflow-hidden">
+                <div className="relative h-72 sm:h-96 lg:h-115 rounded-3xl overflow-hidden">
                   <ParallaxImage
                     src={tab.img}
                     alt={tab.label}
@@ -555,147 +515,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════
-          4. COUNTERS
-      ══════════════════════════ */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(201,166,107,0.07),transparent_60%)]" />
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {COUNTERS.map((c, i) => (
-              <FadeUp key={i} delay={i * 0.12}>
-                <motion.div
-                  whileHover={{
-                    y: -8,
-                    boxShadow: "0 24px 60px rgba(44,62,80,0.12)",
-                  }}
-                  transition={{ type: "spring", stiffness: 250 }}
-                  className="p-8 rounded-3xl border border-divider-dark bg-white text-center group cursor-default"
-                >
-                  <div className="text-5xl sm:text-6xl font-bold text-brand-primary mb-2 group-hover:text-brand-accent transition-colors duration-300">
-                    <AnimatedCounter target={c.value} suffix={c.suffix} />
-                  </div>
-                  <h4 className="text-xs font-bold text-brand-secondary uppercase tracking-widest mb-3">
-                    {c.label}
-                  </h4>
-                  <p className="text-site-muted text-sm leading-relaxed">
-                    {c.desc}
-                  </p>
-                </motion.div>
-              </FadeUp>
-            ))}
-          </div> */}
-        </div>
-      </section>
+  
 
-      {/* ══════════════════════════
-          5. WHAT WE DO
-      ══════════════════════════ */}
-      <section className="py-28 bg-site-bg relative overflow-hidden">
-        <Orb className="w-80 h-80 bg-brand-secondary/10 bottom-0 left-0" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <FadeUp className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 text-brand-secondary text-xs tracking-[4px] font-semibold uppercase mb-4">
-              <span className="block h-px w-8 bg-brand-secondary" />
-              What We Do
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-brand-primary">
-              Living Our{" "}
-              <span className="text-brand-accent">Faith Together</span>
-            </h2>
-          </FadeUp>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {WHAT_WE_DO.map((w, i) => (
-              <FadeUp key={i} delay={i * 0.15}>
-                <motion.div
-                  whileHover={{ y: -10 }}
-                  transition={{ type: "spring", stiffness: 220 }}
-                  className="group relative bg-white rounded-3xl p-10 shadow-[0_4px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_60px_rgba(44,62,80,0.14)] transition-shadow duration-500 overflow-hidden"
-                >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-brand-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  <div className="w-16 h-16 rounded-2xl bg-brand-accent-muted flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-                    <img src={w.icon} alt="" className="w-8 h-8" />
-                  </div>
-                  <h3 className="text-xl font-bold text-brand-primary mb-4">
-                    {w.title}
-                  </h3>
-                  <p className="text-site-muted leading-relaxed text-[15px]">
-                    {w.desc}
-                  </p>
-                  <Link
-                    href={w.href}
-                    className="mt-8 inline-flex items-center gap-2 text-brand-secondary text-sm font-semibold group-hover:text-brand-accent transition-colors"
-                  >
-                    Explore &rarr;
-                  </Link>
-                </motion.div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════
-          6. OUR TEAM
-      ══════════════════════════ */}
-      {/* <section className="py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <FadeUp className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 text-[var(--color-brand-secondary)] text-xs tracking-[4px] font-semibold uppercase mb-4">
-              <span className="block h-px w-8 bg-[var(--color-brand-secondary)]" />
-              Our Team
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-[var(--color-brand-primary)]">
-              Meet Our{" "}
-              <span className="text-[var(--color-brand-accent)]">
-                Pastors &amp; Deacons
-              </span>
-            </h2>
-          </FadeUp>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {TEAM.map((member, i) => (
-              <FadeUp key={i} delay={i * 0.12}>
-                <motion.div
-                  whileHover={{ y: -12 }}
-                  transition={{ type: "spring", stiffness: 220 }}
-                  className="group"
-                >
-                  <div className="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
-                    <img
-                      src={member.img}
-                      alt={member.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-brand-primary)]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                      <div className="flex gap-2">
-                        {SOCIALS.map((s) => (
-                          <motion.a
-                            key={s}
-                            href="#"
-                            whileHover={{ scale: 1.2, y: -3 }}
-                            className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-[var(--color-brand-accent)] hover:text-[var(--color-brand-primary)] transition-colors text-sm"
-                          >
-                            <Icon name={s} />
-                          </motion.a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="font-bold text-[var(--color-brand-primary)] text-lg capitalize mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-[var(--color-brand-secondary)] text-sm font-medium capitalize">
-                    {member.role}
-                  </p>
-                </motion.div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section> */}
 
       {/* ══════════════════════════
           7. PASTOR'S MESSAGE
@@ -704,7 +525,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <FadeUp className="relative">
-              <div className="relative rounded-3xl overflow-hidden h-[460px] lg:h-[580px]">
+              <div className="relative rounded-3xl overflow-hidden h-115 lg:h-145">
                 <ParallaxImage
                   src="/images/pastorimg.jpg"
                   alt="Pastor"
@@ -781,141 +602,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ══════════════════════════
-          8. CORE VALUES
-      ══════════════════════════ */}
-      <section className="py-28 bg-brand-primary relative overflow-hidden">
-        <Orb className="w-[500px] h-[500px] bg-brand-secondary/15 -bottom-40 -left-40" />
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: "radial-gradient(circle,#fff 1px,transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-          <FadeUp className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold text-white">
-              Foundations of Our Faith and{" "}
-              <span className="text-brand-accent">
-                Community Life
-              </span>
-            </h2>
-          </FadeUp>
-
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            {/* <FadeUp>
-              <div className="space-y-3">
-                {FAQS.map((faq) => (
-                  <motion.div
-                    key={faq.id}
-                    layout
-                    className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm"
-                  >
-                    <button
-                      onClick={() =>
-                        setOpenFaq(openFaq === faq.id ? "" : faq.id)
-                      }
-                      className="w-full flex items-center justify-between gap-4 p-6 text-left"
-                    >
-                      <span className="text-white font-semibold text-[15px] leading-snug">
-                        {faq.q}
-                      </span>
-                      <motion.span
-                        animate={{ rotate: openFaq === faq.id ? 45 : 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-[var(--color-brand-accent)] text-2xl flex-shrink-0 font-light"
-                      >
-                        +
-                      </motion.span>
-                    </button>
-
-                    <AnimatePresence initial={false}>
-                      {openFaq === faq.id && (
-                        <motion.div
-                          key="body"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{
-                            duration: 0.35,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
-                          className="overflow-hidden"
-                        >
-                          <p className="px-6 pb-6 text-white/65 text-[15px] leading-relaxed border-t border-white/10 pt-4">
-                            {faq.a}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                ))}
-              </div>
-            </FadeUp> */}
-
-            {/* <FadeUp delay={0.2}>
-              <div className="relative h-[380px] sm:h-[500px]">
-                {CORE_IMAGES.map((src, i) => (
-                  <motion.div
-                    key={src}
-                    initial={{ opacity: 0, y: 30, rotate: (i - 1) * 5 }}
-                    whileInView={{ opacity: 1, y: 0, rotate: (i - 1) * 5 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.15, duration: 0.7 }}
-                    whileHover={{ rotate: 0, scale: 1.04, zIndex: 10 }}
-                    className="absolute inset-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 cursor-pointer"
-                    style={{ zIndex: 3 - i }}
-                  >
-                    <img src={src} alt="" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-brand-primary)]/30 to-transparent" />
-                  </motion.div>
-                ))}
-                <p className="absolute bottom-4 left-0 right-0 text-center text-white/40 text-[10px] tracking-widest uppercase z-20">
-                  Hover to explore
-                </p>
-              </div>
-            </FadeUp> */}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════
-          9. CTA STRIP
-      ══════════════════════════ */}
-      {/* <section className="py-20 bg-[var(--color-brand-accent)] relative overflow-hidden">
-        <motion.div
-          animate={{ x: ["-100%", "100%"] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none"
-        />
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <FadeUp>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--color-brand-primary)] mb-5">
-              Ready to join our community?
-            </h2>
-            <p className="text-[var(--color-brand-primary)]/70 text-lg mb-10 max-w-xl mx-auto">
-              Whether you&apos;re new to faith or looking for a spiritual home,
-              our doors are always open.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/services"
-                className="px-10 py-4 rounded-full bg-[var(--color-brand-primary)] text-white font-bold text-base hover:bg-[var(--color-brand-primary-dark)] transition-colors shadow-lg"
-              >
-                Join a Service &rarr;
-              </Link>
-              <Link
-                href="/donation"
-                className="px-10 py-4 rounded-full border-2 border-[var(--color-brand-primary)] text-[var(--color-brand-primary)] font-bold text-base hover:bg-[var(--color-brand-primary)] hover:text-white transition-colors"
-              >
-                Give Online
-              </Link>
-            </div>
-          </FadeUp>
-        </div>
-      </section> */}
     </div>
   );
 }

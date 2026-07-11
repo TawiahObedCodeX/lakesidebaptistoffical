@@ -10,21 +10,7 @@ export default function HomePage() {
       {/* === CATCHY HERO CAROUSEL === */}
       <HomeHero />
 
-      {/* Scrolling Ticker */}
-      <div className="bg-brand-primary py-4 overflow-hidden border-b border-brand-primary-dark">
-        <div className="flex whitespace-nowrap animate-marquee text-white/90 text-sm font-medium">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span key={i} className="mx-16 flex items-center gap-4">
-              <img 
-                src="/images/church_logo_blue-removebg-preview (1).png" 
-                alt="" 
-                className="h-6 opacity-80" 
-              />
-              LOVE YOUR NEIGHBOR AS YOURSELF • 
-            </span>
-          ))}
-        </div>
-      </div>
+
 
       {/* About Us Section - Enhanced */}
       <section id="home-about" className="scroll-mt-28 py-24 bg-white">
@@ -64,7 +50,7 @@ export default function HomePage() {
                 <p>Our church is a welcoming place where everyone can find support, inspiration, and a sense of belonging. Together, we strive to live out our faith and make a difference.</p>
               </div>
 
-              <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
+              {/* <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                 {[
                   "Share God’s Love",
                   "Foster Spiritual Growth",
@@ -85,7 +71,7 @@ export default function HomePage() {
                     <h4 className="font-semibold text-xl text-brand-primary">{text}</h4>
                   </motion.div>
                 ))}
-              </div>
+              </div> */}
 
               <Link
                 href="/about"

@@ -77,11 +77,11 @@ export default function GalleryPage() {
       <GalleryStyles />
 
       {/* ── Hero with Requested Gradient ─────────────────────────────── */}
-      <section className="gl-hero bg-gradient-to-b from-[var(--color-brand-primary)]/75 via-[var(--color-brand-primary)]/55 to-[var(--color-brand-primary)]/85">
-        <div className="gl-hero-bg" aria-hidden="true">
+      <section className="gl-hero bg-blue-900 relative overflow-hidden">
+        {/* <div className="gl-hero-bg" aria-hidden="true">
           <div className="gl-orb gl-orb-a opacity-20" />
           <div className="gl-orb gl-orb-b opacity-10" />
-        </div>
+        </div> */}
 
         <div className="gl-hero-inner">
           <div className="gl-hero-text gl-anim-1">
@@ -95,19 +95,8 @@ export default function GalleryPage() {
               gatherings to quiet moments of prayer and joyful community service.
             </p>
 
-            <div className="gl-stats">
-              <div className="gl-stat"><strong className="text-white">150+</strong><span className="text-white/50">Moments</span></div>
-              <div className="gl-stat"><strong className="text-white">20+</strong><span className="text-white/50">Ministries</span></div>
-            </div>
 
-            <div className="gl-hero-actions">
-              <Link href="/contact" className="gl-btn bg-brand-accent text-brand-primary hover:bg-white hover:text-brand-primary transition-all shadow-lg">
-                Be Part of the Story
-              </Link>
-              <Link href="#collection" className="gl-btn border border-white/20 text-white hover:bg-white/10 transition-all">
-                Browse All
-              </Link>
-            </div>
+
           </div>
 
           <div className="gl-hero-mosaic gl-anim-2">
@@ -119,6 +108,12 @@ export default function GalleryPage() {
               <div className="gl-mosaic-sm"><img src="/images/celebration.jpg" alt="Celebration" /></div>
             </div>
           </div>
+        </div>
+        {/* Section Divider Curve */}
+          <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+            </svg>
         </div>
       </section>
 

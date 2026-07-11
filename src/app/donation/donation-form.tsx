@@ -20,14 +20,14 @@ const PRESETS = [100, 200, 300, 400, 500, 600] as const;
 const PURPOSES = [
   { value: "TITHE", label: "Tithe" },
   { value: "OFFERING", label: "Offering" },
-  { value: "DONATION", label: "Donation" },
+  { value: "GIVE", label: "Give" },
   { value: "EVENT_TICKET", label: "Event Ticket" },
 ] as const;
 
 export function DonationForm() {
   const [selectedPreset, setSelectedPreset] = useState<number>(PRESETS[0]);
   const [customAmount, setCustomAmount] = useState("");
-  const [purpose, setPurpose] = useState<string>("DONATION");
+  const [purpose, setPurpose] = useState<string>("GIVE");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

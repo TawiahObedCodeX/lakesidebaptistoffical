@@ -102,24 +102,24 @@ const deacons = [
     focus: "Identifying, vetting, and recommending qualified candidates to fill open leadership roles and committee vacancies within the organization.",
     img: "/images/Paula.jpg",
   },
-  {
-    name: "Deacon Kingsly Asante",
-    img: "/images/choir.jpg",
-  },
+  // {
+  //   name: "Deacon Kingsly Asante",
+  //   img: "/images/choir.jpg",
+  // },
   {
     name: "Deaconess Linda Adams-Ashun",
     role: "Secretary",
     focus: "Maintaining administrative order by documenting meetings, managing official correspondence, and organizing institutional records to ensure seamless communication and continuity within the organization.",
     img: "/images/linda.JPG",
   },
-  {
-    name: "Deaconess Anita Lawal",
-    img: "images/antyanita.jpg",
-  },
-  {
-    name: "Deaconess Elinda Agyei",
-    img: "/images/elinda.jpg",
-  },
+  // {
+  //   name: "Deaconess Anita Lawal",
+  //   img: "images/antyanita.jpg",
+  // },
+  // {
+  //   name: "Deaconess Elinda Agyei",
+  //   img: "/images/elinda.jpg",
+  // },
 ];
 
 function MemberCard({
@@ -142,14 +142,14 @@ function MemberCard({
         transition: `all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) ${delay}ms`,
       }}
     >
-      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-brand-primary-muted">
+      <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-brand-primary-mute">
         <img
           src={member.img}
           alt={member.name}
-          className="h-full w-full object-cover grayscale-[30%] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+          className="h-full w-full object-cover grayscale-30 transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
         />
         {/* Subtle Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-90" />
+        <div className="absolute inset-0 bg-linear-to-t from-brand-primary/80 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-90" />
 
         <div className="absolute bottom-0 p-5 text-white">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent-light">
@@ -170,7 +170,7 @@ export default function LeadershipPage() {
   return (
     <main className="bg-site-bg min-h-screen selection:bg-brand-accent-muted">
       {/* --- HERO SECTION --- */}
-      <section className="relative overflow-hidden bg-brand-primary pt-32 pb-48 text-center px-6">
+      <section className="relative overflow-hidden min-h-[70vh] flex items-center justify-center  bg-blue-900 pt-32 pb-48 text-center px-6">
         {/* Decorative Background Elements */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-brand-accent blur-[120px]" />
@@ -188,6 +188,12 @@ export default function LeadershipPage() {
             Our leadership team is dedicated to fostering a community of faith,
             resilience, and radical hospitality in the heart of the city.
           </p>
+        </div>
+           {/* Section Divider Curve */}
+        <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+            </svg>
         </div>
       </section>
 
@@ -233,7 +239,7 @@ export default function LeadershipPage() {
             </h2>
             <div className="h-1 w-20 bg-brand-accent mb-8" />
             <p className="text-site-text text-lg leading-loose mb-8 italic">
-              "{team[0].bio}"
+             {team[0].bio}
             </p>
             <div className="grid grid-cols-2 gap-8 border-t border-divider-dark pt-8">
               <div>
@@ -279,7 +285,7 @@ export default function LeadershipPage() {
             </h2>
             <div className="h-1 w-20 bg-brand-accent mb-8" />
             <p className="text-site-text text-lg leading-loose mb-8 italic">
-              "{team[1]?.bio}"
+              {team[1]?.bio}
             </p>
             <div className="grid grid-cols-2 gap-8 border-t border-divider-dark pt-8">
               <div>

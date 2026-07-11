@@ -22,7 +22,7 @@ export function Preloader() {
   return (
     <div
       style={{ zIndex: 99999 }}
-      className="fixed inset-0 flex items-center justify-center bg-brand-primary overflow-hidden"
+      className="fixed inset-0 flex items-center justify-center bg-blue-900 overflow-hidden"
     >
       {/* Subtle background dot pattern */}
       <div

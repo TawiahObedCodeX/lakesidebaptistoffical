@@ -74,36 +74,7 @@ const sermons = [
     img: "/images/pastorimg.jpg",
     url:"https://www.youtube.com/live/_4PKOR7v5x0?si=920YtIOJJrO4itEx"
   },
-  // {
-  //   id: 4,
-  //   day: "03",
-  //   month: "AUG",
-  //   title: "Overcoming Life's Challenges",
-  //   preacher: "Pastor Jane Smith",
-  //   category: "Resilience",
-  //   time: "9:30 AM",
-  //   img: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1000&auto=format&fit=crop",
-  // },
-  // {
-  //   id: 5,
-  //   day: "08",
-  //   month: "AUG",
-  //   title: "The Architecture of Hope",
-  //   preacher: "John Doe",
-  //   category: "Vision",
-  //   time: "11:00 AM",
-  //   img: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=1000&auto=format&fit=crop",
-  // },
-  // {
-  //   id: 6,
-  //   day: "03",
-  //   month: "AUG",
-  //   title: "Overcoming Life's Challenges",
-  //   preacher: "Pastor Jane Smith",
-  //   category: "Resilience",
-  //   time: "9:30 AM",
-  //   img: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1000&auto=format&fit=crop",
-  // },
+
 ];
 
 /* ── Sermon Card Component ── */
@@ -127,7 +98,7 @@ function SermonCard({ sermon, index }: { sermon: typeof sermons[0]; index: numbe
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60" />
         
         {/* Date Badge: Glassmorphism */}
-        <div className="absolute top-5 left-5 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-3 text-white text-center min-w-[60px]">
+        <div className="absolute top-5 left-5 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-3 text-white text-center min-w-15">
           <span className="block text-2xl font-bold leading-none">{sermon.day}</span>
           <span className="block text-[10px] tracking-widest uppercase font-medium opacity-80">{sermon.month}</span>
         </div>
@@ -174,8 +145,8 @@ export default function SermonsPage() {
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#1a2530] px-6 py-20">
         {/* Animated Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full opacity-30">
-            <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-amber-500/20 rounded-full blur-[120px] animate-pulse" />
-            <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px]" />
+            <div className="absolute top-[-10%] right-[-10%] w-125 h-125 bg-amber-500/20 rounded-full blur-[120px] animate-pulse" />
+            <div className="absolute bottom-[-10%] left-[-10%] w-125 h-125 bg-blue-500/10 rounded-full blur-[120px]" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
@@ -201,7 +172,7 @@ export default function SermonsPage() {
 
         {/* Section Divider Curve */}
         <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
             </svg>
         </div>

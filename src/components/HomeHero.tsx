@@ -26,7 +26,7 @@ const slides = [
     title: "Together We",
     subtitle: "Worship, Grow,",
     highlight: "and Serve",
-    description: "Come as you are. Grow with us. Be part of something bigger than yourself — a community rooted in Christ.",
+    description: "Come as you are. Grow with us. Be part of something bigger than yourself  a community rooted in Christ.",
   },
 ];
 
@@ -63,14 +63,14 @@ export function HomeHero() {
           />
           {/* Sophisticated Overlays */}
           <div className="absolute inset-0 bg-brand-primary/40 backdrop-brightness-[0.85]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-primary via-transparent to-brand-primary/30" />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/50 via-transparent to-brand-primary/50" />
+          <div className="absolute inset-0 bg-linear-to-t from-brand-primary via-transparent to-brand-primary/30" />
+          <div className="absolute inset-0 bg-linear-to-r from-brand-primary/50 via-transparent to-brand-primary/50" />
         </motion.div>
       </AnimatePresence>
 
       {/* CENTERED CONTENT BOX */}
       <div className="relative z-20 flex h-full items-center justify-center px-4 sm:px-6 text-center pt-32 sm:pt-40">
-        <div className="w-full max-w-5xl">
+        <div className="w-full max-w-5xl ">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
@@ -78,7 +78,7 @@ export function HomeHero() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center pt-12 lg:p-40"
             >
               {/* Floating Badge */}
               <motion.div 
@@ -88,7 +88,7 @@ export function HomeHero() {
                 className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 backdrop-blur-xl"
               >
                 <div className="h-1.5 w-1.5 rounded-full bg-brand-accent animate-pulse" />
-                <span className="text-[10px] font-bold tracking-[0.4em] text-white uppercase sm:text-xs">
+                <span className="text-[10px] font-bold font-serif tracking-[0.4em] text-white uppercase sm:text-xs">
                   Welcome to Lakeside
                 </span>
               </motion.div>
@@ -98,7 +98,7 @@ export function HomeHero() {
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8, ease: "circOut" }}
-                className="mb-4 text-5xl font-black leading-[0.95] tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl uppercase italic"
+                className="mb-4 text-3xl font-black leading-[0.95]  text-white sm:text-7xl md:text-3xl lg:text-8xl uppercase "
               >
                 {slides[index].title} <br />
                 <span className="text-brand-accent not-italic drop-shadow-2xl">{slides[index].subtitle}</span>
@@ -109,7 +109,7 @@ export function HomeHero() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
-                className="mb-8 text-xl font-medium tracking-[0.2em] text-white/90 sm:text-2xl md:text-3xl uppercase"
+                className="mb-8 text-xl font-medium  text-white/90 sm:text-2xl font-serif md:text-3xl uppercase"
               >
                 — {slides[index].highlight} —
               </motion.h2>
@@ -118,36 +118,11 @@ export function HomeHero() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 }}
-                className="mx-auto mb-10 max-w-2xl text-base text-white/80 leading-relaxed sm:text-lg md:text-xl"
+                className="mx-auto mb-10 max-w-2xl text-base font-serif text-white/80 leading-relaxed sm:text-lg md:text-xl"
               >
                 {slides[index].description}
               </motion.p>
 
-              {/* Responsive Action Buttons */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.1 }}
-                className="flex flex-col items-center justify-center gap-4 w-full sm:flex-row sm:gap-6"
-              >
-                <Link
-                  href="/about"
-                  className="group relative w-full sm:w-auto overflow-hidden rounded-full bg-brand-accent px-10 py-5 text-xs font-black uppercase tracking-widest text-brand-primary transition-all hover:scale-105 active:scale-95 shadow-[0_20px_50px_rgba(201,166,107,0.3)]"
-                >
-                  <span className="relative z-10">Discover Story</span>
-                  <div className="absolute inset-0 -translate-x-full bg-white/20 transition-transform group-hover:translate-x-0" />
-                </Link>
-                
-                <a
-                  href="https://youtube.com"
-                  className="flex items-center gap-4 group px-6 py-4"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 bg-white/5 backdrop-blur-md transition-all group-hover:border-brand-accent group-hover:bg-brand-accent group-hover:scale-110">
-                    <FaPlay className="ml-1 text-[10px] text-white group-hover:text-brand-primary" />
-                  </div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-white group-hover:text-brand-accent">Watch Live</span>
-                </a>
-              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -163,7 +138,7 @@ export function HomeHero() {
             <span className="h-px w-8 bg-brand-accent/50 my-1" />
             <span className="text-[10px] font-black text-white/30">0{slides.length}</span>
           </div>
-          <div className="h-[2px] w-48 bg-white/10 relative rounded-full overflow-hidden">
+          <div className="h-0.5 w-48 bg-white/10 relative rounded-full overflow-hidden">
              <motion.div 
                key={index}
                initial={{ width: "0%" }}
@@ -178,13 +153,13 @@ export function HomeHero() {
       
       </div>
 
-      {/* Decorative Side Elements (Desktop only) */}
+    
       <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-10 items-center z-20">
-        <div className="h-24 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent" />
+        <div className="h-24 w-px bg-linear-to-b from-transparent via-white/20 to-transparent" />
         <p className="rotate-90 text-[10px] font-bold tracking-[0.5em] text-white/20 uppercase whitespace-nowrap">
           Lakeside Baptist Church • 2026
         </p>
-        <div className="h-24 w-px bg-gradient-to-t from-transparent via-white/20 to-transparent" />
+        <div className="h-24 w-px bg-linear-to-t from-transparent via-white/20 to-transparent" />
       </div>
 
       {/* Scroll Indicator */}
@@ -193,7 +168,7 @@ export function HomeHero() {
         transition={{ repeat: Infinity, duration: 3 }}
         className="absolute bottom-4 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 z-20"
       >
-        <div className="h-8 w-px bg-white/40" />
+        {/* <div className="h-8 w-px bg-white/40" /> */}
       </motion.div>
     </section>
   );

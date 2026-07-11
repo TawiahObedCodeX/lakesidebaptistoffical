@@ -37,7 +37,7 @@ export default function MinistriesPage() {
   return (
     <div className="bg-site-bg min-h-screen font-sans">
       {/* HERO SECTION with requested gradient */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#1a2530] px-6 py-20">
         {/* Background Image Placeholder (Replace src with your main banner image) */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -46,7 +46,7 @@ export default function MinistriesPage() {
             className="w-full h-full object-cover"
           />
           {/* Your Custom Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-brand-primary)]/75 via-[var(--color-brand-primary)]/55 to-[var(--color-brand-primary)]/85" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-brand-primary)]/75 via-[var(--color-brand-primary)]/55 to-[var(--color-brand-primary)]/85 " />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
@@ -61,6 +61,12 @@ export default function MinistriesPage() {
             A place for everyone to belong. Discover how you can connect, grow, and serve 
             within our various ministry groups.
           </p>
+        </div>
+         {/* Section Divider Curve */}
+            <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+            </svg>
         </div>
       </section>
 

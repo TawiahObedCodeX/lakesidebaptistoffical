@@ -14,13 +14,11 @@ const mainNavItems = [
 
 const pagesDropdownItems = [
   { href: "/blog", label: "Blog" },
-  { href: "/sermons", label: "Sermons" },
-  // { href: "/event", label: "Event" },
-  { href: "/donation", label: "Donation" },
+  // { href: "/sermons", label: "Sermons" },
   { href: "/ministries", label: "Ministries" },
   { href: "/pastor", label: "Pastor" },
   { href: "/gallery", label: "Gallery" },
-  {href:"/contact", label:"contact"}
+  { href: "/contact", label: "contact" },
 ];
 
 export function SiteHeader() {
@@ -36,16 +34,16 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header 
-      className={`fixed inset-x-0 top-0 z-[100] transition-all duration-500 ${
-        scrolled 
-        ? "py-3 bg-brand-primary/80 backdrop-blur-xl border-b border-white/10 shadow-2xl" 
-        : "py-6 bg-transparent"
+    <header
+      className={`fixed inset-x-0 top-0 z-100 transition-all duration-500 ${
+        scrolled
+          ? "py-3 bg-blue-900  border-b border-white/10 shadow-2xl"
+          : "py-6 bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-12 flex items-center justify-between">
+      <div className="mx-auto px-5   flex items-center justify-between">
         {/* Logo Section */}
-        <Link href="/" className="flex items-center gap-3 group relative z-[110]">
+        <Link href="/" className="flex items-center gap-3 group relative z-110">
           <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-white/10 p-1 backdrop-blur-md transition-transform group-hover:scale-110">
             <img
               src="/images/church_logo_blue-removebg-preview (1).png"
@@ -57,7 +55,7 @@ export function SiteHeader() {
             <span className="text-lg font-bold tracking-tight text-white leading-none">
               Lakeside
             </span>
-            <span className="text-[10px] font-medium tracking-[0.2em] text-brand-accent uppercase">
+            <span className="text-[10px] font-medium tracking-[0.2em] text-white uppercase">
               Baptist Church
             </span>
           </div>
@@ -75,19 +73,25 @@ export function SiteHeader() {
             >
               {item.label}
               {pathname === item.href && (
-                <motion.div layoutId="nav-underline" className="absolute -bottom-1 left-0 h-0.5 w-full bg-brand-accent" />
+                <motion.div
+                  layoutId="nav-underline"
+                  className="absolute -bottom-1 left-0 h-0.5 w-full bg-brand-accent"
+                />
               )}
             </Link>
           ))}
 
           {/* Enhanced Dropdown */}
-          <div 
+          <div
             className="relative"
             onMouseEnter={() => setPagesOpen(true)}
             onMouseLeave={() => setPagesOpen(false)}
           >
             <button className="flex items-center gap-1 text-sm font-semibold text-white hover:text-brand-accent transition-colors">
-              Resources <HiChevronDown className={`transition-transform duration-300 ${pagesOpen ? "rotate-180" : ""}`} />
+              Resources{" "}
+              <HiChevronDown
+                className={`transition-transform duration-300 ${pagesOpen ? "rotate-180" : ""}`}
+              />
             </button>
             <AnimatePresence>
               {pagesOpen && (
@@ -118,17 +122,19 @@ export function SiteHeader() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/donation"
-            className="group relative overflow-hidden rounded-full bg-brand-accent px-8 py-2.5 text-sm font-bold text-brand-primary transition-all hover:pr-10"
+            className="group relative overflow-hidden rounded-full bg-white px-8 py-2.5 text-sm font-bold text-black transition-all hover:pr-10"
           >
             <span className="relative z-10">GIVE ONLINE</span>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100">→</div>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100">
+              →
+            </div>
           </Link>
         </div>
 
         {/* Mobile Toggle */}
-        <button 
-          onClick={() => setMobileOpen(!mobileOpen)} 
-          className="lg:hidden relative z-[110] p-2 text-white"
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="lg:hidden relative z-110 p-2 text-white"
         >
           {mobileOpen ? <HiX size={32} /> : <HiMenuAlt3 size={32} />}
         </button>
@@ -142,7 +148,7 @@ export function SiteHeader() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[100] flex flex-col  bg-brand-primary p-8 lg:hidden"
+            className="fixed inset-0 z-100 flex flex-col  bg-brand-primary p-8 lg:hidden"
           >
             <div className="mt-20 flex flex-col items-center gap-6">
               {[...mainNavItems, ...pagesDropdownItems].map((item, i) => (
@@ -152,8 +158,8 @@ export function SiteHeader() {
                   transition={{ delay: i * 0.05 }}
                   key={item.href}
                 >
-                  <Link 
-                    href={item.href} 
+                  <Link
+                    href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className="text-2xl font-bold text-white active:text-brand-accent"
                   >
