@@ -25,7 +25,15 @@ import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
 
-// Validation schema — the same shape the backend expects
+/**
+ * Validation schema — matches what the Church Backend API expects
+ * at POST /api/v1/payments/initiate.
+ *
+ * NOTE: z.record() requires TWO arguments in Zod 3.23+:
+ *   z.record(keySchema, valueSchema)
+ * We use z.record(z.string(), z.any()) to accept any object with
+ * string keys and any values (the metadata field is free-form).
+ */
 const schema = z.object({
   amount: z.number().positive("Amount must be greater than zero"),
   purpose: z
@@ -34,7 +42,10 @@ const schema = z.object({
   giverName: z.string().trim().min(1, "Name is required").max(120),
   giverEmail: z.string().email("Valid email is required"),
   currency: z.string().length(3).default("GHS"),
-  metadata: z.record(z.any()).optional(),
+  // FIXED: z.record() now takes 2 arguments — key schema and value schema.
+  // z.record(z.string(), z.any()) means "an object with string keys and any values".
+  // This is the same as the old z.record(z.any()) but matches Zod 3.23+ API.
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export async function POST(req: Request) {
@@ -47,8 +58,8 @@ export async function POST(req: Request) {
       purpose: body.purpose,
     });
 
-    // Forward the request to the Church Backend API
-    // The backend has the Paystack SECRET key and handles everything
+    // Forward the request to the Church Backend API.
+    // The backend has the Paystack SECRET key and handles everything.
     const backendUrl = `${env.BACKEND_API_URL}/api/v1/payments/initiate`;
 
     const res = await fetch(backendUrl, {
@@ -80,9 +91,14 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error("[PAYMENTS_INITIALIZE] Error:", err);
 
+    // Return validation errors as 400 so the frontend can show
+    // a helpful message to the user.
     if (err instanceof z.ZodError) {
       return NextResponse.json(
-        { ok: false, error: err.errors.map((e) => e.message).join(", ") },
+        {
+          ok: false,
+          error: err.errors.map((e) => e.message).join(", "),
+        },
         { status: 400 }
       );
     }
