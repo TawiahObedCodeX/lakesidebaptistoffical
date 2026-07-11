@@ -44,6 +44,18 @@ export async function POST(req: Request) {
     });
   } catch (err: any) {
     console.error("[NEWSLETTER_UNSUBSCRIBE] Error:", err);
+
+    // FIXED: Zod 3.23+ uses `err.issues` not `err.errors`
+    if (err instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: err.issues.map((e) => e.message).join(", "),
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { ok: false, error: "Server error occurred" },
       { status: 500 }

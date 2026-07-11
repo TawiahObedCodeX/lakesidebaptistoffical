@@ -4,10 +4,6 @@
  * Admin-only proxy: forwards newsletter send requests to the
  * Church Backend API. The backend requires a valid JWT access
  * token, which this proxy passes through.
- *
- * The admin login token is obtained from POST /api/v1/auth/login
- * on the backend and stored in the browser's localStorage or
- * sessionStorage by the admin dashboard page.
  * ──────────────────────────────────────────────────────────────
  */
 
@@ -34,8 +30,6 @@ export async function POST(req: Request) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Pass the admin's access token to the backend so it can
-        // verify they're authorized to send newsletters
         Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ subject, bodyHtml }),
@@ -58,9 +52,13 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error("[NEWSLETTER_SEND] Error:", err);
 
+    // FIXED: Zod 3.23+ uses `err.issues` not `err.errors`
     if (err instanceof z.ZodError) {
       return NextResponse.json(
-        { ok: false, error: err.errors.map((e) => e.message).join(", ") },
+        {
+          ok: false,
+          error: err.issues.map((e) => e.message).join(", "),
+        },
         { status: 400 }
       );
     }

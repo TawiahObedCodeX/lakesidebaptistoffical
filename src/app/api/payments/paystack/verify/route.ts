@@ -5,9 +5,6 @@
  * reference from the URL. This forwards to the Church Backend API,
  * which verifies with Paystack, updates the Payment record, and
  * queues a receipt email.
- *
- * The backend has the Paystack SECRET key — the frontend never
- * touches it.
  * ──────────────────────────────────────────────────────────────
  */
 
@@ -26,7 +23,6 @@ export async function POST(req: Request) {
 
     console.log(`🔵 Verify proxy: forwarding reference "${reference}" to backend`);
 
-    // Forward to the Church Backend API
     const backendUrl = `${env.BACKEND_API_URL}/api/v1/payments/verify-from-frontend`;
 
     const res = await fetch(backendUrl, {
@@ -57,6 +53,18 @@ export async function POST(req: Request) {
     });
   } catch (err: any) {
     console.error("[VERIFY_PROXY] Error:", err);
+
+    // FIXED: Zod 3.23+ uses `err.issues` not `err.errors`
+    if (err instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: err.issues.map((e) => e.message).join(", "),
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
       { ok: false, error: "Server error occurred" },
       { status: 500 }

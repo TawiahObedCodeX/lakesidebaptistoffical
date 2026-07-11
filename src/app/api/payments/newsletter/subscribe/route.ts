@@ -4,9 +4,6 @@
  * Thin proxy: the subscribe form on the website calls this,
  * which forwards to POST /api/v1/newsletter/subscribe on the
  * Church Backend API.
- *
- * The backend creates the subscriber record and queues a
- * confirmation email. The frontend never touches the database.
  * ──────────────────────────────────────────────────────────────
  */
 
@@ -56,9 +53,13 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error("[NEWSLETTER_SUBSCRIBE] Error:", err);
 
+    // FIXED: Zod 3.23+ uses `err.issues` not `err.errors`
     if (err instanceof z.ZodError) {
       return NextResponse.json(
-        { ok: false, error: err.errors.map((e) => e.message).join(", ") },
+        {
+          ok: false,
+          error: err.issues.map((e) => e.message).join(", "),
+        },
         { status: 400 }
       );
     }
