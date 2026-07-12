@@ -161,7 +161,6 @@ export default function ServicesPage() {
     { icon: <FaHeart />, title: "Marriage & Family life", desc: "Strong families in Christ" },
     { icon: <FaMusic />, title: "Worship Team", desc: "Leading spirit-filled worship" },
     { icon: <FaGlobe />, title: "Outreach & Missions", desc: "Impacting communities" },
-    { icon: <FaBook />, title: "Bible Study", desc: "Grow deeper in the Word" },
     { icon: <FaUserFriends />, title: "Women's Ministry", desc: "Sisterhood & growth" },
     { icon: <FaUserFriends />, title: "Men's Ministry", desc: "Brotherhood & growth" },
   ];

@@ -21,9 +21,9 @@ export default function DonationPage() {
         @keyframes shimmer { to { background-position: 200% center; } }
       `}</style>
 
-      <main className="min-h-dvh relative overflow-hidden flex items-center justify-center py-16 px-4" 
-            style={{ background: '#0F172A' }}>
-        
+      <main className="min-h-dvh relative overflow-hidden flex items-center justify-center py-16 px-4"
+        style={{ background: '#0F172A' }}>
+
         {/* Massive Background Aurora Elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-1/4 -left-1/4 w-[80%] h-[80%] bg-brand-primary/20 blur-[120px] rounded-full animate-pulse" />
@@ -51,7 +51,7 @@ export default function DonationPage() {
 
           <div className="mt-8 text-center">
             <p className="text-sm text-slate-300 mb-4">
-              Prefer to donate by bank transfer? Use our secure bank payment page for direct gifting.
+              Prefer to give by bank transfer? Use our secure bank payment page for direct gifting.
             </p>
             <a
               href="/donation/bank"

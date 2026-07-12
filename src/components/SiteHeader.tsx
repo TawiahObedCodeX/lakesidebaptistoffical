@@ -13,12 +13,12 @@ const mainNavItems = [
 ];
 
 const pagesDropdownItems = [
-  { href: "/blog", label: "Blog" },
+  { href: "/blog", label: "Updates" },
   // { href: "/sermons", label: "Sermons" },
   { href: "/ministries", label: "Ministries" },
   { href: "/pastor", label: "Pastor" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/contact", label: "contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {

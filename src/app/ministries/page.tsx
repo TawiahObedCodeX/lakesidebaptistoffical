@@ -119,12 +119,26 @@ export default function MinistriesPage() {
                   </div>
 
                   <div className="pt-8">
-                    <a 
-                      href="/ministry-single" 
-                      className="inline-flex items-center justify-center px-10 py-4 bg-brand-primary text-white font-bold rounded-pill shadow-brand hover:bg-brand-primary-dark transition-all transform hover:scale-105"
-                    >
-                      Learn More & Join
-                    </a>
+                    <form className="grid gap-4">
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Your name"
+                        className="w-full rounded-2xl border border-slate-200 px-5 py-4 text-sm text-slate-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
+                      />
+                      <input
+                        type="text"
+                        name="contact"
+                        placeholder="Your contact (email or phone)"
+                        className="w-full rounded-2xl border border-slate-200 px-5 py-4 text-sm text-slate-900 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20"
+                      />
+                      <button
+                        type="submit"
+                        className="inline-flex items-center justify-center px-10 py-4 bg-brand-primary text-white font-bold rounded-pill shadow-brand hover:bg-brand-primary-dark transition-all transform hover:scale-105"
+                      >
+                        Join
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
