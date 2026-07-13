@@ -311,7 +311,7 @@ export default function GalleryPage() {
 
             {/* Hero Mosaic */}
             <div className="grid grid-cols-[1.5fr_1fr] gap-4 animate-fadeInUp">
-              <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="aspect-4/5 rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src="/images/congregation.JPG"
                   alt="Worship"
