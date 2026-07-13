@@ -31,9 +31,7 @@ export default function MinistriesPage() {
       title: "Children & Teens",
       subtitle: "Foundations of Faith",
       description: "Providing a creative and engaging environment where our youngest members learn about love and kindness through age-appropriate activities and leadership workshops.",
-      highlights: ["Creative Bible Classes", "Teen Leadership Prep", "Holiday Musical Pageants"],
       image: "/images/childministries.png",
-      meeting: "The Children & Teens Ministry meets",
       reverse: true
     }
   ];
@@ -114,17 +112,17 @@ export default function MinistriesPage() {
                   <div className="mt-6">
                     <h5 className="text-brand-accent font-semibold mb-2">{m.meeting}</h5>
 
-                    {/* Highlights */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                      {m.highlights.map((item, i) => (
-                        <div key={i} className="flex items-center gap-3 text-brand-primary font-medium">
-                          <div className="w-2 h-2 bg-brand-accent rounded-full"></div>
-                          {item}
-                        </div>
-                      ))}
-                    </div>
-
-                  
+                    {/* Highlights - Only render if highlights exist */}
+                    {m.highlights && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        {m.highlights.map((item, i) => (
+                          <div key={i} className="flex items-center gap-3 text-brand-primary font-medium">
+                            <div className="w-2 h-2 bg-brand-accent rounded-full"></div>
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
