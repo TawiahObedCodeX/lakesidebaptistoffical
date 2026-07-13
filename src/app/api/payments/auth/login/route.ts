@@ -1,9 +1,8 @@
 /**
- * app/api/newsletter/send/route.ts
+ * app/api/auth/login/route.ts
  * ──────────────────────────────────────────────────────────────
- * Admin-only proxy: forwards newsletter send requests to the
- * Church Backend API. The backend requires a valid JWT access
- * token, which this proxy passes through.
+ * Admin login proxy. Forwards credentials to the Church Backend
+ * API and returns the access token + sets the refresh cookie.
  * ──────────────────────────────────────────────────────────────
  */
 
@@ -11,26 +10,27 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { env } from "@/lib/env";
 
-interface NewsletterSendBody {
-  subject: string;
-  bodyHtml: string;
-  accessToken: string;
+interface LoginBody {
+  email: string;
+  password: string;
 }
 
-interface ApiResponse {
+interface LoginResponse {
   ok: boolean;
   error?: string;
-  message?: string;
   data?: {
-    campaignId: string;
-    totalRecipients: number;
+    accessToken: string;
+    admin: {
+      id: string;
+      name: string;
+      email: string;
+    };
   };
 }
 
 const schema = z.object({
-  subject: z.string().min(1, "Subject is required").max(200),
-  bodyHtml: z.string().min(1, "Email body is required"),
-  accessToken: z.string().min(1, "Admin access token is required"),
+  email: z.string().email("Valid email is required"),
+  password: z.string().min(1, "Password is required"),
 });
 
 type SchemaType = z.infer<typeof schema>;
@@ -38,37 +38,42 @@ type SchemaType = z.infer<typeof schema>;
 export async function POST(req: Request): Promise<Response> {
   try {
     const json: unknown = await req.json();
-    const { subject, bodyHtml, accessToken } = schema.parse(json) as SchemaType;
+    const { email, password } = schema.parse(json) as SchemaType;
 
-    console.log("🔵 Newsletter send proxy: forwarding to backend");
+    console.log("🔵 Admin login proxy: forwarding to backend");
 
-    const backendUrl = `${env.BACKEND_API_URL}/api/v1/newsletter/send`;
+    const backendUrl = `${env.BACKEND_API_URL}/api/v1/auth/login`;
 
     const res = await fetch(backendUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ subject, bodyHtml }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     });
 
-    const data = (await res.json()) as ApiResponse;
+    const data = (await res.json()) as LoginResponse;
 
     if (!res.ok) {
       return NextResponse.json(
-        { ok: false, error: data.message || "Failed to send newsletter" } as const,
+        { ok: false, error: data.error || "Login failed" } as const,
         { status: res.status }
       );
     }
 
+    // Extract the refresh token from the Set-Cookie header
+    const setCookie = res.headers.get("set-cookie");
+    const refreshTokenMatch = setCookie?.match(/refreshToken=([^;]+)/);
+
     return NextResponse.json({
       ok: true,
-      message: data.message || "Newsletter queued for sending",
-      data: data.data,
+      message: "Login successful",
+      data: {
+        accessToken: data.data?.accessToken,
+        admin: data.data?.admin,
+        refreshToken: refreshTokenMatch?.[1] || null,
+      },
     } as const);
   } catch (err: unknown) {
-    console.error("[NEWSLETTER_SEND] Error:", err);
+    console.error("[ADMIN_LOGIN] Error:", err);
 
     if (err instanceof z.ZodError) {
       return NextResponse.json(

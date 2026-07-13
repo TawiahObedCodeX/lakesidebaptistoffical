@@ -4,7 +4,8 @@ export default function MinistriesPage() {
       title: "Men's Ministry",
       subtitle: "Strength & Brotherhood",
       description: "Our Men's Ministry is dedicated to developing men of character through biblical teaching and authentic fellowship. We believe that strong men build strong families and vibrant communities.",
-      highlights: ["Weekly Men's Breakfast", "Annual Wilderness Retreat", "Community Work Projects"],
+      highlights: ["Every Tuesday", "7:00 PM – 8:00 PM", "at the church premises"],
+      meeting:"The Men's Ministry meets",
       image: "/images/lol1 (1).jpg",
       reverse: false
     },
@@ -12,16 +13,18 @@ export default function MinistriesPage() {
       title: "Women's Ministry",
       subtitle: "Grace & Connection",
       description: "A supportive space for women of all ages to grow spiritually and connect deeply. We offer a sanctuary for prayer, mentorship, and shared life experiences.",
-      highlights: ["Morning Prayer Circles", "Bi-Monthly Book Club", "Fall Women's Conference"],
+      highlights: ["Every Tuesday", "6:00 PM – 8:00 PM", "at the church premises"],
       image: "/images/umm.jpg",
+       meeting:"The Women's Ministry meets",
       reverse: true
     },
     {
       title: "Youth Ministry",
       subtitle: "Purpose & Identity",
       description: "Empowering the next generation to explore their faith in a high-energy, safe environment. We tackle real-world issues through the lens of timeless values.",
-      highlights: ["Friday Night Live Events", "Summer Mission Trips", "Academic Mentorship"],
+      highlights: ["Every Tuesday", "6:00 PM – 8:00 PM", "at the church premises"],
       image: "/images/serviceyouth.png",
+      meeting:"The Youth Ministry meets",
       reverse: false
     },
     {
@@ -46,7 +49,7 @@ export default function MinistriesPage() {
             className="w-full h-full object-cover"
           />
           {/* Your Custom Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-brand-primary)]/75 via-[var(--color-brand-primary)]/55 to-[var(--color-brand-primary)]/85 " />
+          <div className="absolute inset-0 bg-gradient-to-b from-(--color-brand-primary)/75 via-(--color-brand-primary)/55 to-[var(--color-brand-primary)]/85 " />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
@@ -87,45 +90,48 @@ export default function MinistriesPage() {
                   <img 
                     src={m.image} 
                     alt={m.title} 
-                    className="relative rounded-2xl shadow-card w-full h-[400px] object-cover transition-transform duration-500 group-hover:-translate-y-2"
+                    className="relative rounded-2xl shadow-card w-full h-100 object-cover transition-transform duration-500 group-hover:-translate-y-2"
                   />
                 </div>
               </div>
 
               {/* Text Information */}
               <div className="w-full lg:w-1/2">
-                <div className="space-y-6">
-                  <div>
+                <div className="space-y-8">
+                  <div className="space-y-2">
+                     <h2 className="text-4xl font-bold text-brand-primary">
+                      {m.title}
+                    </h2>
                     <h4 className="text-brand-secondary font-bold text-sm uppercase tracking-widest mb-2">
                       {m.subtitle}
                     </h4>
-                    <h2 className="text-4xl font-bold text-brand-primary">
-                      {m.title}
-                    </h2>
                   </div>
                   
                   <p className="text-site-muted text-lg leading-relaxed">
                     {m.description}
                   </p>
+                  <div className="mt-6">
 
-                  {/* Program Highlights Grid */}
+                    <h5 className="text-brand-accent font-semibold mb-2">{m.meeting}</h5>
+                       
+                      
+                       {/* Program Highlights Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                     {m.highlights.map((item, i) => (
                       <div key={i} className="flex items-center gap-3 text-brand-primary font-medium">
+                        
                         <div className="w-2 h-2 bg-brand-accent rounded-full"></div>
                         {item}
                       </div>
                     ))}
                   </div>
-
-                  <div className="pt-8">
-                    <a 
-                      href="/ministry-single" 
-                      className="inline-flex items-center justify-center px-10 py-4 bg-brand-primary text-white font-bold rounded-pill shadow-brand hover:bg-brand-primary-dark transition-all transform hover:scale-105"
-                    >
-                      Learn More & Join
-                    </a>
                   </div>
+                   
+                   
+                   
+                 
+
+ 
                 </div>
               </div>
             </div>

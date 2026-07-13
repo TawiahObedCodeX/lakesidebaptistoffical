@@ -8,6 +8,7 @@
         "Ashun",
         "borga",
         "carouselimg",
+        "childministries",
         "dcnalbert",
         "Elinda",
         "Glassmorphism",
@@ -36,5 +37,6 @@
         "slicknav",
         "SUPABASE",
         "Tsibu"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }

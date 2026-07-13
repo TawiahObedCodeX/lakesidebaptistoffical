@@ -13,7 +13,7 @@ const mainNavItems = [
 ];
 
 const pagesDropdownItems = [
-  { href: "/blog", label: "Blog" },
+  { href: "/blog", label: "Updates" },
   // { href: "/sermons", label: "Sermons" },
   { href: "/ministries", label: "Ministries" },
   { href: "/pastor", label: "Pastor" },
@@ -148,7 +148,7 @@ export function SiteHeader() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-100 flex flex-col  bg-brand-primary p-8 lg:hidden"
+            className="fixed inset-0 z-100 flex flex-col  bg-blue-900 opacity-80 p-8 lg:hidden"
           >
             <div className="mt-20 flex flex-col items-center gap-6">
               {[...mainNavItems, ...pagesDropdownItems].map((item, i) => (

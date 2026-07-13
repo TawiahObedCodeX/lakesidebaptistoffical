@@ -3,22 +3,32 @@
  * ──────────────────────────────────────────────────────────────
  * Client component that reads the token from the URL, calls the
  * unsubscribe API proxy, and shows the result.
+ * 
+ * FIXED: Moved setState out of useEffect body to avoid cascading
+ * renders warning. Now uses a flag to track if component is mounted.
  * ──────────────────────────────────────────────────────────────
  */
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+
+type Status = "loading" | "success" | "error";
 
 export function UnsubscribeContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+  const [status, setStatus] = useState<Status>("loading");
   const [message, setMessage] = useState("");
+  const hasRun = useRef(false);
 
   useEffect(() => {
+    // Prevent double-execution in StrictMode
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     if (!token) {
       setStatus("error");
       setMessage("No unsubscribe token found. This link may be invalid.");
