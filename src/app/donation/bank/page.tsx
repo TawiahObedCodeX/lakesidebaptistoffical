@@ -17,7 +17,7 @@ export default function DonationBankPage() {
               Bank Transfer Donation
             </span>
             <h1 className="text-5xl md:text-6xl font-light tracking-tight text-white">
-              Donate by Bank Transfer
+              Give by Bank Transfer
             </h1>
             <p className="mx-auto max-w-2xl text-sm text-slate-300 font-light leading-relaxed">
               Use our bank account to make a direct donation. Once your transfer is complete, send us a confirmation receipt so we can credit your gift and say thank you.
@@ -77,7 +77,7 @@ export default function DonationBankPage() {
               href="/donation"
               className="inline-flex items-center justify-center rounded-full bg-[#0f172a] px-8 py-4 text-sm font-bold uppercase tracking-[0.24em] text-white transition hover:bg-slate-900"
             >
-              Return to Donation Options
+              Return to Giving Options
             </Link>
             <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
               Secure giving through church banking partners.

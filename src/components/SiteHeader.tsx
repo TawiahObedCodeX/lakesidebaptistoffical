@@ -18,7 +18,7 @@ const pagesDropdownItems = [
   { href: "/ministries", label: "Ministries" },
   { href: "/pastor", label: "Pastor" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/contact", label: "contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {

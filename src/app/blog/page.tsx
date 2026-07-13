@@ -107,11 +107,11 @@ export default function BlogPage() {
             Dive into our latest sermons, church events, and faith-building insights. Explore, reflect, and grow with us.
           </p>
         </div>
-           {/* Section Divider Curve */}
+        {/* Section Divider Curve */}
         <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
-            </svg>
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+          </svg>
         </div>
       </section>
 
@@ -193,22 +193,6 @@ export default function BlogPage() {
           </div>
         ))}
       </section>
-
-      {/* CTA SECTION */}
-      <section className="bg-brand-secondary py-20 text-center">
-  <h2 className="text-3xl font-bold mb-4 text-white">
-    Stay Connected & Inspired
-  </h2>
-  <p className="text-white/80 mb-6 max-w-xl mx-auto">
-    Join our church family, attend events, and explore sermons to strengthen your faith.
-  </p>
-  <Link
-    href="/sermons"
-    className="inline-block bg-brand-accent text-brand-primary px-8 py-3 rounded-full font-bold hover:scale-105 transition"
-  >
-    Explore Sermons
-  </Link>
-</section>
     </main>
   );
 }

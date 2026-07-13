@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="overflow-x-hidden">
       <body
-        className={`${fira.variable} antialiased bg-site-bg text-site-text`}
+        className={`${fira.variable} antialiased bg-site-bg text-site-text overflow-x-hidden`}
       >
         {/* Preloader MUST be first so it renders before SiteHeader */}
         <Preloader />

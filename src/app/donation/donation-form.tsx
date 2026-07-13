@@ -108,11 +108,10 @@ export function DonationForm() {
               key={p.value}
               type="button"
               onClick={() => setPurpose(p.value)}
-              className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 border text-sm ${
-                purpose === p.value
-                  ? "bg-brand-primary border-brand-primary text-white shadow-lg"
-                  : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
-              }`}
+              className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 border text-sm ${purpose === p.value
+                ? "bg-brand-primary border-brand-primary text-white shadow-lg"
+                : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
+                }`}
             >
               {p.label}
             </button>
@@ -143,11 +142,10 @@ export function DonationForm() {
                 setSelectedPreset(amt);
                 setCustomAmount("");
               }}
-              className={`py-4 rounded-xl font-medium transition-all duration-300 border ${
-                !customAmount && selectedPreset === amt
-                  ? "bg-brand-primary border-brand-primary text-white shadow-lg scale-[1.02]"
-                  : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
-              }`}
+              className={`py-4 rounded-xl font-medium transition-all duration-300 border ${!customAmount && selectedPreset === amt
+                ? "bg-brand-primary border-brand-primary text-white shadow-lg scale-[1.02]"
+                : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
+                }`}
             >
               GH₵{amt}
             </button>
@@ -215,7 +213,7 @@ export function DonationForm() {
           {loading ? (
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
           ) : (
-            "Complete Secure Donation"
+            "Complete Secure Transaction"
           )}
         </button>
         <p className="text-center text-[10px] uppercase tracking-[0.2em] text-neutral-400">
