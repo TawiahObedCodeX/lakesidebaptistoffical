@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { BodyClass } from "@/components/BodyClass";
-import Link from "next/link";
 import { useEffect } from "react";
 
 /* ─── Image data ─────────────────────────────────────────────────────────── */
@@ -239,17 +238,17 @@ const CATEGORIES = [
 ];
 
 const TAG_COLORS: Record<string, string> = {
-  Worship: "#C9A66B",
-  Faith: "#2C3E50",
-  Music: "#8C6A4F",
-  Prayer: "#6B7280",
-  Fellowship: "#4B5563",
-  Outreach: "#10B981",
-  Women: "#D4A853",
-  Youth: "#3B82F6",
-  Events: "#8B5CF6",
-  Media: "#EC4899",
-  Celebration: "#F59E0B",
+  Worship: "bg-amber-100 text-amber-800",
+  Faith: "bg-slate-100 text-slate-800",
+  Music: "bg-stone-100 text-stone-800",
+  Prayer: "bg-gray-100 text-gray-800",
+  Fellowship: "bg-gray-100 text-gray-800",
+  Outreach: "bg-emerald-100 text-emerald-800",
+  Women: "bg-amber-100 text-amber-800",
+  Youth: "bg-blue-100 text-blue-800",
+  Events: "bg-purple-100 text-purple-800",
+  Media: "bg-pink-100 text-pink-800",
+  Celebration: "bg-yellow-100 text-yellow-800",
 };
 
 export default function GalleryPage() {
@@ -282,48 +281,58 @@ export default function GalleryPage() {
   return (
     <>
       <BodyClass className="gallery-ui-pro" />
-      <GalleryStyles />
 
-      {/* ── Hero with Requested Gradient ─────────────────────────────── */}
-      <section className="gl-hero bg-blue-900 relative overflow-hidden">
-        {/* <div className="gl-hero-bg" aria-hidden="true">
-          <div className="gl-orb gl-orb-a opacity-20" />
-          <div className="gl-orb gl-orb-b opacity-10" />
-        </div> */}
-
-        <div className="gl-hero-inner">
-          <div className="gl-hero-text gl-anim-1">
-            <span className="gl-eyebrow text-brand-accent">
-              ✦ Our Collection ✦
-            </span>
-            <h1 className="gl-hero-title text-white">
-              Moments of
-              <br />
-              <em className="text-brand-accent italic font-normal">
-                Faith & Grace
-              </em>
-            </h1>
-            <p className="gl-hero-desc text-white/70">
-              Explore the visual journey of our church family. From powerful
-              worship gatherings to quiet moments of prayer and joyful community
-              service.
-            </p>
-          </div>
-
-          <div className="gl-hero-mosaic gl-anim-2">
-            <div className="gl-mosaic-main">
-              <img src="/images/congregation.JPG" alt="Worship" />
+      {/* ── Hero Section ─────────────────────────────────────────────── */}
+      <section className="relative bg-blue-900 overflow-hidden px-6 py-24 lg:py-32">
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Text Content */}
+            <div className="animate-fadeInUp">
+              <span className="text-amber-400 font-bold text-xs tracking-[0.25em] uppercase mb-4 block">
+                ✦ Our Collection ✦
+              </span>
+              <h1 className="font-serif text-white text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                Moments of{" "}
+                <em className="text-amber-400 italic font-normal">
+                  Faith & Grace
+                </em>
+              </h1>
+              <p className="text-white/70 text-lg leading-relaxed max-w-lg">
+                Explore the visual journey of our church family. From powerful
+                worship gatherings to quiet moments of prayer and joyful
+                community service.
+              </p>
             </div>
-            <div className="gl-mosaic-stack">
-              <div className="gl-mosaic-sm">
-                <img src="/images/choir.jpg" alt="Choir" />
+
+            {/* Hero Mosaic */}
+            <div className="grid grid-cols-[1.5fr_1fr] gap-4 animate-fadeInUp">
+              <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+                <img
+                  src="/images/congregation.JPG"
+                  alt="Worship"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="gl-mosaic-sm">
-                <img src="/images/celebration.jpg" alt="Celebration" />
+              <div className="flex flex-col gap-4">
+                <div className="aspect-square rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src="/images/choir.jpg"
+                    alt="Choir"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="aspect-square rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src="/images/celebration.jpg"
+                    alt="Celebration"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
+
         {/* CURVY DIVIDER - FIXED */}
         <div className="absolute bottom-0 left-0 w-full -mb-1 overflow-hidden">
           <svg
@@ -336,258 +345,139 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* ── Collection ───────────────────────────────────────────────── */}
-      <section id="collection" className="gl-masonry-section bg-site-bg">
-        <div className="gl-section-head">
-          <span className="gl-eyebrow text-brand-secondary">The Archive</span>
-          <h2 className="text-brand-primary font-serif">Full Gallery</h2>
-        </div>
+      {/* ── Gallery Section ───────────────────────────────────────────── */}
+      <section className="bg-stone-50 py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-12">
+            <span className="text-stone-600 font-bold text-xs tracking-[0.25em] uppercase">
+              The Archive
+            </span>
+            <h2 className="font-serif text-slate-800 text-4xl sm:text-5xl font-bold mt-3">
+              Full Gallery
+            </h2>
+          </div>
 
-        <div className="gl-filters">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActive(cat)}
-              className={`gl-filter-chip${active === cat ? " gl-filter-active bg-brand-primary text-white border-brand-primary" : " bg-white text-site-muted border-gray-200"}`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`px-6 py-2.5 rounded-full text-sm font-semibold border transition-all duration-300 ${
+                  active === cat
+                    ? "bg-slate-800 text-white border-slate-800 shadow-lg"
+                    : "bg-white text-gray-600 border-gray-200 hover:border-slate-400 hover:text-slate-800"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
 
-        <div className="gl-masonry" key={active}>
-          {filtered.map((img, i) => (
-            <div
-              key={`${img.src}-${i}`}
-              className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer`}
-              onClick={() => openImage(img)}
-            >
-              <figure className="gl-card-fig">
-                <img src={img.src} alt={img.title} loading="lazy" />
-              </figure>
-              <div className="gl-card-overlay">
-                <span
-                  className="gl-card-tag"
-                  style={{
-                    background: `${TAG_COLORS[img.tag]}22`,
-                    color: TAG_COLORS[img.tag],
-                  }}
-                >
-                  {img.tag}
-                </span>
-                <h3 className="gl-card-title text-white">{img.title}</h3>
-                <p className="gl-card-meta text-white/80 text-sm mt-2">
-                  Click to view · Download available
-                </p>
+          {/* Masonry Grid */}
+          <div className="columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4">
+            {filtered.map((img, i) => (
+              <div
+                key={`${img.src}-${i}`}
+                className="break-inside-avoid rounded-2xl overflow-hidden relative group cursor-pointer shadow-md hover:shadow-2xl transition-all duration-500"
+                onClick={() => openImage(img)}
+              >
+                <img
+                  src={img.src}
+                  alt={img.title}
+                  loading="lazy"
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+
+                {/* Subtle Hover Overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── Image Viewer Modal ─────────────────────────────────────────────── */}
       {selectedImage && (
-        <div className="gl-modal-overlay" onClick={closeModal}>
+        <div
+          className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-4 sm:p-6 md:p-8 lg:p-12 animate-fadeIn"
+          onClick={closeModal}
+        >
           <div
-            className="gl-modal-content"
+            className="relative w-full h-full max-w-7xl flex flex-col items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button
-              onClick={closeModal}
-              className="gl-modal-close"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-
-            {/* Main Image */}
-            <div className="gl-modal-image-container">
-              <img src={selectedImage.src} alt={selectedImage.title} />
-            </div>
-
-            {/* Actions */}
-            <div className="gl-modal-actions gl-modal-actions-center">
+            {/* Top Actions Bar */}
+            <div className="absolute lg:top-4 top-16 left-0 right-0 flex items-center justify-end gap-3 sm:gap-4 p-4 sm:p-6 z-20">
+              {/* Download Button */}
               <a
                 href={selectedImage.src}
                 download={`${selectedImage.title.replace(/\s+/g, "-")}.jpg`}
-                className="gl-modal-btn gl-modal-btn-primary"
+                className="flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full border-2 border-white/30 text-white hover:border-white/60 hover:bg-white/10 transition-all duration-300 group backdrop-blur-sm"
+                onClick={(e) => e.stopPropagation()}
               >
-                ⬇ Download
+                <svg
+                  className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                <span className="text-sm sm:text-base font-medium">
+                  Download
+                </span>
               </a>
+
+              {/* Close Button */}
+              <button
+                onClick={closeModal}
+                className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white/30 text-white hover:border-white/60 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm group"
+                aria-label="Close"
+              >
+                <svg
+                  className="w-5 h-5 sm:w-6 sm:h-6 group-hover:rotate-90 transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
             </div>
+
+            {/* Centered Image */}
+            <div className="flex-1 flex items-center justify-center w-full mt-16 sm:mt-20">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.title}
+                className="max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain rounded-lg shadow-2xl animate-slideUp"
+              />
+            </div>
+
+            {/* Bottom Image Info */}
+            {/* <div className="absolute bottom-8 left-0 right-0 p-4 sm:p-6 text-center">
+              <span className="text-white/50 text-xs sm:text-sm tracking-wider uppercase">
+                {selectedImage.tag}
+              </span>
+              <h3 className="text-white text-lg sm:text-xl font-serif font-semibold mt-1">
+                {selectedImage.title}
+              </h3>
+            </div> */}
           </div>
         </div>
       )}
     </>
-  );
-}
-
-function GalleryStyles() {
-  return (
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;700&display=swap');
-
-      .gl-hero, .gl-masonry-section {
-        --pri: #2C3E50;
-        --sec: #8C6A4F;
-        --acc: #C9A66B;
-        --bg:  #F7F6F3;
-        font-family: 'DM Sans', sans-serif;
-      }
-
-      .gl-hero { position: relative; padding: 120px 24px; overflow: hidden; }
-      .gl-hero-bg { position: absolute; inset: 0; pointer-events: none; }
-      .gl-orb { position: absolute; border-radius: 50%; filter: blur(120px); }
-      .gl-orb-a { width: 500px; height: 500px; top: -150px; left: -100px; background: var(--acc); }
-      .gl-orb-b { width: 400px; height: 400px; bottom: -100px; right: -50px; background: white; }
-
-      .gl-hero-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-      @media(max-width: 900px) { .gl-hero-inner { grid-template-columns: 1fr; } }
-
-      .gl-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 700; line-height: 1.1; margin: 1rem 0; }
-      .gl-hero-desc { font-size: 1.1rem; line-height: 1.7; max-width: 480px; margin-bottom: 2rem; }
-      
-      .gl-eyebrow { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; }
-      .gl-stats { display: flex; gap: 40px; margin-bottom: 40px; }
-      .gl-stat strong { display: block; font-size: 2.2rem; font-family: 'Cormorant Garamond', serif; line-height: 1; }
-      .gl-stat span { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-
-      .gl-btn { padding: 16px 36px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 0.85rem; display: inline-block; }
-
-      .gl-hero-mosaic { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
-      .gl-mosaic-main { aspect-ratio: 4/5; border-radius: 32px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-      .gl-mosaic-main img, .gl-mosaic-sm img { width: 100%; height: 100%; object-fit: cover; }
-      .gl-mosaic-stack { display: flex; flex-direction: column; gap: 16px; }
-      .gl-mosaic-sm { aspect-ratio: 1/1; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 30px -10px rgba(0,0,0,0.4); }
-
-      .gl-masonry-section { padding: 100px 24px; max-width: 1300px; margin: 0 auto; }
-      .gl-section-head { text-align: center; margin-bottom: 50px; }
-      .gl-section-head h2 { font-size: 3.5rem; font-weight: 700; margin-top: 10px; }
-
-      .gl-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 60px; }
-      .gl-filter-chip { padding: 10px 24px; border: 1px solid; border-radius: 50px; cursor: pointer; transition: all 0.4s ease; font-weight: 600; font-size: 0.9rem; }
-
-      .gl-masonry { columns: 4 250px; column-gap: 24px; }
-      .gl-card { break-inside: avoid; margin-bottom: 24px; border-radius: 24px; overflow: hidden; position: relative; cursor: pointer; }
-      .gl-card img { width: 100%; display: block; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-      .gl-card:hover img { transform: scale(1.1); }
-      .gl-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent 70%); padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; opacity: 0; transition: all 0.4s ease; }
-      .gl-card:hover .gl-card-overlay { opacity: 1; }
-      .gl-card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; }
-      .gl-card-tag { font-size: 0.6rem; text-transform: uppercase; font-weight: 800; padding: 5px 12px; border-radius: 6px; align-self: flex-start; margin-bottom: 10px; letter-spacing: 0.1em; }
-      .gl-card-meta { display: none; }
-      .gl-card:hover .gl-card-meta { display: block; }
-      
-      /* ── Modal Styles ────────────────────────────────────────────────── */
-      .gl-modal-overlay { 
-        position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
-        display: flex; align-items: center; justify-content: center; 
-        z-index: 1000; padding: 20px; 
-        animation: gl-fade-in 0.3s ease;
-      }
-
-      .gl-modal-content {
-        background: white; border-radius: 20px; max-width: 900px; 
-        width: 100%; max-height: 90vh; overflow-y: auto;
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        position: relative;
-        animation: gl-slide-up 0.4s ease;
-      }
-
-      .gl-modal-close {
-        position: absolute; top: 20px; right: 20px; 
-        background: rgba(0,0,0,0.7); color: white; 
-        border: none; width: 40px; height: 40px; 
-        border-radius: 50%; font-size: 24px; 
-        cursor: pointer; display: flex; align-items: center; 
-        justify-content: center; transition: all 0.3s ease;
-        z-index: 10;
-      }
-      .gl-modal-close:hover { background: rgba(0,0,0,0.9); }
-
-      .gl-modal-image-container {
-        width: 100%; max-height: 500px; overflow: hidden;
-        border-radius: 20px 20px 0 0;
-      }
-      .gl-modal-image-container img {
-        width: 100%; height: 100%; object-fit: contain;
-      }
-
-      .gl-modal-info {
-        padding: 40px; display: flex; 
-        justify-content: space-between; align-items: flex-start; 
-        gap: 40px; flex-wrap: wrap;
-      }
-
-      .gl-modal-text { flex: 1; min-width: 250px; }
-      .gl-modal-tag {
-        font-size: 0.7rem; font-weight: 800; 
-        text-transform: uppercase; letter-spacing: 0.1em;
-      }
-      .gl-modal-title {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 2.5rem; font-weight: 700; 
-        margin: 12px 0; color: #2C3E50;
-      }
-      .gl-modal-meta { 
-        color: #6B7280; font-size: 1rem; margin-top: 10px;
-      }
-
-      .gl-modal-actions {
-        display: flex; gap: 12px; flex-wrap: wrap;
-      }
-      .gl-modal-btn {
-        padding: 12px 28px; border: none; 
-        border-radius: 50px; font-weight: 700; 
-        cursor: pointer; font-size: 0.9rem;
-        transition: all 0.3s ease;
-      }
-      .gl-modal-btn-primary {
-        background: #C9A66B; color: white;
-      }
-      .gl-modal-btn-primary:hover { background: #A88B5C; transform: translateY(-2px); }
-      .gl-modal-btn-secondary {
-        background: #F3F4F6; color: #374151; 
-        border: 1px solid #E5E7EB;
-      }
-      .gl-modal-btn-secondary:hover { background: #E5E7EB; }
-
-      .gl-modal-nav {
-        padding: 20px 40px; display: flex; 
-        align-items: center; justify-content: center; 
-        gap: 30px; border-top: 1px solid #E5E7EB;
-        background: #F9FAFB;
-        border-radius: 0 0 20px 20px;
-      }
-      .gl-nav-btn {
-        background: #2C3E50; color: white; 
-        border: none; width: 45px; height: 45px; 
-        border-radius: 50%; font-size: 24px; 
-        cursor: pointer; transition: all 0.3s ease;
-        display: flex; align-items: center; justify-content: center;
-      }
-      .gl-nav-btn:hover:not(:disabled) { background: #C9A66B; transform: scale(1.1); }
-      .gl-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-      .gl-nav-counter {
-        font-weight: 700; color: #6B7280; 
-        font-size: 0.95rem; min-width: 80px; text-align: center;
-      }
-
-      @keyframes gl-fade-in { from{opacity:0} to{opacity:1} }
-      @keyframes gl-slide-up { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-      @keyframes gl-fade-up { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-      .gl-anim-1 { animation: gl-fade-up 1s ease forwards; }
-      .gl-anim-2 { animation: gl-fade-up 1s ease 0.2s forwards; opacity: 0; }
-
-      /* Responsive adjustments */
-      @media(max-width: 768px) {
-        .gl-modal-info { padding: 24px; gap: 20px; }
-        .gl-modal-title { font-size: 1.8rem; }
-        .gl-modal-nav { padding: 16px 24px; gap: 16px; }
-        .gl-nav-btn { width: 40px; height: 40px; font-size: 20px; }
-      }
-      
-    `}</style>
   );
 }

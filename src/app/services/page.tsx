@@ -184,7 +184,7 @@ export default function ServicesPage() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
               Featured Teachings
             </h2>
-            <div className="h-1 w-20 bg-amber-500 mb-6" />
+            <div className="h-1 w-20 bg-brand-accent mb-6" />
             <p className="text-slate-500 text-2xl leading-relaxed">
               Filtering through our most impactful series. Select a topic that resonates with your current season of life.
             </p>

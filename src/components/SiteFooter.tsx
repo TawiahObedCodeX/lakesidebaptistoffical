@@ -77,7 +77,7 @@ export function SiteFooter() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 flex items-center justify-center rounded-xl  hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl   text-white transition-all duration-300 hover:scale-110"
                   aria-label={social.name}
                 >
                   <Image
