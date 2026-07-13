@@ -124,14 +124,7 @@ export default function MinistriesPage() {
                       ))}
                     </div>
 
-                    <div className="pt-8">
-                      <a
-                        href="/ministry-single"
-                        className="inline-flex items-center justify-center px-10 py-4 bg-brand-primary text-white font-bold rounded-full shadow-brand hover:bg-brand-primary-dark transition-all transform hover:scale-105"
-                      >
-                        Learn More & Join
-                      </a>
-                    </div>
+                  
                   </div>
                 </div>
               </div>
