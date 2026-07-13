@@ -3,37 +3,53 @@ export default function MinistriesPage() {
     {
       title: "Men's Ministry",
       subtitle: "Strength & Brotherhood",
-      description: "Our Men's Ministry is dedicated to developing men of character through biblical teaching and authentic fellowship. We believe that strong men build strong families and vibrant communities.",
-      highlights: ["Every Tuesday", "7:00 PM – 8:00 PM", "at the church premises"],
+      description:
+        "Our Men's Ministry is dedicated to developing men of character through biblical teaching and authentic fellowship. We believe that strong men build strong families and vibrant communities.",
+      highlights: [
+        "Every Tuesday",
+        "7:00 PM – 8:00 PM",
+        "at the church premises",
+      ],
       meeting: "The Men's Ministry meets",
       image: "/images/lol1 (1).jpg",
-      reverse: false
+      reverse: false,
     },
     {
       title: "Women's Ministry",
       subtitle: "Grace & Connection",
-      description: "A supportive space for women of all ages to grow spiritually and connect deeply. We offer a sanctuary for prayer, mentorship, and shared life experiences.",
-      highlights: ["Every Tuesday", "6:00 PM – 8:00 PM", "at the church premises"],
+      description:
+        "A supportive space for women of all ages to grow spiritually and connect deeply. We offer a sanctuary for prayer, mentorship, and shared life experiences.",
+      highlights: [
+        "Every Tuesday",
+        "6:00 PM – 8:00 PM",
+        "at the church premises",
+      ],
       image: "/images/umm.jpg",
       meeting: "The Women's Ministry meets",
-      reverse: true
+      reverse: true,
     },
     {
       title: "Youth Ministry",
       subtitle: "Purpose & Identity",
-      description: "Empowering the next generation to explore their faith in a high-energy, safe environment. We tackle real-world issues through the lens of timeless values.",
-      highlights: ["Every Tuesday", "6:00 PM – 8:00 PM", "at the church premises"],
+      description:
+        "Empowering the next generation to explore their faith in a high-energy, safe environment. We tackle real-world issues through the lens of timeless values.",
+      highlights: [
+        "Every Tuesday",
+        "6:00 PM – 8:00 PM",
+        "at the church premises",
+      ],
       image: "/images/serviceyouth.png",
       meeting: "The Youth Ministry meets",
-      reverse: false
+      reverse: false,
     },
     {
       title: "Children & Teens",
       subtitle: "Foundations of Faith",
-      description: "Providing a creative and engaging environment where our youngest members learn about love and kindness through age-appropriate activities and leadership workshops.",
+      description:
+        "Providing a creative and engaging environment where our youngest members learn about love and kindness through age-appropriate activities and leadership workshops.",
       image: "/images/childministries.png",
-      reverse: true
-    }
+      reverse: true,
+    },
   ];
 
   return (
@@ -58,15 +74,19 @@ export default function MinistriesPage() {
           </h1>
           <div className="h-1.5 w-24 bg-brand-secondary mx-auto mb-8 rounded-full"></div>
           <p className="max-w-2xl mx-auto text-blue-50 text-xl leading-relaxed opacity-90">
-            A place for everyone to belong. Discover how you can connect, grow, and serve
-            within our various ministry groups.
+            A place for everyone to belong. Discover how you can connect, grow,
+            and serve within our various ministry groups.
           </p>
         </div>
 
-        {/* Section Divider Curve */}
-        <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
+        {/* CURVY DIVIDER - FIXED */}
+        <div className="absolute bottom-0 left-0 w-full -mb-1 overflow-hidden">
+          <svg
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-full h-20 sm:h-24 md:h-28 lg:h-32 fill-white"
+          >
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z" />
           </svg>
         </div>
       </section>
@@ -78,7 +98,7 @@ export default function MinistriesPage() {
             <div
               key={index}
               className={`flex flex-col lg:items-center gap-12 lg:gap-20 mb-32 last:mb-0 ${
-                m.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'
+                m.reverse ? "lg:flex-row-reverse" : "lg:flex-row"
               }`}
             >
               {/* Image */}
@@ -110,13 +130,18 @@ export default function MinistriesPage() {
                   </p>
 
                   <div className="mt-6">
-                    <h5 className="text-brand-accent font-semibold mb-2">{m.meeting}</h5>
+                    <h5 className="text-brand-accent font-semibold mb-2">
+                      {m.meeting}
+                    </h5>
 
                     {/* Highlights - Only render if highlights exist */}
                     {m.highlights && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                         {m.highlights.map((item, i) => (
-                          <div key={i} className="flex items-center gap-3 text-brand-primary font-medium">
+                          <div
+                            key={i}
+                            className="flex items-center gap-3 text-brand-primary font-medium"
+                          >
                             <div className="w-2 h-2 bg-brand-accent rounded-full"></div>
                             {item}
                           </div>

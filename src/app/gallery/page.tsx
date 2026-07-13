@@ -7,54 +7,262 @@ import { useEffect } from "react";
 
 /* ─── Image data ─────────────────────────────────────────────────────────── */
 const IMAGES = [
-  { src: '/images/lol1 (1).jpg',      tag: 'Faith',       title: 'Hearts In Unity',       meta: 'Congregation · Hope',  size: 'wide' },
-  { src: '/images/lol1 (4).jpg',      tag: 'Music',       title: 'Voices Of Hope',        meta: 'Choir · Harmony',      size: 'square' },
-  { src: '/images/lol1 (5).jpg',      tag: 'Prayer',      title: 'Moments Of Prayer',     meta: 'Reflection · Peace',   size: 'tall' },
-  { src: '/images/lol1 (6).jpg',      tag: 'Fellowship',  title: 'Family Fellowship',     meta: 'Community · Love',     size: 'wide' },
-  { src: '/images/lem.jpg',           tag: 'Outreach',    title: 'Serving Together',      meta: 'Service · Impact',     size: 'square' },
-  { src: '/images/Afia.jpg',          tag: 'Women',       title: 'Women Of Faith',        meta: 'Growth · Fellowship',  size: 'tall' },
-  { src: '/images/Josh.jpg',          tag: 'Youth',       title: 'Rising Generation',     meta: 'Ministry · Purpose',   size: 'square' },
-  { src: '/images/Paula.jpg',         tag: 'Events',      title: 'Community Moments',     meta: 'Connection · Joy',     size: 'wide' },
-  { src: '/images/Media.jpg',         tag: 'Media',       title: 'Media Ministry',        meta: 'Creative · Service',   size: 'square' },
-  { src: '/images/celebration.jpg',   tag: 'Celebration', title: 'Faith Celebrations',    meta: 'Joy · Worship',        size: 'tall' },
-  { src: '/images/Blessing.jpg',      tag: 'Worship',     title: 'Blessed Together',      meta: 'Gratitude · Prayer',   size: 'square' },
-  { src: '/images/choir.jpg',         tag: 'Music',       title: 'Choir Harmony',         meta: 'Music · Worship',      size: 'wide' },
-  { src: '/images/191.jpg',           tag: 'Faith',       title: 'Grace In Action',       meta: 'Faith · Impact',       size: 'square' },
-  { src: '/images/68.jpg',            tag: 'Fellowship',  title: 'Gathered In Love',      meta: 'Joy · Together',       size: 'tall' },
-  { src: '/images/211.jpg',           tag: 'Worship',     title: 'Sanctuary Praise',      meta: 'Spirit · Joy',         size: 'square' },
-  { src: '/images/192.jpg',           tag: 'Fellowship',  title: 'Warm Fellowship',       meta: 'Care · Unity',         size: 'wide' },
-  { src: '/images/Music.jpg',         tag: 'Music',       title: 'Praise Team',           meta: 'Worship · Sound',      size: 'tall' },
-  { src: '/images/pappoe.jpg',        tag: 'Events',      title: 'Leadership Moments',    meta: 'Vision · Guidance',    size: 'square' },
-  { src: '/images/69.jpg',            tag: 'Events',      title: 'Program Highlights',    meta: 'Events · Worship',     size: 'wide' },
-  { src: '/images/52.jpg',            tag: 'Fellowship',  title: 'Faithful Friends',      meta: 'Joy · Connection',     size: 'square' },
-  { src: '/images/27.jpg',            tag: 'Outreach',    title: 'Gathering Of Grace',    meta: 'Faith · Community',    size: 'tall' },
-  { src: '/images/dede mom.jpg',      tag: 'Celebration', title: 'Celebration Day',       meta: 'Joy · Fellowship',     size: 'wide' },
-  { src: '/images/share.jpg',         tag: 'Outreach',    title: 'Serving With Love',     meta: 'Care · Giving',        size: 'square' },
-  { src: '/images/congregation.JPG',  tag: 'Worship',     title: 'United In Worship',     meta: 'Praise · Together',    size: 'tall' },
-  { src: '/images/camera.JPG',        tag: 'Media',       title: 'Captured Moments',      meta: 'Story · Memory',       size: 'square' },
-  { src: '/images/ga.JPG',            tag: 'Outreach',    title: 'Outreach Love',         meta: 'Service · Hope',       size: 'wide' },
-  { src: '/images/girls.JPG',         tag: 'Youth',       title: 'Youth Fellowship',      meta: 'Growth · Joy',         size: 'square' },
-  { src: '/images/nabila.JPG',        tag: 'Fellowship',  title: 'Faithful Smiles',       meta: 'Care · Warmth',        size: 'tall' },
-  { src: '/images/umm.JPG',           tag: 'Faith',       title: 'Church Family',         meta: 'Love · Together',      size: 'square' },
-  { src: '/images/old.JPG',           tag: 'Faith',       title: 'Legacy Of Faith',       meta: 'Wisdom · Grace',       size: 'wide' },
-  { src: '/images/mimi.JPG',          tag: 'Worship',     title: 'Joyful Hearts',         meta: 'Worship · Joy',        size: 'square' },
-  { src: '/images/borga.JPG',         tag: 'Fellowship',  title: 'Together In Grace',     meta: 'Faith · Connection',   size: 'tall' },
+  {
+    src: "/images/lol1 (1).jpg",
+    tag: "Faith",
+    title: "Hearts In Unity",
+    meta: "Congregation · Hope",
+    size: "wide",
+  },
+  {
+    src: "/images/lol1 (4).jpg",
+    tag: "Music",
+    title: "Voices Of Hope",
+    meta: "Choir · Harmony",
+    size: "square",
+  },
+  {
+    src: "/images/lol1 (5).jpg",
+    tag: "Prayer",
+    title: "Moments Of Prayer",
+    meta: "Reflection · Peace",
+    size: "tall",
+  },
+  {
+    src: "/images/lol1 (6).jpg",
+    tag: "Fellowship",
+    title: "Family Fellowship",
+    meta: "Community · Love",
+    size: "wide",
+  },
+  {
+    src: "/images/lem.jpg",
+    tag: "Outreach",
+    title: "Serving Together",
+    meta: "Service · Impact",
+    size: "square",
+  },
+  {
+    src: "/images/Afia.jpg",
+    tag: "Women",
+    title: "Women Of Faith",
+    meta: "Growth · Fellowship",
+    size: "tall",
+  },
+  {
+    src: "/images/Josh.jpg",
+    tag: "Youth",
+    title: "Rising Generation",
+    meta: "Ministry · Purpose",
+    size: "square",
+  },
+  {
+    src: "/images/Paula.jpg",
+    tag: "Events",
+    title: "Community Moments",
+    meta: "Connection · Joy",
+    size: "wide",
+  },
+  {
+    src: "/images/Media.jpg",
+    tag: "Media",
+    title: "Media Ministry",
+    meta: "Creative · Service",
+    size: "square",
+  },
+  {
+    src: "/images/celebration.jpg",
+    tag: "Celebration",
+    title: "Faith Celebrations",
+    meta: "Joy · Worship",
+    size: "tall",
+  },
+  {
+    src: "/images/Blessing.jpg",
+    tag: "Worship",
+    title: "Blessed Together",
+    meta: "Gratitude · Prayer",
+    size: "square",
+  },
+  {
+    src: "/images/choir.jpg",
+    tag: "Music",
+    title: "Choir Harmony",
+    meta: "Music · Worship",
+    size: "wide",
+  },
+  {
+    src: "/images/191.jpg",
+    tag: "Faith",
+    title: "Grace In Action",
+    meta: "Faith · Impact",
+    size: "square",
+  },
+  {
+    src: "/images/68.jpg",
+    tag: "Fellowship",
+    title: "Gathered In Love",
+    meta: "Joy · Together",
+    size: "tall",
+  },
+  {
+    src: "/images/211.jpg",
+    tag: "Worship",
+    title: "Sanctuary Praise",
+    meta: "Spirit · Joy",
+    size: "square",
+  },
+  {
+    src: "/images/192.jpg",
+    tag: "Fellowship",
+    title: "Warm Fellowship",
+    meta: "Care · Unity",
+    size: "wide",
+  },
+  {
+    src: "/images/Music.jpg",
+    tag: "Music",
+    title: "Praise Team",
+    meta: "Worship · Sound",
+    size: "tall",
+  },
+  {
+    src: "/images/pappoe.jpg",
+    tag: "Events",
+    title: "Leadership Moments",
+    meta: "Vision · Guidance",
+    size: "square",
+  },
+  {
+    src: "/images/69.jpg",
+    tag: "Events",
+    title: "Program Highlights",
+    meta: "Events · Worship",
+    size: "wide",
+  },
+  {
+    src: "/images/52.jpg",
+    tag: "Fellowship",
+    title: "Faithful Friends",
+    meta: "Joy · Connection",
+    size: "square",
+  },
+  {
+    src: "/images/27.jpg",
+    tag: "Outreach",
+    title: "Gathering Of Grace",
+    meta: "Faith · Community",
+    size: "tall",
+  },
+  {
+    src: "/images/dede mom.jpg",
+    tag: "Celebration",
+    title: "Celebration Day",
+    meta: "Joy · Fellowship",
+    size: "wide",
+  },
+  {
+    src: "/images/share.jpg",
+    tag: "Outreach",
+    title: "Serving With Love",
+    meta: "Care · Giving",
+    size: "square",
+  },
+  {
+    src: "/images/congregation.JPG",
+    tag: "Worship",
+    title: "United In Worship",
+    meta: "Praise · Together",
+    size: "tall",
+  },
+  {
+    src: "/images/camera.JPG",
+    tag: "Media",
+    title: "Captured Moments",
+    meta: "Story · Memory",
+    size: "square",
+  },
+  {
+    src: "/images/ga.JPG",
+    tag: "Outreach",
+    title: "Outreach Love",
+    meta: "Service · Hope",
+    size: "wide",
+  },
+  {
+    src: "/images/girls.JPG",
+    tag: "Youth",
+    title: "Youth Fellowship",
+    meta: "Growth · Joy",
+    size: "square",
+  },
+  {
+    src: "/images/nabila.JPG",
+    tag: "Fellowship",
+    title: "Faithful Smiles",
+    meta: "Care · Warmth",
+    size: "tall",
+  },
+  {
+    src: "/images/umm.JPG",
+    tag: "Faith",
+    title: "Church Family",
+    meta: "Love · Together",
+    size: "square",
+  },
+  {
+    src: "/images/old.JPG",
+    tag: "Faith",
+    title: "Legacy Of Faith",
+    meta: "Wisdom · Grace",
+    size: "wide",
+  },
+  {
+    src: "/images/mimi.JPG",
+    tag: "Worship",
+    title: "Joyful Hearts",
+    meta: "Worship · Joy",
+    size: "square",
+  },
+  {
+    src: "/images/borga.JPG",
+    tag: "Fellowship",
+    title: "Together In Grace",
+    meta: "Faith · Connection",
+    size: "tall",
+  },
 ];
 
-const CATEGORIES = ['All', ...Array.from(new Set(IMAGES.map(i => i.tag))).sort()];
+const CATEGORIES = [
+  "All",
+  ...Array.from(new Set(IMAGES.map((i) => i.tag))).sort(),
+];
 
 const TAG_COLORS: Record<string, string> = {
-  Worship: '#C9A66B', Faith: '#2C3E50', Music: '#8C6A4F', Prayer: '#6B7280',
-  Fellowship: '#4B5563', Outreach: '#10B981', Women: '#D4A853', Youth: '#3B82F6',
-  Events: '#8B5CF6', Media: '#EC4899', Celebration: '#F59E0B',
+  Worship: "#C9A66B",
+  Faith: "#2C3E50",
+  Music: "#8C6A4F",
+  Prayer: "#6B7280",
+  Fellowship: "#4B5563",
+  Outreach: "#10B981",
+  Women: "#D4A853",
+  Youth: "#3B82F6",
+  Events: "#8B5CF6",
+  Media: "#EC4899",
+  Celebration: "#F59E0B",
 };
 
 export default function GalleryPage() {
-  const [active, setActive] = useState('All');
-  const [selectedImage, setSelectedImage] = useState<typeof IMAGES[0] | null>(null);
-  const filtered = useMemo(() => active === 'All' ? IMAGES : IMAGES.filter(i => i.tag === active), [active]);
+  const [active, setActive] = useState("All");
+  const [selectedImage, setSelectedImage] = useState<(typeof IMAGES)[0] | null>(
+    null,
+  );
+  const filtered = useMemo(
+    () => (active === "All" ? IMAGES : IMAGES.filter((i) => i.tag === active)),
+    [active],
+  );
 
-  const openImage = (image: typeof IMAGES[0]) => {
+  const openImage = (image: (typeof IMAGES)[0]) => {
     setSelectedImage(image);
   };
 
@@ -65,10 +273,10 @@ export default function GalleryPage() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedImage) return;
-      if (e.key === 'Escape') closeModal();
+      if (e.key === "Escape") closeModal();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedImage]);
 
   return (
@@ -85,18 +293,21 @@ export default function GalleryPage() {
 
         <div className="gl-hero-inner">
           <div className="gl-hero-text gl-anim-1">
-            <span className="gl-eyebrow text-brand-accent">✦ Our Collection ✦</span>
+            <span className="gl-eyebrow text-brand-accent">
+              ✦ Our Collection ✦
+            </span>
             <h1 className="gl-hero-title text-white">
-              Moments of<br />
-              <em className="text-brand-accent italic font-normal">Faith & Grace</em>
+              Moments of
+              <br />
+              <em className="text-brand-accent italic font-normal">
+                Faith & Grace
+              </em>
             </h1>
             <p className="gl-hero-desc text-white/70">
-              Explore the visual journey of our church family. From powerful worship 
-              gatherings to quiet moments of prayer and joyful community service.
+              Explore the visual journey of our church family. From powerful
+              worship gatherings to quiet moments of prayer and joyful community
+              service.
             </p>
-
-
-
           </div>
 
           <div className="gl-hero-mosaic gl-anim-2">
@@ -104,16 +315,24 @@ export default function GalleryPage() {
               <img src="/images/congregation.JPG" alt="Worship" />
             </div>
             <div className="gl-mosaic-stack">
-              <div className="gl-mosaic-sm"><img src="/images/choir.jpg" alt="Choir" /></div>
-              <div className="gl-mosaic-sm"><img src="/images/celebration.jpg" alt="Celebration" /></div>
+              <div className="gl-mosaic-sm">
+                <img src="/images/choir.jpg" alt="Choir" />
+              </div>
+              <div className="gl-mosaic-sm">
+                <img src="/images/celebration.jpg" alt="Celebration" />
+              </div>
             </div>
           </div>
         </div>
-        {/* Section Divider Curve */}
-          <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
-            </svg>
+        {/* CURVY DIVIDER - FIXED */}
+        <div className="absolute bottom-0 left-0 w-full -mb-1 overflow-hidden">
+          <svg
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            className="relative block w-full h-20 sm:h-24 md:h-28 lg:h-32 fill-white"
+          >
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z" />
+          </svg>
         </div>
       </section>
 
@@ -125,11 +344,11 @@ export default function GalleryPage() {
         </div>
 
         <div className="gl-filters">
-          {CATEGORIES.map(cat => (
+          {CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setActive(cat)}
-              className={`gl-filter-chip${active === cat ? ' gl-filter-active bg-brand-primary text-white border-brand-primary' : ' bg-white text-site-muted border-gray-200'}`}
+              className={`gl-filter-chip${active === cat ? " gl-filter-active bg-brand-primary text-white border-brand-primary" : " bg-white text-site-muted border-gray-200"}`}
             >
               {cat}
             </button>
@@ -138,14 +357,28 @@ export default function GalleryPage() {
 
         <div className="gl-masonry" key={active}>
           {filtered.map((img, i) => (
-            <div key={`${img.src}-${i}`} className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer`} onClick={() => openImage(img)}>
+            <div
+              key={`${img.src}-${i}`}
+              className={`gl-card gl-card-${img.size} shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer`}
+              onClick={() => openImage(img)}
+            >
               <figure className="gl-card-fig">
                 <img src={img.src} alt={img.title} loading="lazy" />
               </figure>
               <div className="gl-card-overlay">
-                <span className="gl-card-tag" style={{ background: `${TAG_COLORS[img.tag]}22`, color: TAG_COLORS[img.tag] }}>{img.tag}</span>
+                <span
+                  className="gl-card-tag"
+                  style={{
+                    background: `${TAG_COLORS[img.tag]}22`,
+                    color: TAG_COLORS[img.tag],
+                  }}
+                >
+                  {img.tag}
+                </span>
                 <h3 className="gl-card-title text-white">{img.title}</h3>
-                <p className="gl-card-meta text-white/80 text-sm mt-2">Click to view · Download available</p>
+                <p className="gl-card-meta text-white/80 text-sm mt-2">
+                  Click to view · Download available
+                </p>
               </div>
             </div>
           ))}
@@ -155,9 +388,16 @@ export default function GalleryPage() {
       {/* ── Image Viewer Modal ─────────────────────────────────────────────── */}
       {selectedImage && (
         <div className="gl-modal-overlay" onClick={closeModal}>
-          <div className="gl-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="gl-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close Button */}
-            <button onClick={closeModal} className="gl-modal-close" aria-label="Close">
+            <button
+              onClick={closeModal}
+              className="gl-modal-close"
+              aria-label="Close"
+            >
               ✕
             </button>
 
@@ -170,7 +410,7 @@ export default function GalleryPage() {
             <div className="gl-modal-actions gl-modal-actions-center">
               <a
                 href={selectedImage.src}
-                download={`${selectedImage.title.replace(/\s+/g, '-')}.jpg`}
+                download={`${selectedImage.title.replace(/\s+/g, "-")}.jpg`}
                 className="gl-modal-btn gl-modal-btn-primary"
               >
                 ⬇ Download

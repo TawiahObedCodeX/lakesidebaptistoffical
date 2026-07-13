@@ -189,12 +189,16 @@ export default function LeadershipPage() {
             resilience, and radical hospitality in the heart of the city.
           </p>
         </div>
-           {/* Section Divider Curve */}
-        <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
-            </svg>
-        </div>
+    {/* CURVY DIVIDER - FIXED */}
+  <div className="absolute bottom-0 left-0 w-full -mb-1 overflow-hidden">
+    <svg
+      viewBox="0 0 1200 120"
+      preserveAspectRatio="none"
+      className="relative block w-full h-20 sm:h-24 md:h-28 lg:h-32 fill-white"
+    >
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z" />
+    </svg>
+  </div>
       </section>
 
       {/* --- STATS OVERLAP --- */}
