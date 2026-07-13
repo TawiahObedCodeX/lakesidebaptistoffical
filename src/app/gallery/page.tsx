@@ -288,12 +288,17 @@ export default function GalleryPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Text Content */}
             <div className="animate-fadeInUp">
-              <span className="text-amber-400 font-bold text-xs tracking-[0.25em] uppercase mb-4 block">
-                ✦ Our Collection ✦
-              </span>
+              <div className="inline-flex items-center gap-3 mb-6">
+                <div className="h-px w-12 bg-brand-accent" />
+                <span className="text-brand-accent text-xl font-bold tracking-[0.25em] uppercase">
+                  Our Collection
+                </span>
+                <div className="h-px w-12 bg-brand-accent" />
+              </div>
+
               <h1 className="font-serif text-white text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 Moments of{" "}
-                <em className="text-amber-400 italic font-normal">
+                <em className="text-brand-accent italic font-normal">
                   Faith & Grace
                 </em>
               </h1>
