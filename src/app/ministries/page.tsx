@@ -46,7 +46,7 @@ export default function MinistriesPage() {
             alt="Hero Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-brand-primary)]/75 via-[var(--color-brand-primary)]/55 to-[var(--color-brand-primary)]/85" />
+          <div className="absolute inset-0 bg-linear-to-b from-(--color-brand-primary)/75 via-(--color-brand-primary)/55 to-(--color-brand-primary)/85" />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
@@ -88,7 +88,7 @@ export default function MinistriesPage() {
                   <img
                     src={m.image}
                     alt={m.title}
-                    className="relative rounded-2xl shadow-card w-full h-[28rem] object-cover transition-transform duration-500 group-hover:-translate-y-2"
+                    className="relative rounded-2xl shadow-card w-full h-112 object-cover transition-transform duration-500 group-hover:-translate-y-2"
                   />
                 </div>
               </div>
