@@ -269,70 +269,74 @@ export default function AboutPage() {
 
   return (
     <div className="bg-site-bg overflow-x-hidden">
-      {/* ══════════════════════════
-          1. HERO
-      ══════════════════════════ */}
-      <section
-        ref={heroRef}
-        className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#1a2530] px-6 py-20"
-      >
-        <motion.div style={{ y: heroY }} className="absolute inset-0 scale-110">
-          <img
-            src="/images/fade.gif"
-            alt=""
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-blue-900" />
-        </motion.div>
+    {/* ══════════════════════════
+    1. HERO
+══════════════════════════ */}
+<section
+  ref={heroRef}
+  className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-[#1a2530] px-6 py-20"
+>
+  <motion.div style={{ y: heroY }} className="absolute inset-0 scale-110">
+    <img
+      src="/images/fade.gif"
+      alt=""
+      className="w-full h-full object-cover"
+    />
+    <div className="absolute inset-0 bg-blue-900" />
+  </motion.div>
 
-      
+  <motion.div
+    style={{ opacity: heroOpacity }}
+    className="relative z-10 text-center px-6 max-w-4xl mx-auto"
+  >
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+      className="inline-flex items-center gap-3 mb-6"
+    >
+      <div className="h-px w-12 bg-brand-accent" />
+      <span className="text-brand-accent text-xl font-bold tracking-[0.25em] uppercase">
+        Our Story
+      </span>
+      <div className="h-px w-12 bg-brand-accent" />
+    </motion.div>
 
-        <motion.div
-          style={{ opacity: heroOpacity }}
-          className="relative z-10 text-center px-6 max-w-4xl mx-auto"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center gap-3 mb-6"
-          >
-            <div className="h-px w-12 bg-brand-accent" />
-            <span className="text-brand-accent  text-xl font-bold  tracking-[0.25em] uppercase   ">
-              Our Story
-            </span>
-            <div className="h-px w-12 bg-brand-accent" />
-          </motion.div>
+    <motion.h1
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.9,
+        delay: 0.35,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] tracking-tight mb-8"
+    >
+      About <span className="text-brand-accent">Us</span>
+    </motion.h1>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.9,
-              delay: 0.35,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] tracking-tight mb-8"
-          >
-            About <span className="text-brand-accent">Us</span>
-          </motion.h1>
+    <motion.p
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.55 }}
+      className="text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed"
+    >
+      A vibrant community of believers dedicated to worship, fellowship,
+      and service &mdash; sharing God&apos;s love every single day.
+    </motion.p>
+  </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.55 }}
-            className="text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed"
-          >
-            A vibrant community of believers dedicated to worship, fellowship,
-            and service &mdash; sharing God&apos;s love every single day.
-          </motion.p>
-        </motion.div>
-         <div className="absolute bottom-0 left-0 w-full leading-0 fill-[#FDFCFB]">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-15">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z"></path>
-            </svg>
-        </div>
-      </section>
+  {/* CURVY DIVIDER - FIXED */}
+  <div className="absolute bottom-0 left-0 w-full -mb-1 overflow-hidden">
+    <svg
+      viewBox="0 0 1200 120"
+      preserveAspectRatio="none"
+      className="relative block w-full h-20 sm:h-24 md:h-28 lg:h-32 fill-white"
+    >
+      <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C49.49,34.2,224.43,74.52,321.39,56.44Z" />
+    </svg>
+  </div>
+</section>
 
       {/* ══════════════════════════
           2. ABOUT US
@@ -397,11 +401,11 @@ export default function AboutPage() {
             {/* Content */}
             <div>
               <FadeUp>
-                <span className="inline-flex items-center gap-2 text-brand-secondary text-xs tracking-[4px] font-semibold uppercase mb-5">
+                {/* <span className="inline-flex items-center gap-2 text-brand-secondary text-xs tracking-[4px] font-semibold uppercase mb-5">
                   <span className="block h-px w-8 bg-brand-secondary" />
                   About Us
-                </span>
-                <h2 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-brand-primary leading-[1.1] mb-6">
+                </span> */}
+                <h2 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-brand-accent leading-[1.1] mb-6">
                   Faith, hope, and love in{" "}
                   <span className="text-brand-accent">
                     action every day
@@ -445,7 +449,7 @@ export default function AboutPage() {
 
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <FadeUp className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 text-brand-accent text-xs tracking-[4px] font-semibold uppercase mb-5">
+            <span className="inline-flex items-center gap-2 text-brand-accent text-lg tracking-[4px] font-semibold uppercase mb-5">
               <span className="block h-px w-8 bg-brand-accent" />
               Our Foundation
               <span className="block h-px w-8 bg-brand-accent" />
@@ -468,8 +472,8 @@ export default function AboutPage() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-8 py-3 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 ${
                   activeTab === tab.id
-                    ? "bg-brand-accent text-brand-primary"
-                    : "border border-white/20 text-white/70 hover:border-brand-accent hover:text-brand-accent"
+                    ? "bg-white text-brand-primary"
+                    : "border border-white/20 text-white/70 hover:border-white hover:text-white"
                 }`}
               >
                 {tab.label}
@@ -592,7 +596,7 @@ export default function AboutPage() {
               <FadeUp delay={0.35}>
                 <Link
                   href="/pastor"
-                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-brand-primary text-white font-semibold hover:bg-brand-primary-dark transition-colors duration-300 shadow-lg"
+                  className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-black text-white font-semibold hover:bg-blue-900 transition-colors duration-300 shadow-lg"
                 >
                   Meet Our Pastor &rarr;
                 </Link>

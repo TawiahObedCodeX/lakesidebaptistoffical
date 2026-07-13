@@ -77,7 +77,7 @@ export function SiteFooter() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl  hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
                   aria-label={social.name}
                 >
                   <Image
@@ -85,7 +85,7 @@ export function SiteFooter() {
                     alt={social.name}
                     width={24}
                     height={24}
-                    className="h-6 w-6"
+                    className="h-8 w-8"
                   />
                 </a>
               ))}
@@ -96,7 +96,7 @@ export function SiteFooter() {
           <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-8">
             {/* Navigation */}
             <motion.div variants={itemVariants}>
-              <h3 className="text-white text-sm font-bold mb-6 tracking-wider uppercase">
+              <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
                 Navigation
               </h3>
               <ul className="space-y-3">
@@ -104,7 +104,7 @@ export function SiteFooter() {
                   <li key={link}>
                     <Link
                       href={link === "Home" ? "/" : `/${link.toLowerCase().replace(" ", "")}`}
-                      className="text-white/70 hover:text-brand-accent hover:scale-110 transition-all duration-300 inline-block text-[18px]"
+                      className="text-white/70 hover:text-brand-accent hover:scale-125 transition-all duration-300 inline-block text-[18px]"
                     >
                       {link}
                     </Link>
@@ -115,7 +115,7 @@ export function SiteFooter() {
 
             {/* Resources */}
             <motion.div variants={itemVariants}>
-              <h3 className="text-white text-sm font-bold mb-6 tracking-wider uppercase">
+              <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
                 Resources
               </h3>
               <ul className="space-y-3">
@@ -135,7 +135,7 @@ export function SiteFooter() {
 
           {/* 3. Contact & Newsletter */}
           <motion.div variants={itemVariants} className="lg:col-span-4">
-            <h3 className="text-white text-sm font-bold mb-6 tracking-wider uppercase">
+            <h3 className="text-white text-xl font-bold mb-6 tracking-wider uppercase">
               Connect With Us
             </h3>
             <div className="space-y-8">
@@ -143,10 +143,10 @@ export function SiteFooter() {
               <div className="flex items-start gap-4">
                 <span className="text-brand-accent text-xl mt-0.5">✦</span>
                 <div>
-                  <p className="text-white/50 text-xs uppercase font-bold tracking-widest mb-1">
+                  <p className="text-white text-xl uppercase font-bold tracking-widest mb-1">
                     Visit Us
                   </p>
-                  <p className="text-white/70 text-[15px] leading-relaxed">
+                  <p className="text-white/70 text-lg leading-relaxed">
                     Lakeside Estate, PV9H+7R7 <br /> Accra, Ghana
                   </p>
                 </div>
@@ -156,18 +156,18 @@ export function SiteFooter() {
               <div className="flex items-start gap-4">
                 <span className="text-brand-accent text-xl mt-0.5">✦</span>
                 <div>
-                  <p className="text-white/50 text-xs uppercase font-bold tracking-widest mb-1">
+                  <p className="text-white text-xl uppercase font-bold tracking-widest mb-1">
                     Contact
                   </p>
                   <a
                     href="tel:+233248383745"
-                    className="text-white/70 hover:text-white text-[15px] block mb-1 transition-colors"
+                    className="text-white/70 hover:text-white text-lg block mb-1 transition-colors"
                   >
                     (+233) 24 838 3745
                   </a>
                   <a
                     href="mailto:lakesidebaptistchurch1@gmail.com"
-                    className="text-white/70 hover:text-white text-[15px] transition-colors"
+                    className="text-white/70 hover:text-white text-lg transition-colors"
                   >
                     lakesidebaptistchurch1@gmail.com
                   </a>
@@ -176,10 +176,10 @@ export function SiteFooter() {
 
               {/* Newsletter */}
               <div className="pt-6 border-t border-white/10">
-                <h4 className="text-white text-sm font-bold mb-3 tracking-wider uppercase">
+                <h4 className="text-white text-xl font-bold mb-3 tracking-wider uppercase">
                   Newsletter
                 </h4>
-                <p className="text-white/50 text-sm mb-4">
+                <p className="text-white/50 text-lg mb-4">
                   Get weekly updates and announcements delivered to your inbox.
                 </p>
                 <NewsletterSubscribe variant="inline" />
@@ -191,7 +191,7 @@ export function SiteFooter() {
         {/* Footer Bottom Bar */}
         <motion.div
           variants={itemVariants}
-          className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm"
+          className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-lg"
         >
           <p className="text-white/50 text-center md:text-left">
             © 2026 <span className="text-white/70">Lakeside Baptist Church</span>. 

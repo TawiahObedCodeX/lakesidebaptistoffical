@@ -147,7 +147,7 @@ export function NewsletterSubscribe({ className = "", variant = "inline" }: Prop
           <button
             type="submit"
             disabled={status === "loading"}
-            className="px-6 py-2.5 rounded-lg bg-blue-900 text-brand-primary font-bold text-sm hover:bg-white  transition-all  whitespace-nowrap"
+            className="px-6 py-2.5 rounded-lg bg-blue-900 text-white border border-white font-bold text-lg hover:bg-white hover:text-black  transition-all  whitespace-nowrap"
           >
             {status === "loading" ? "Sending..." : "Subscribe"}
           </button>
