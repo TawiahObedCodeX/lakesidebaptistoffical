@@ -85,10 +85,9 @@ export function HomeHero() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, type: "spring" }}
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 backdrop-blur-xl"
+                className="mb-6 inline-flex items-center l"
               >
-                <div className="h-1.5 w-1.5 rounded-full bg-brand-accent animate-pulse" />
-                <span className="text-[10px] font-bold font-serif tracking-[0.4em] text-white uppercase sm:text-xs">
+                <span className="lg:text-2xl font-bold font-serif tracking-[0.4em] text-white uppercase sm:text-xs">
                   Welcome to Lakeside
                 </span>
               </motion.div>
@@ -98,7 +97,7 @@ export function HomeHero() {
                 initial={{ y: 40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.8, ease: "circOut" }}
-                className="mb-4 text-3xl font-black leading-[0.95]  text-white sm:text-7xl md:text-3xl lg:text-8xl uppercase "
+                className="mb-4 text-3xl font-black leading-[0.95]  text-white sm:text-7xl md:text-3xl lg:text-7xl uppercase "
               >
                 {slides[index].title} <br />
                 <span className="text-brand-accent not-italic drop-shadow-2xl">{slides[index].subtitle}</span>
@@ -118,7 +117,7 @@ export function HomeHero() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 }}
-                className="mx-auto mb-10 max-w-2xl text-base font-serif text-white/80 leading-relaxed sm:text-lg md:text-xl"
+                className="mx-auto mb-10 max-w-2xl text-base font-serif text-white/80 leading-relaxed sm:text-lg md:text-2xl"
               >
                 {slides[index].description}
               </motion.p>

@@ -298,7 +298,7 @@ export default function AboutPage() {
             className="inline-flex items-center gap-3 mb-6"
           >
             <div className="h-px w-12 bg-brand-accent" />
-            <span className="text-brand-accent  text-sm font-bold  tracking-[0.25em] uppercase  font-semibold ">
+            <span className="text-brand-accent  text-xl font-bold  tracking-[0.25em] uppercase   ">
               Our Story
             </span>
             <div className="h-px w-12 bg-brand-accent" />
