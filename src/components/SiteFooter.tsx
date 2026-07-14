@@ -57,26 +57,29 @@ export function SiteFooter() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-accent opacity-[0.04] rounded-full blur-[120px] -translate-y-1/2" />
 
       <motion.div
-        className="px-24  lg:px-12 xl:px-10 pt-16 pb-12"
+        className="px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 pt-12 md:pt-16 pb-10 md:pb-12"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-24">
           {/* 1. Brand Identity */}
           <motion.div
             variants={itemVariants}
             className="lg:col-span-5 space-y-6"
           >
             <Link href="/" className="flex items-center gap-3">
-              <img
+              <Image
                 src="/images/church_logo_blue-removebg-preview (1).png"
                 alt="Lakeside Baptist Church"
+                width={80}
+                height={56}
                 className="h-14 w-auto brightness-0 invert"
+                priority
               />
               <div className="flex flex-col">
-                <span className="text-xl font-bold tracking-tight leading-none text-white">
+                <span className="text-2xl sm:text-[28px] font-bold tracking-tight leading-none text-white">
                   Lakeside
                 </span>
                 <span className="text-sm font-medium tracking-[0.2em] text-white uppercase mt-1">
@@ -85,41 +88,45 @@ export function SiteFooter() {
               </div>
             </Link>
 
-            <p className="text-white/60 leading-relaxed text-sm max-w-md">
+            <p className="text-white/70 leading-relaxed text-base md:text-sm max-w-md">
               A community rooted in faith, reaching out in love. Join our family
               as we worship, grow, and impact lives through the word of God.
             </p>
+
             {/* Social Media Links */}
-            <div className="flex gap-4 pt-2">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-11 h-11 flex items-center justify-center rounded-xl   text-white transition-all duration-300 hover:scale-110"
-                  aria-label={social.name}
-                >
-                  <Image
-                    src={social.icon}
-                    alt={social.name}
-                    width={24}
-                    height={24}
-                    className="h-8 w-8"
-                  />
-                </a>
-              ))}
+            <div className="pt-4">
+              <h4 className="text-white text-lg font-bold mb-4">Follow Us</h4>
+              <div className="flex flex-wrap gap-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/5 hover:bg-white/10 text-white transition-all duration-300 hover:scale-110 active:scale-95"
+                    aria-label={social.name}
+                  >
+                    <Image
+                      src={social.icon}
+                      alt={social.name}
+                      width={28}
+                      height={28}
+                      className="h-7 w-7"
+                    />
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.div>
 
           {/* 2. Quick Links */}
-          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-28">
+          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-12 lg:gap-28">
             {/* Navigation */}
             <motion.div variants={itemVariants}>
               <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
                 Navigation
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-base">
                 {["Home", "Ministries", "Our Church", "Events", "News"].map(
                   (link) => (
                     <li key={link}>
@@ -129,7 +136,7 @@ export function SiteFooter() {
                             ? "/"
                             : `/${link.toLowerCase().replace(" ", "")}`
                         }
-                        className="text-white/70 hover:text-brand-accent hover:scale-110 transition-all duration-300 inline-block text-[18px]"
+                        className="text-white/70 hover:text-brand-accent transition-all duration-200 hover:translate-x-1 inline-block"
                       >
                         {link}
                       </Link>
@@ -144,7 +151,7 @@ export function SiteFooter() {
               <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
                 Resources
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-3 text-base">
                 {[
                   "Sermons",
                   "Giving",
@@ -155,7 +162,7 @@ export function SiteFooter() {
                   <li key={link}>
                     <Link
                       href="#"
-                      className="text-white/70 hover:text-brand-accent hover:scale-125 transition-all duration-300 inline-block text-[18px]"
+                      className="text-white/70 hover:text-brand-accent transition-all duration-200 hover:translate-x-1 inline-block"
                     >
                       {link}
                     </Link>
@@ -166,14 +173,18 @@ export function SiteFooter() {
           </div>
 
           {/* 3. Contact & Newsletter */}
-          <motion.div variants={itemVariants} className="lg:col-span-4">
-            <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
+          <motion.div
+            variants={itemVariants}
+            className="lg:col-span-4 space-y-8"
+          >
+            <h3 className="text-white text-lg font-bold tracking-wider uppercase">
               Connect With Us
             </h3>
+
             <div className="space-y-8">
               {/* Visit Us */}
               <div className="flex items-start gap-4">
-                <span className="text-brand-accent text-xl mt-0.5">✦</span>
+                <span className="text-brand-accent text-2xl mt-0.5 flex-shrink-0">✦</span>
                 <div>
                   <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Visit Us
@@ -186,7 +197,7 @@ export function SiteFooter() {
 
               {/* Contact */}
               <div className="flex items-start gap-4">
-                <span className="text-brand-accent text-xl mt-0.5">✦</span>
+                <span className="text-brand-accent text-2xl mt-0.5 flex-shrink-0">✦</span>
                 <div>
                   <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Contact
@@ -211,7 +222,7 @@ export function SiteFooter() {
                 <h4 className="text-white text-lg font-bold mb-3 tracking-wider uppercase">
                   Newsletter
                 </h4>
-                <p className="text-white/50 text-sm mb-4">
+                <p className="text-white/60 text-sm mb-4">
                   Get weekly updates and announcements delivered to your inbox.
                 </p>
                 <NewsletterSubscribe variant="inline" />
@@ -223,21 +234,21 @@ export function SiteFooter() {
         {/* Footer Bottom Bar */}
         <motion.div
           variants={itemVariants}
-          className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-lg"
+          className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm md:text-base"
         >
-          <p className="text-white/50 text-center md:text-left">
+          <p className="text-white/60 text-center md:text-left">
             © 2026{" "}
-            <span className="text-white/70">Lakeside Baptist Church</span>.
+            <span className="text-white/80">Lakeside Baptist Church</span>.
             Excellence in Discipleship.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white/50">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-white/60">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
               (item) => (
                 <a
                   key={item}
                   href="#"
-                  className="hover:text-white hover:scale-105 transition-all duration-300 text-xs uppercase tracking-widest"
+                  className="hover:text-white transition-colors text-xs uppercase tracking-widest"
                 >
                   {item}
                 </a>

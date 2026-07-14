@@ -52,10 +52,10 @@ export function SiteHeader() {
             />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight text-white leading-none">
+            <span className="text-2xl font-bold tracking-tight text-white leading-none">
               Lakeside
             </span>
-            <span className="text-[10px] font-medium tracking-[0.2em] text-white uppercase">
+            <span className="text-lg font-medium tracking-[0.2em] text-white uppercase">
               Baptist Church
             </span>
           </div>
@@ -67,7 +67,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative text-sm font-semibold tracking-wide transition-all duration-300 hover:text-brand-accent ${
+              className={`relative text-xl font-semibold tracking-wide transition-all duration-300 hover:text-brand-accent ${
                 pathname === item.href ? "text-brand-accent" : "text-white"
               }`}
             >
@@ -87,7 +87,7 @@ export function SiteHeader() {
             onMouseEnter={() => setPagesOpen(true)}
             onMouseLeave={() => setPagesOpen(false)}
           >
-            <button className="flex items-center gap-1 text-sm font-semibold text-white hover:text-brand-accent transition-colors">
+            <button className="flex items-center gap-1 text-xl font-semibold text-white hover:text-brand-accent transition-colors">
               Resources{" "}
               <HiChevronDown
                 className={`transition-transform duration-300 ${pagesOpen ? "rotate-180" : ""}`}
@@ -106,7 +106,7 @@ export function SiteHeader() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="rounded-xl px-4 py-2.5 text-sm text-center text-white/80 hover:bg-white/5 hover:text-brand-accent transition-all"
+                        className="rounded-xl px-4 py-2.5 text-lg text-center text-white/80 hover:bg-white/5 hover:text-brand-accent transition-all"
                       >
                         {item.label}
                       </Link>
@@ -122,7 +122,7 @@ export function SiteHeader() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/donation"
-            className="group relative overflow-hidden rounded-full bg-white px-8 py-2.5 text-sm font-bold text-black transition-all hover:pr-10"
+            className="group relative overflow-hidden rounded-full bg-white px-8 py-2.5 text-lg font-bold text-black transition-all hover:pr-10"
           >
             <span className="relative z-10">GIVE ONLINE</span>
             <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100">
