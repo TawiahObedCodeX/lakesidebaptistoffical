@@ -24,11 +24,31 @@ export function SiteFooter() {
   };
 
   const socialLinks = [
-    { name: "facebook", url: "https://web.facebook.com/lbcghana", icon: "/images/facebook.svg" },
-    { name: "youtube", url: "http://www.youtube.com/@lakesidebaptistchurchab1", icon: "/images/youtube.svg" },
-    { name: "tiktok", url: "https://www.tiktok.com/@lakeside.baptist", icon: "/images/tiktok.svg" },
-    { name: "instagram", url: "https://www.instagram.com/lakesidebaptistchurchab", icon: "/images/instagram.svg" },
-    {name:"spotify", url:"https://open.spotify.com/show/4g0k1r6Z3y5J7v8F9G2H3K", icon:"/images/spotify.svg"}
+    {
+      name: "facebook",
+      url: "https://web.facebook.com/lbcghana",
+      icon: "/images/facebook.svg",
+    },
+    {
+      name: "youtube",
+      url: "http://www.youtube.com/@lakesidebaptistchurchab1",
+      icon: "/images/youtube.svg",
+    },
+    {
+      name: "tiktok",
+      url: "https://www.tiktok.com/@lakeside.baptist",
+      icon: "/images/tiktok.svg",
+    },
+    {
+      name: "instagram",
+      url: "https://www.instagram.com/lakesidebaptistchurchab",
+      icon: "/images/instagram.svg",
+    },
+    {
+      name: "spotify",
+      url: "https://open.spotify.com/show/4g0k1r6Z3y5J7v8F9G2H3K",
+      icon: "/images/spotify.svg",
+    },
   ];
 
   return (
@@ -37,17 +57,17 @@ export function SiteFooter() {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-brand-accent opacity-[0.04] rounded-full blur-[120px] -translate-y-1/2" />
 
       <motion.div
-        className="px-6 md:px-10 lg:px-16 xl:px-24 pt-16 pb-12"
+        className="px-24  lg:px-12 xl:px-10 pt-16 pb-12"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-24">
           {/* 1. Brand Identity */}
           <motion.div
             variants={itemVariants}
-            className="lg:col-span-5 space-y-8"
+            className="lg:col-span-5 space-y-6"
           >
             <Link href="/" className="flex items-center gap-3">
               <img
@@ -65,11 +85,11 @@ export function SiteFooter() {
               </div>
             </Link>
 
-            <p className="text-white/60 leading-relaxed text-[15px] max-w-md">
+            <p className="text-white/60 leading-relaxed text-sm max-w-md">
               A community rooted in faith, reaching out in love. Join our family
               as we worship, grow, and impact lives through the word of God.
             </p>
-
+            {/* Social Media Links */}
             <div className="flex gap-4 pt-2">
               {socialLinks.map((social) => (
                 <a
@@ -93,23 +113,29 @@ export function SiteFooter() {
           </motion.div>
 
           {/* 2. Quick Links */}
-          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-8">
+          <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-28">
             {/* Navigation */}
             <motion.div variants={itemVariants}>
               <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
                 Navigation
               </h3>
               <ul className="space-y-3">
-                {["Home", "Ministries", "Our Church", "Events", "News"].map((link) => (
-                  <li key={link}>
-                    <Link
-                      href={link === "Home" ? "/" : `/${link.toLowerCase().replace(" ", "")}`}
-                      className="text-white/70 hover:text-brand-accent hover:scale-125 transition-all duration-300 inline-block text-[18px]"
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                ))}
+                {["Home", "Ministries", "Our Church", "Events", "News"].map(
+                  (link) => (
+                    <li key={link}>
+                      <Link
+                        href={
+                          link === "Home"
+                            ? "/"
+                            : `/${link.toLowerCase().replace(" ", "")}`
+                        }
+                        className="text-white/70 hover:text-brand-accent hover:scale-110 transition-all duration-300 inline-block text-[18px]"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  ),
+                )}
               </ul>
             </motion.div>
 
@@ -119,7 +145,13 @@ export function SiteFooter() {
                 Resources
               </h3>
               <ul className="space-y-3">
-                {["Sermons", "Giving", "Prayer Request", "Media", "Contact"].map((link) => (
+                {[
+                  "Sermons",
+                  "Giving",
+                  "Prayer Request",
+                  "Media",
+                  "Contact",
+                ].map((link) => (
                   <li key={link}>
                     <Link
                       href="#"
@@ -135,7 +167,7 @@ export function SiteFooter() {
 
           {/* 3. Contact & Newsletter */}
           <motion.div variants={itemVariants} className="lg:col-span-4">
-            <h3 className="text-white text-xl font-bold mb-6 tracking-wider uppercase">
+            <h3 className="text-white text-lg font-bold mb-6 tracking-wider uppercase">
               Connect With Us
             </h3>
             <div className="space-y-8">
@@ -143,10 +175,10 @@ export function SiteFooter() {
               <div className="flex items-start gap-4">
                 <span className="text-brand-accent text-xl mt-0.5">✦</span>
                 <div>
-                  <p className="text-white text-xl uppercase font-bold tracking-widest mb-1">
+                  <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Visit Us
                   </p>
-                  <p className="text-white/70 text-lg leading-relaxed">
+                  <p className="text-white/70 text-sm leading-relaxed">
                     Lakeside Estate, PV9H+7R7 <br /> Accra, Ghana
                   </p>
                 </div>
@@ -156,18 +188,18 @@ export function SiteFooter() {
               <div className="flex items-start gap-4">
                 <span className="text-brand-accent text-xl mt-0.5">✦</span>
                 <div>
-                  <p className="text-white text-xl uppercase font-bold tracking-widest mb-1">
+                  <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Contact
                   </p>
                   <a
                     href="tel:+233248383745"
-                    className="text-white/70 hover:text-white text-lg block mb-1 transition-colors"
+                    className="text-white/70 hover:text-white text-sm block mb-1 transition-colors"
                   >
                     (+233) 24 838 3745
                   </a>
                   <a
                     href="mailto:lakesidebaptistchurch1@gmail.com"
-                    className="text-white/70 hover:text-white text-lg transition-colors"
+                    className="text-white/70 hover:text-white text-sm transition-colors"
                   >
                     lakesidebaptistchurch1@gmail.com
                   </a>
@@ -176,10 +208,10 @@ export function SiteFooter() {
 
               {/* Newsletter */}
               <div className="pt-6 border-t border-white/10">
-                <h4 className="text-white text-xl font-bold mb-3 tracking-wider uppercase">
+                <h4 className="text-white text-lg font-bold mb-3 tracking-wider uppercase">
                   Newsletter
                 </h4>
-                <p className="text-white/50 text-lg mb-4">
+                <p className="text-white/50 text-sm mb-4">
                   Get weekly updates and announcements delivered to your inbox.
                 </p>
                 <NewsletterSubscribe variant="inline" />
@@ -194,20 +226,23 @@ export function SiteFooter() {
           className="border-t border-white/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-lg"
         >
           <p className="text-white/50 text-center md:text-left">
-            © 2026 <span className="text-white/70">Lakeside Baptist Church</span>. 
+            © 2026{" "}
+            <span className="text-white/70">Lakeside Baptist Church</span>.
             Excellence in Discipleship.
           </p>
 
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-white/50">
-            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((item) => (
-              <a
-                key={item}
-                href="#"
-                className="hover:text-white hover:scale-105 transition-all duration-300 text-xs uppercase tracking-widest"
-              >
-                {item}
-              </a>
-            ))}
+            {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
+              (item) => (
+                <a
+                  key={item}
+                  href="#"
+                  className="hover:text-white hover:scale-105 transition-all duration-300 text-xs uppercase tracking-widest"
+                >
+                  {item}
+                </a>
+              ),
+            )}
           </div>
         </motion.div>
       </motion.div>

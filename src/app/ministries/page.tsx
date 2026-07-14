@@ -72,8 +72,7 @@ export default function MinistriesPage() {
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
             Our Ministries
           </h1>
-          <div className="h-1.5 w-24 bg-brand-secondary mx-auto mb-8 rounded-full"></div>
-          <p className="max-w-2xl mx-auto text-blue-50 text-xl leading-relaxed opacity-90">
+          <p className="max-w-2xl mx-auto text-blue-50 text-xl font-bold leading-relaxed opacity-90">
             A place for everyone to belong. Discover how you can connect, grow,
             and serve within our various ministry groups.
           </p>

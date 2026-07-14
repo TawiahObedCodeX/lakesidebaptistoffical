@@ -322,7 +322,7 @@ export default function AboutPage() {
       className="text-white/75 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed"
     >
       A vibrant community of believers dedicated to worship, fellowship,
-      and service &mdash; sharing God&apos;s love every single day.
+      and service sharing God&apos;s love every single day.
     </motion.p>
   </motion.div>
 
@@ -550,7 +550,7 @@ export default function AboutPage() {
 
             <div>
               <FadeUp>
-                <span className="inline-flex items-center gap-2 text-brand-secondary text-xs tracking-[4px] font-semibold uppercase mb-5">
+                <span className="inline-flex items-center gap-2 text-brand-secondary text-lg tracking-[4px] font-semibold uppercase mb-5">
                   <span className="block h-px w-8 bg-brand-secondary" />
                   Pastor&apos;s Message
                 </span>
