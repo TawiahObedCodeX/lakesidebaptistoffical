@@ -99,14 +99,14 @@ export function SiteHeader() {
                   initial={{ opacity: 0, y: 15, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                  className="absolute left-1/2 -translate-x-1/2 mt-4 w-56 rounded-2xl bg-brand-primary border border-white/10 p-2 shadow-2xl"
+                  className="absolute left-1/2 -translate-x-1/2 mt-4 w-64 rounded-2xl bg-brand-primary border border-white/10 p-2 shadow-2xl"
                 >
                   <div className="grid grid-cols-1 gap-1">
                     {pagesDropdownItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="rounded-xl px-4 py-2.5 text-sm text-white/80 hover:bg-white/5 hover:text-brand-accent transition-all"
+                        className="rounded-xl px-4 py-2.5 text-sm text-center text-white/80 hover:bg-white/5 hover:text-brand-accent transition-all"
                       >
                         {item.label}
                       </Link>
