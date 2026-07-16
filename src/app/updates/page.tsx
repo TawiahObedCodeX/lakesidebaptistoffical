@@ -100,7 +100,7 @@ export default function BlogPage() {
           <div className="absolute inset-0 bg-blue-900" />
         </div>
         <div className="relative z-10 px-6">
-          <h1 className="text-4xl md:text-6xl font-bold font-serif text-white leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold font-serif text-red-600 leading-tight">
             Inspiring Stories & Sermons
           </h1>
           <p className="mt-4 text-white/80 max-w-2xl mx-auto text-xl">
@@ -126,21 +126,21 @@ export default function BlogPage() {
             title: "Past Events",
             description: "A look back at the inspiring gatherings, services, and moments we have already shared.",
             badge: "Past Event",
-            accent: "bg-brand-accent/15 text-brand-primary",
+            accent: "bg-blue-900 text-white",
           },
           {
             title: "Upcoming Events",
             description: "The next opportunities to gather, worship, and grow together with the church family.",
             badge: "Upcoming Event",
-            accent: "bg-brand-secondary/15 text-brand-secondary",
+            accent: "bg-blue-900 text-white",
           },
         ].map((group, groupIndex) => (
           <div key={group.title} className="space-y-8">
             <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-brand-accent">
+                {/* <p className="text-sm font-semibold uppercase tracking-[0.3em] text-brand-accent">
                   Events
-                </p>
+                </p> */}
                 <h2 className="text-3xl md:text-4xl font-bold text-brand-primary">
                   {group.title}
                 </h2>
@@ -148,7 +148,7 @@ export default function BlogPage() {
                   {group.description}
                 </p>
               </div>
-              <div className="rounded-full border border-brand-primary/10 bg-white px-4 py-2 text-sm font-semibold text-brand-primary shadow-sm">
+              <div className="rounded-full border border-brand-primary/10 bg-white px-4 py-2 text-lg font-semibold text-brand-primary shadow-sm">
                 {groupIndex === 0 ? "Recent Highlights" : "Coming Soon"}
               </div>
             </div>
@@ -164,29 +164,29 @@ export default function BlogPage() {
                   transition={{ duration: 0.6 }}
                   className="flex flex-col overflow-hidden rounded-4xl border border-brand-primary/10 bg-white shadow-card md:flex-row"
                 >
-                  <div className="relative h-[260px] w-full md:h-auto md:w-[38%]">
+                  <div className="relative h-65 w-full md:h-auto md:w-[38%]">
                     <Image src={section.image} alt={section.title} fill className="object-cover" />
                   </div>
                   <div className="flex-1 p-8 md:p-10">
-                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] ${group.accent}`}>
+                    <span className={`inline-flex rounded-full px-3 py-1 text-sm font-semibold uppercase tracking-[0.32em] ${group.accent}`}>
                       {group.badge}
                     </span>
-                    <h3 className="mt-4 text-2xl md:text-3xl font-bold text-brand-primary">
+                    <h3 className="mt-4 text-2xl md:text-3xl font-bold text-red-400 leading-snug">
                       {section.title}
                     </h3>
                     <h4 className="mt-2 text-lg font-medium text-brand-secondary">
                       {section.subtitle}
                     </h4>
-                    <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-site-muted">
+                    <div className="mt-5 flex flex-wrap items-center gap-4 text-lg text-site-muted">
                       <span className="flex items-center gap-1"><HiCalendar /> {section.date}</span>
                       <span className="flex items-center gap-1"><HiClock /> {section.readTime}</span>
                     </div>
-                    <p className="mt-5 text-site-text leading-relaxed">
+                    <p className="mt-5 text-site-text text-xl leading-relaxed">
                       {section.content[0]}
                     </p>
                     <Link
                       href={`/blog/${section.id}`}
-                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-accent px-6 py-3 font-bold text-brand-primary transition hover:scale-105"
+                      className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-6 py-3 font-bold text-white hover:bg-blue-900 transition hover:scale-105"
                     >
                       View Event <HiArrowRight />
                     </Link>

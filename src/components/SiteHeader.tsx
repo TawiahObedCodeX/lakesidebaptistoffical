@@ -13,7 +13,7 @@ const mainNavItems = [
 ];
 
 const pagesDropdownItems = [
-  { href: "/blog", label: "Updates" },
+  { href: "/updates", label: "Updates" },
   // { href: "/sermons", label: "Sermons" },
   { href: "/ministries", label: "Ministries" },
   { href: "/pastor", label: "Pastor" },

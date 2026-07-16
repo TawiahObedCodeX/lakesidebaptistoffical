@@ -62,11 +62,11 @@ export default function MinistriesPage() {
             alt="Hero Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-linear-to-b from-(--color-brand-primary)/75 via-(--color-brand-primary)/55 to-(--color-brand-primary)/85" />
+          <div className="absolute inset-0 bg-linear-to-b from-(--color-brand-primary)/70 via-(--color-brand-primary)/55 to-(--color-brand-primary)/85" />
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <span className="text-brand-accent font-bold tracking-[0.2em] uppercase text-sm mb-4 block">
+          <span className="text-red-400 font-bold tracking-[0.2em] uppercase text-xl mb-4 block">
             Our Community
           </span>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
@@ -116,10 +116,10 @@ export default function MinistriesPage() {
               <div className="w-full lg:w-1/2">
                 <div className="space-y-8">
                   <div className="space-y-2">
-                    <h2 className="text-4xl font-bold text-brand-primary">
+                    <h2 className="text-4xl font-bold text-black">
                       {m.title}
                     </h2>
-                    <h4 className="text-brand-secondary font-bold text-sm uppercase tracking-widest mb-2">
+                    <h4 className="text-red-600 font-bold text-xl uppercase tracking-widest mb-2">
                       {m.subtitle}
                     </h4>
                   </div>
@@ -129,7 +129,7 @@ export default function MinistriesPage() {
                   </p>
 
                   <div className="mt-6">
-                    <h5 className="text-brand-accent font-semibold mb-2">
+                    <h5 className="text-black text-lg font-semibold mb-2">
                       {m.meeting}
                     </h5>
 
@@ -141,7 +141,7 @@ export default function MinistriesPage() {
                             key={i}
                             className="flex items-center gap-3 text-brand-primary font-medium"
                           >
-                            <div className="w-2 h-2 bg-brand-accent rounded-full"></div>
+                            <div className="w-2 h-2 bg-red-600 rounded-full"></div>
                             {item}
                           </div>
                         ))}

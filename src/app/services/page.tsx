@@ -184,7 +184,7 @@ export default function ServicesPage() {
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
               Featured Teachings
             </h2>
-            <div className="h-1 w-20 bg-brand-accent mb-6" />
+            <div className="h-1 w-20 bg-blue-900 mb-6" />
             <p className="text-slate-500 text-2xl leading-relaxed">
               Filtering through our most impactful series. Select a topic that resonates with your current season of life.
             </p>
@@ -220,11 +220,11 @@ export default function ServicesPage() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="bg-white/10 backdrop-blur-md border border-white/20 p-10 rounded-3xl text-center group hover:bg-white/15 transition-all duration-500"
               >
-                <div className="text-brand-accent text-5xl mb-8 flex justify-center group-hover:rotate-12 transition-transform duration-300">
+                <div className="text-white text-5xl mb-8 flex justify-center group-hover:rotate-12 transition-transform duration-300">
                   {s.icon}
                 </div>
                 <h3 className="text-3xl font-bold mb-3">{s.day}</h3>
-                <p className="text-brand-accent text-2xl font-semibold mb-2">{s.time}</p>
+                <p className="text-red-400 text-2xl font-semibold mb-2">{s.time}</p>
                 <p className="text-white/70 text-sm tracking-widest uppercase font-medium">{s.label}</p>
               </motion.div>
             ))}
@@ -251,7 +251,7 @@ export default function ServicesPage() {
               whileHover={{ y: -12 }}
               className="group p-5  rounded-3xl bg-white border border-neutral-100 shadow hover:border-brand-accent/30 hover:shadow-xl transition-all duration-300 flex flex-col"
             >
-              <div className="text-brand-secondary text-4xl mb-6 group-hover:scale-110 transition-transform">{m.icon}</div>
+              <div className="text-blue-900 text-4xl mb-6 group-hover:scale-110 transition-transform">{m.icon}</div>
               <h3 className="text-2xl font-bold text-brand-primary mb-4">{m.title}</h3>
               <p className="text-site-muted text-[15px] leading-relaxed grow">{m.desc}</p>
               <Link

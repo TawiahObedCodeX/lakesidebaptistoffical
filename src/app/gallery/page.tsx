@@ -289,20 +289,20 @@ export default function GalleryPage() {
             {/* Text Content */}
             <div className="animate-fadeInUp">
               <div className="inline-flex items-center gap-3 mb-6">
-                <div className="h-px w-12 bg-brand-accent" />
-                <span className="text-brand-accent text-xl font-bold tracking-[0.25em] uppercase">
+                <div className="h-px w-12 bg-white" />
+                <span className="text-red-600 text-xl font-bold tracking-[0.25em] uppercase">
                   Our Collection
                 </span>
-                <div className="h-px w-12 bg-brand-accent" />
+                <div className="h-px w-12 bg-white" />
               </div>
 
               <h1 className="font-serif text-white text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 Moments of{" "}
-                <em className="text-brand-accent italic font-normal">
+                <em className="text-red-600 italic font-normal">
                   Faith & Grace
                 </em>
               </h1>
-              <p className="text-white/70 text-lg leading-relaxed max-w-lg">
+              <p className="text-white/70 text-xl leading-relaxed max-w-lg">
                 Explore the visual journey of our church family. From powerful
                 worship gatherings to quiet moments of prayer and joyful
                 community service.

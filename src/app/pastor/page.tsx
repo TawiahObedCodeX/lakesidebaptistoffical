@@ -180,7 +180,7 @@ export default function LeadershipPage() {
         <div ref={heroRef} className="relative z-10 max-w-4xl mx-auto">
           <h1 className="font-serif text-5xl md:text-8xl font-bold text-white leading-[0.9] tracking-tighter mb-8">
             The Hearts Behind <br />
-            <em className="text-brand-accent italic font-normal">
+            <em className="text-red-600 italic font-normal">
               the Mission.
             </em>
           </h1>
@@ -226,39 +226,39 @@ export default function LeadershipPage() {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2">
             <div className="relative group">
-              <div className="absolute -inset-4 bg-brand-accent/10 rounded-[2rem] scale-95 group-hover:scale-100 transition-transform duration-700" />
+              <div className="absolute -inset-4 bg-brand-accent/10 rounded-4xl scale-95 group-hover:scale-100 transition-transform duration-700" />
               <img
                 src={team[0].img}
-                className="relative rounded-2xl w-full aspect-[4/5] object-cover shadow-brand"
+                className="relative rounded-2xl w-full aspect-4/5 object-cover shadow-brand"
                 alt="Head Pastor"
               />
             </div>
           </div>
           <div className="w-full lg:w-1/2">
-            <h4 className="text-brand-secondary text-sm font-bold uppercase tracking-[0.2em] mb-4">
+            <h4 className="text-black text-lg font-bold uppercase tracking-[0.2em] mb-4">
               Head Pastor
             </h4>
-            <h2 className="text-brand-primary font-serif text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-blue-900 font-serif text-4xl md:text-5xl font-bold mb-6">
               {team[0].name}
             </h2>
-            <div className="h-1 w-20 bg-brand-accent mb-8" />
+            <div className="h-1 w-20 bg-black mb-8" />
             <p className="text-site-text text-lg leading-loose mb-8 italic">
              {team[0].bio}
             </p>
             <div className="grid grid-cols-2 gap-8 border-t border-divider-dark pt-8">
               <div>
-                <h5 className="text-[11px] font-black uppercase text-brand-primary mb-1">
+                <h5 className="text-xl font-black uppercase text-brand-primary mb-1">
                   Focus
                 </h5>
-                <p className="text-site-muted text-sm">
+                <p className="text-site-muted text-lg">
                   Spiritual Formation & Global Outreach
                 </p>
               </div>
               <div>
-                <h5 className="text-[11px] font-black uppercase text-brand-primary mb-1">
+                <h5 className="text-xl font-black uppercase text-brand-primary mb-1">
                   Education
                 </h5>
-                <p className="text-site-muted text-sm">
+                <p className="text-site-muted text-lg">
                   Doctor of Ministry (D.Min)
                 </p>
               </div>
@@ -272,39 +272,39 @@ export default function LeadershipPage() {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="w-full lg:w-1/2">
             <div className="relative group">
-              <div className="absolute -inset-4 bg-brand-accent/10 rounded-[2rem] scale-95 group-hover:scale-100 transition-transform duration-700" />
+              <div className="absolute -inset-4 bg-brand-accent/10 rounded-4xl scale-95 group-hover:scale-100 transition-transform duration-700" />
               <img
                 src={team[1]?.img}
-                className="relative rounded-2xl w-full aspect-[4/5] object-cover shadow-brand"
+                className="relative rounded-2xl w-full aspect-4/5 object-cover shadow-brand"
                 alt={team[1]?.name}
               />
             </div>
           </div>
           <div className="w-full lg:w-1/2">
-            <h4 className="text-brand-secondary text-sm font-bold uppercase tracking-[0.2em] mb-4">
+            <h4 className="text-black text-lg font-bold uppercase tracking-[0.2em] mb-4">
               Associate Pastor
             </h4>
-            <h2 className="text-brand-primary font-serif text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-blue-900 font-serif text-4xl md:text-5xl font-bold mb-6">
               {team[1]?.name}
             </h2>
-            <div className="h-1 w-20 bg-brand-accent mb-8" />
+            <div className="h-1 w-20 bg-black mb-8" />
             <p className="text-site-text text-lg leading-loose mb-8 italic">
               {team[1]?.bio}
             </p>
             <div className="grid grid-cols-2 gap-8 border-t border-divider-dark pt-8">
               <div>
-                <h5 className="text-[11px] font-black uppercase text-brand-primary mb-1">
+                <h5 className="text-xl font-black uppercase text-brand-primary mb-1">
                   Focus
                 </h5>
-                <p className="text-site-muted text-sm">
+                <p className="text-site-muted text-lg">
                   Discipleship & Community Care
                 </p>
               </div>
               <div>
-                <h5 className="text-[11px] font-black uppercase text-brand-primary mb-1">
+                <h5 className="text-xl font-black uppercase text-brand-primary mb-1">
                   Education
                 </h5>
-                <p className="text-site-muted text-sm">
+                <p className="text-site-muted text-lg">
                   Bachelor of Theology (B.Th)
                 </p>
               </div>
@@ -314,12 +314,12 @@ export default function LeadershipPage() {
       </section>
 
       {/* --- DEACONS --- */}
-      <section className="max-w-6xl mx-auto px-6 py-24">
+      <section className="max-w-7xl mx-auto px-4 py-24">
         <div className="text-center mb-14">
-          <h2 className="text-brand-primary font-serif text-4xl font-bold mb-4">
+          <h2 className="text-black font-serif text-4xl font-bold mb-4">
             Our Deacons
           </h2>
-          <p className="text-site-muted max-w-2xl mx-auto">
+          <p className="text-site-muted text-lg max-w-2xl mx-auto">
             Our deacons serve faithfully behind the scenes, supporting the church family with humility, care, and dedication.
           </p>
         </div>
@@ -330,16 +330,16 @@ export default function LeadershipPage() {
               key={index}
               className="rounded-3xl border border-divider-dark bg-white overflow-hidden shadow-sm hover:shadow-brand transition-all duration-300"
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-brand-primary-muted">
+              <div className="relative aspect-3/4 overflow-hidden bg-brand-primary-muted">
                 <img
                   src={deacon.img}
                   alt={deacon.name}
-                  className="h-full w-full object-cover grayscale-[30%] transition-all duration-700 hover:scale-105 hover:grayscale-0"
+                  className="h-full w-full object-cover grayscale-30 transition-all duration-700 hover:scale-105 hover:grayscale-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-primary/80 via-transparent to-transparent opacity-60 hover:opacity-90 transition-opacity" />
-                <div className="absolute bottom-0 p-5 text-white w-full">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent-light">
-                    {deacon.role}
+                <div className="absolute inset-0 bg-linear-to-t from-brand-primary/80 via-transparent to-transparent opacity-60 hover:opacity-90 transition-opacity" />
+                <div className="absolute bottom-0 p-5 text-red-600 w-full bg-accent/10 backdrop-blur-sm">
+                  <p className="text-lg  font-bold uppercase tracking-[0.2em] text-white/90">
+                    {deacon.role} 
                   </p>
                   <h3 className="font-serif text-lg font-bold leading-tight mt-1">
                     {deacon.name}
