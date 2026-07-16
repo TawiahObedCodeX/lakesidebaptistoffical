@@ -100,7 +100,7 @@ export function HomeHero() {
                 className="mb-4 text-3xl font-black leading-[0.95]  text-white sm:text-7xl md:text-3xl lg:text-7xl uppercase "
               >
                 {slides[index].title} <br />
-                <span className="text-brand-accent not-italic drop-shadow-2xl">{slides[index].subtitle}</span>
+                <span className="text-red-600 not-italic drop-shadow-2xl">{slides[index].subtitle}</span>
               </motion.h1>
 
               {/* High-Impact Highlight */}

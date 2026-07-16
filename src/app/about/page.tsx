@@ -295,11 +295,11 @@ export default function AboutPage() {
       transition={{ duration: 0.6, delay: 0.2 }}
       className="inline-flex items-center gap-3 mb-6"
     >
-      <div className="h-px w-12 bg-brand-accent" />
-      <span className="text-brand-accent text-xl font-bold tracking-[0.25em] uppercase">
+      <div className="h-px w-12 bg-white" />
+      <span className="text-red-600 text-xl font-bold tracking-[0.25em] uppercase">
         Our Story
       </span>
-      <div className="h-px w-12 bg-brand-accent" />
+      <div className="h-px w-12 bg-white" />
     </motion.div>
 
     <motion.h1
@@ -312,7 +312,7 @@ export default function AboutPage() {
       }}
       className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] tracking-tight mb-8"
     >
-      About <span className="text-brand-accent">Us</span>
+      About <span className="text-red-600">Us</span>
     </motion.h1>
 
     <motion.p
@@ -405,9 +405,9 @@ export default function AboutPage() {
                   <span className="block h-px w-8 bg-brand-secondary" />
                   About Us
                 </span> */}
-                <h2 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-brand-accent leading-[1.1] mb-6">
+                <h2 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-red-600 leading-[1.1] mb-6">
                   Faith, hope, and love in{" "}
-                  <span className="text-brand-accent">
+                  <span className="text-red-600">
                     action every day
                   </span>
                 </h2>
@@ -449,14 +449,14 @@ export default function AboutPage() {
 
         <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
           <FadeUp className="text-center mb-14">
-            <span className="inline-flex items-center gap-2 text-brand-accent text-lg tracking-[4px] font-semibold uppercase mb-5">
-              <span className="block h-px w-8 bg-brand-accent" />
+            <span className="inline-flex items-center gap-2 text-red-700 text-lg tracking-[4px] font-semibold uppercase mb-5">
+              <span className="block h-px w-8 bg-white" />
               Our Foundation
-              <span className="block h-px w-8 bg-brand-accent" />
+              <span className="block h-px w-8 bg-white" />
             </span>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-3xl mx-auto">
               Building Faithful Community Through Love, Service,{" "}
-              <span className="text-brand-accent">
+              <span className="text-red-600">
                 Worship, and Fellowship.
               </span>
             </h2>
@@ -494,7 +494,7 @@ export default function AboutPage() {
                 <div>
                   <h3 className="text-3xl sm:text-4xl font-bold text-white leading-snug mb-6">
                     {tab.heading}
-                    <span className="text-brand-accent">{tab.accent}</span>
+                    <span className="text-red-600">{tab.accent}</span>
                   </h3>
                   <p className="text-white/90 text-xl font-medium leading-relaxed mb-5">
                     {tab.subtitle}
@@ -542,7 +542,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", delay: 0.3 }}
-                className="absolute -top-5 -right-5 w-20 h-20 rounded-2xl bg-brand-accent flex items-center justify-center text-brand-primary text-5xl font-serif shadow-xl leading-none"
+                className="absolute -top-5 -right-5 w-20 h-20 rounded-2xl bg-blue-900 flex items-center justify-center text-white text-5xl font-serif shadow-xl leading-none"
               >
                 &ldquo;
               </motion.div>
@@ -556,7 +556,7 @@ export default function AboutPage() {
                 </span>
                 <h2 className="text-4xl sm:text-5xl font-bold text-brand-primary leading-tight mb-8">
                   Your generosity makes a{" "}
-                  <span className="text-brand-accent">
+                  <span className="text-red-600">
                     profound impact
                   </span>
                 </h2>

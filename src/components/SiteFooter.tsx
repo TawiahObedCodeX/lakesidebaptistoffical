@@ -46,7 +46,7 @@ export function SiteFooter() {
     },
     {
       name: "spotify",
-      url: "https://open.spotify.com/show/4g0k1r6Z3y5J7v8F9G2H3K",
+      url: "https://open.spotify.com/show/279iMTIsuCW0bapqblSrEE?si=430234fb0941447e",
       icon: "/images/spotify.svg",
     },
   ];

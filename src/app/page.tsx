@@ -41,8 +41,8 @@ export default function HomePage() {
             <div>
              
               
-              <h2 className="text-5xl md:text-6xl leading-tight font-bold text-brand-primary mb-8">
-                Faith, hope, and love in <span className="text-brand-accent">action every day</span>
+              <h2 className="text-5xl md:text-6xl leading-tight font-bold text-red-600 mb-8">
+                Faith, hope, and love in <span className="text-red-600">action every day</span>
               </h2>
 
               <div className="space-y-6 text-site-text text-[17px] leading-relaxed">
