@@ -62,20 +62,20 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8 ">
           {mainNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`relative text-xl font-semibold tracking-wide transition-all duration-300 hover:text-brand-accent ${
-                pathname === item.href ? "text-brand-accent" : "text-white"
+              className={`relative text-xl font-semibold tracking-wide transition-all duration-300 hover:text-red-700 ${
+                pathname === item.href ? "text-red-700" : "text-white"
               }`}
             >
               {item.label}
               {pathname === item.href && (
                 <motion.div
                   layoutId="nav-underline"
-                  className="absolute -bottom-1 left-0 h-0.5 w-full bg-brand-accent"
+                  className="absolute -bottom-1 left-0 h-0.5 w-full bg-red-700"
                 />
               )}
             </Link>
@@ -87,7 +87,7 @@ export function SiteHeader() {
             onMouseEnter={() => setPagesOpen(true)}
             onMouseLeave={() => setPagesOpen(false)}
           >
-            <button className="flex items-center gap-1 text-xl font-semibold text-white hover:text-brand-accent transition-colors">
+            <button className="flex items-center gap-1 text-xl font-semibold text-white hover:text-red-700 transition-colors">
               Resources{" "}
               <HiChevronDown
                 className={`transition-transform duration-300 ${pagesOpen ? "rotate-180" : ""}`}
@@ -106,7 +106,7 @@ export function SiteHeader() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="rounded-xl px-4 py-2.5 text-lg text-center text-white/80 hover:bg-white/5 hover:text-brand-accent transition-all"
+                        className="rounded-xl px-4 py-2.5 text-lg text-center text-white/80 hover:bg-white/5 hover:text-red-700 transition-all"
                       >
                         {item.label}
                       </Link>

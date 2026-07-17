@@ -153,13 +153,13 @@ export function HomeHero() {
       </div>
 
     
-      <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-10 items-center z-20">
+      {/* <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-10 items-center z-20">
         <div className="h-24 w-px bg-linear-to-b from-transparent via-white/20 to-transparent" />
         <p className="rotate-90 text-[10px] font-bold tracking-[0.5em] text-white/20 uppercase whitespace-nowrap">
           Lakeside Baptist Church • 2026
         </p>
         <div className="h-24 w-px bg-linear-to-t from-transparent via-white/20 to-transparent" />
-      </div>
+      </div> */}
 
       {/* Scroll Indicator */}
       <motion.div 
