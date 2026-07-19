@@ -1,9 +1,11 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Fira_Sans_Condensed } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Preloader } from "@/components/Preloader";
+import { Providers } from "./providers";
 
 const fira = Fira_Sans_Condensed({
   variable: "--font-sans",
@@ -29,12 +31,29 @@ export default function RootLayout({
       <body
         className={`${fira.variable} antialiased bg-site-bg text-site-text overflow-x-hidden`}
       >
-        {/* Preloader MUST be first so it renders before SiteHeader */}
-        <Preloader />
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <Providers>
+          {/* Preloader MUST be first so it renders before SiteHeader */}
+          <Preloader />
+          {/* ✅ Only show header/footer if NOT on admin routes */}
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
+        </Providers>
       </body>
     </html>
+  );
+}
+
+// ✅ NEW COMPONENT: Conditionally show/hide header/footer
+function ConditionalLayout({ children }: { children: React.ReactNode }) {
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isAdminRoute = pathname.startsWith('/admin');
+  
+  return (
+    <>
+      {!isAdminRoute && <SiteHeader />}
+      {children}
+      {!isAdminRoute && <SiteFooter />}
+    </>
   );
 }

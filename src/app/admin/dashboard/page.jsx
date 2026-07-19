@@ -1,6 +1,4 @@
-// src/app/admin/dashboard/page.jsx
-// Admin dashboard page
-
+// src/app/admin/dashboard/page.tsx
 'use client'
 
 import { useSession } from 'next-auth/react'
@@ -43,7 +41,7 @@ export default function AdminDashboard() {
                 Welcome, {session.user?.name}
               </span>
               <button
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: '/admin/login' })}
                 className="text-sm text-red-600 hover:text-red-800"
               >
                 Logout
