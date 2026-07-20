@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion, Variants, easeOut } from "framer-motion";
 import Image from "next/image";
-import { NewsletterSubscribe } from "@/components/NewsletterSubscribe";
+// import { NewsletterSubscribe } from "@/components/NewsletterSubscribe";
 
 export function SiteFooter() {
   const containerVariants: Variants = {
@@ -136,7 +136,7 @@ export function SiteFooter() {
                             ? "/"
                             : `/${link.toLowerCase().replace(" ", "")}`
                         }
-                        className="text-white/70 hover:text-brand-accent transition-all duration-200 hover:translate-x-1 inline-block"
+                        className="text-white/70 hover:text-red-500 transition-all duration-200 hover:translate-x-1 inline-block"
                       >
                         {link}
                       </Link>
@@ -162,7 +162,7 @@ export function SiteFooter() {
                   <li key={link}>
                     <Link
                       href="#"
-                      className="text-white/70 hover:text-brand-accent transition-all duration-200 hover:translate-x-1 inline-block"
+                      className="text-white/70 hover:text-red-500 transition-all duration-200 hover:translate-x-1 inline-block"
                     >
                       {link}
                     </Link>
@@ -184,7 +184,7 @@ export function SiteFooter() {
             <div className="space-y-8">
               {/* Visit Us */}
               <div className="flex items-start gap-4">
-                <span className="text-brand-accent text-2xl mt-0.5 flex-shrink-0">✦</span>
+                <span className="text-brand-accent text-2xl mt-0.5 shrink-0">✦</span>
                 <div>
                   <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Visit Us
@@ -197,7 +197,7 @@ export function SiteFooter() {
 
               {/* Contact */}
               <div className="flex items-start gap-4">
-                <span className="text-brand-accent text-2xl mt-0.5 flex-shrink-0">✦</span>
+                <span className="text-brand-accent text-2xl mt-0.5 shrink-0">✦</span>
                 <div>
                   <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Contact
@@ -218,7 +218,7 @@ export function SiteFooter() {
               </div>
 
               {/* Newsletter */}
-              <div className="pt-6 border-t border-white/10">
+              {/* <div className="pt-6 border-t border-white/10">
                 <h4 className="text-white text-lg font-bold mb-3 tracking-wider uppercase">
                   Newsletter
                 </h4>
@@ -226,7 +226,7 @@ export function SiteFooter() {
                   Get weekly updates and announcements delivered to your inbox.
                 </p>
                 <NewsletterSubscribe variant="inline" />
-              </div>
+              </div> */}
             </div>
           </motion.div>
         </div>

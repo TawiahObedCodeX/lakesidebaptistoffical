@@ -72,12 +72,12 @@ const deacons = [
     focus: "Supports the deacon board with administration, communications, and care coordination.",
     img: "/images/dncamuh.jpg",
   },
-  {
-    name: "Deacon Kwadwo Anim",
-    role: "Christian Education",
-    focus: "Designing and delivering educational curricula, training instructors, and coordinating study programs to deepen the congregation's spiritual growth and doctrinal understanding.",
-    img: "/images/team-5.jpg",
-  },
+  // {
+  //   name: "Deacon Kwadwo Anim",
+  //   role: "Christian Education",
+  //   focus: "Designing and delivering educational curricula, training instructors, and coordinating study programs to deepen the congregation's spiritual growth and doctrinal understanding.",
+  //   img: "/images/team-5.jpg",
+  // },
   {
     name: "Deacon Kwame Ntim Gyakari",
     role: "Finance Committee",
@@ -96,12 +96,12 @@ const deacons = [
     focus: "Overseeing the church's small-group pastoral care network by organizing members into designated FOLD's tracking their spiritual and physical well-being, and ensuring effective communication between group leaders and pastoral staff.",
     img: "/images/dcnalbert.jpg",
   },
-  {
-    name: "Deacon Williams Andrews",
-    role: "Nominating Committee",
-    focus: "Identifying, vetting, and recommending qualified candidates to fill open leadership roles and committee vacancies within the organization.",
-    img: "/images/Paula.jpg",
-  },
+  // {
+  //   name: "Deacon Williams Andrews",
+  //   role: "Nominating Committee",
+  //   focus: "Identifying, vetting, and recommending qualified candidates to fill open leadership roles and committee vacancies within the organization.",
+  //   img: "/images/Paula.jpg",
+  // },
   // {
   //   name: "Deacon Kingsly Asante",
   //   img: "/images/choir.jpg",

@@ -109,7 +109,7 @@ export function DonationForm() {
               type="button"
               onClick={() => setPurpose(p.value)}
               className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 border text-sm ${purpose === p.value
-                ? "bg-brand-primary border-brand-primary text-white shadow-lg"
+                ? "bg-black border-brand-primary text-white shadow-lg"
                 : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
                 }`}
             >
@@ -143,7 +143,7 @@ export function DonationForm() {
                 setCustomAmount("");
               }}
               className={`py-4 rounded-xl font-medium transition-all duration-300 border ${!customAmount && selectedPreset === amt
-                ? "bg-brand-primary border-brand-primary text-white shadow-lg scale-[1.02]"
+                ? "bg-black border-brand-primary text-white shadow-lg scale-[1.02]"
                 : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
                 }`}
             >
@@ -208,7 +208,7 @@ export function DonationForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-5 rounded-xl bg-brand-secondary hover:bg-brand-secondary-dark active:scale-[0.99] transition-all font-bold text-white shadow-xl shadow-brand-secondary/20 flex items-center justify-center gap-3 disabled:opacity-50"
+          className="w-full py-5 rounded-xl bg-black hover:bg-blue-700 active:scale-[0.99] transition-all font-bold text-white shadow-xl shadow-brand-secondary/20 flex items-center justify-center gap-3 disabled:opacity-50"
         >
           {loading ? (
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />

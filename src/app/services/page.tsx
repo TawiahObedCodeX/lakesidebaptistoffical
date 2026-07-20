@@ -235,9 +235,9 @@ export default function ServicesPage() {
       {/* 4. Ministries Grid */}
       <section className="py-24 max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="text-brand-secondary font-bold tracking-widest uppercase text-sm mb-4">What we offer</h2>
+          {/* <h2 className="text-brand-secondary font-bold tracking-widest uppercase text-sm mb-4">What we offer</h2> */}
           <h3 className="text-4xl font-serif font-bold text-brand-primary">Our Ministries</h3>
-          <div className="w-24 h-1 bg-brand-accent mx-auto mt-6 rounded-full" />
+          <div className="w-24 h-1 bg-blue-900 mx-auto mt-6 rounded-full" />
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -256,7 +256,7 @@ export default function ServicesPage() {
               <p className="text-site-muted text-[15px] leading-relaxed grow">{m.desc}</p>
               <Link
                 href="/ministries"
-                className="mt-8 text-brand-accent font-bold text-xs uppercase tracking-widest hover:text-brand-primary inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                className="mt-8 text-black font-bold text-xs uppercase tracking-widest hover:text-blue-700 inline-flex items-center gap-2 group-hover:gap-3 transition-all"
               >
                 Learn More <span className="text-lg">→</span>
               </Link>

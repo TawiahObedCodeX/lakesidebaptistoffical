@@ -100,7 +100,7 @@ export default function BlogPage() {
           <div className="absolute inset-0 bg-blue-900" />
         </div>
         <div className="relative z-10 px-6">
-          <h1 className="text-4xl md:text-6xl font-bold font-serif text-red-600 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold font-serif text-white leading-tight">
             Inspiring Stories & Sermons
           </h1>
           <p className="mt-4 text-white/80 max-w-2xl mx-auto text-xl">

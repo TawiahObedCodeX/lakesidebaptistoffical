@@ -16,7 +16,7 @@ const pagesDropdownItems = [
   { href: "/updates", label: "Updates" },
   // { href: "/sermons", label: "Sermons" },
   { href: "/ministries", label: "Ministries" },
-  { href: "/pastor", label: "Pastor" },
+  { href: "/leaders", label: "Leaders" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
 ];
@@ -41,7 +41,7 @@ export function SiteHeader() {
           : "py-6 bg-transparent"
       }`}
     >
-      <div className="mx-auto px-5   flex items-center justify-between">
+      <div className="mx-auto px-5 lg:px-9   flex items-center justify-between">
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-3 group relative z-110">
           <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-white/10 p-1 backdrop-blur-md transition-transform group-hover:scale-110">
