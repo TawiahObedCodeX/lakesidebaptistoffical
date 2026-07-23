@@ -1,31 +1,19 @@
-/**
- * app/(routes)/donation/donation-form.tsx
- * ──────────────────────────────────────────────────────────────
- * The donation form. Collects amount, purpose, name, email and
- * sends directly to POST /api/payments/initialize (which proxies
- * to the Church Backend API).
- *
- * On success, redirects the user to Paystack's hosted checkout.
- * No more two-step flow (initiate → payment page). No Supabase.
- * No Paystack secret keys in the frontend.
- * ──────────────────────────────────────────────────────────────
- */
-
+// app/(routes)/donation/donation-form.tsx
 "use client";
 import { useMemo, useState } from "react";
-import { Alert } from "@/components/ui/Alert";
+import { motion } from "framer-motion";
+import { FaCheckCircle } from "react-icons/fa";
 
-const PRESETS = [100, 200, 300, 400, 500, 600] as const;
-
+const PRESETS = [100, 200, 300, 500, 1000, 2000] as const;
 const PURPOSES = [
   { value: "TITHE", label: "Tithe" },
   { value: "OFFERING", label: "Offering" },
-  { value: "GIVE", label: "Give" },
-  { value: "EVENT_TICKET", label: "Event Ticket" },
+  { value: "GIVE", label: "General Giving" },
+  { value: "EVENT_TICKET", label: "Event / Project" },
 ] as const;
 
 export function DonationForm() {
-  const [selectedPreset, setSelectedPreset] = useState<number>(PRESETS[0]);
+  const [selectedPreset, setSelectedPreset] = useState<number>(PRESETS[3]);
   const [customAmount, setCustomAmount] = useState("");
   const [purpose, setPurpose] = useState<string>("GIVE");
   const [loading, setLoading] = useState(false);
@@ -37,6 +25,7 @@ export function DonationForm() {
   }, [customAmount, selectedPreset]);
 
   async function onSubmit(formData: FormData) {
+    // ... (same logic as before)
     setLoading(true);
     setError(null);
 
@@ -46,23 +35,18 @@ export function DonationForm() {
     const note = String(formData.get("note") ?? "").trim();
 
     if (!firstName || !lastName || !email) {
+      setError("Please provide your full name and email.");
       setLoading(false);
-      setError("Please provide your full name and email address.");
       return;
     }
-
     if (resolvedAmount < 10) {
+      setError("Minimum amount is GH₵10.");
       setLoading(false);
-      setError("Minimum donation amount is GH₵10.");
       return;
     }
 
     try {
       const giverName = `${firstName} ${lastName}`.trim();
-
-      // Single API call → the proxy forwards to the backend,
-      // backend creates the Payment record + calls Paystack,
-      // returns the authorization URL
       const res = await fetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,154 +56,100 @@ export function DonationForm() {
           giverName,
           giverEmail: email,
           currency: "GHS",
-          metadata: {
-            note: note || undefined,
-            source: "donation_page",
-          },
+          metadata: { note: note || undefined, source: "donation_page" },
         }),
       });
 
       const data = await res.json();
+      if (!data.ok || !data.authorization_url) throw new Error(data.error || "Payment failed");
 
-      if (!data.ok || !data.authorization_url) {
-        throw new Error(data.error || "Failed to initialize payment");
-      }
-
-      // Redirect to Paystack's hosted checkout page
       window.location.href = data.authorization_url;
     } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again.");
+      setError(err.message || "Something went wrong.");
+    } finally {
       setLoading(false);
     }
   }
 
   return (
-    <form action={onSubmit} className="space-y-10">
-      {error && <Alert kind="error">{error}</Alert>}
+    <form action={onSubmit} className="space-y-12">
+      {error && <div className="bg-red-50 text-red-700 p-5 rounded-2xl border border-red-100">{error}</div>}
 
-      {/* ── Purpose ────────────────────────────────────────── */}
-      <div className="space-y-3">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60 border-b border-brand-primary/10 pb-4">
-          Giving Purpose
-        </h3>
-        <div className="grid grid-cols-2 gap-3">
+      {/* Purpose */}
+      <div>
+        <h3 className="uppercase tracking-widest text-sm font-semibold text-slate-500 mb-6">Purpose</h3>
+        <div className="grid grid-cols-2 gap-4">
           {PURPOSES.map((p) => (
-            <button
+            <motion.button
               key={p.value}
               type="button"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setPurpose(p.value)}
-              className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 border text-sm ${purpose === p.value
-                ? "bg-black border-brand-primary text-white shadow-lg"
-                : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
-                }`}
+              className={`py-6 rounded-2xl font-medium border transition-all ${
+                purpose === p.value ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 hover:bg-slate-50"
+              }`}
             >
               {p.label}
-            </button>
+            </motion.button>
           ))}
         </div>
       </div>
 
-      {/* ── Amount ─────────────────────────────────────────── */}
-      <div className="space-y-6">
-        <div className="flex items-baseline justify-between border-b border-brand-primary/10 pb-4">
-          <h2 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60">
-            Select Amount
-          </h2>
-          <div className="flex items-baseline gap-1">
-            <span className="text-xs font-bold text-brand-secondary">GH₵</span>
-            <span className="text-5xl font-light text-brand-primary tracking-tighter">
-              {resolvedAmount.toLocaleString()}
-            </span>
-          </div>
+      {/* Amount & Donor Info - same structure as before but cleaner */}
+      <div>
+        <h3 className="uppercase tracking-widest text-sm font-semibold text-slate-500 mb-6">Amount (GH₵)</h3>
+        <div className="flex justify-between items-end mb-8">
+          <span className="text-7xl font-light tracking-tighter text-slate-900">{resolvedAmount}</span>
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-4 mb-8">
           {PRESETS.map((amt) => (
-            <button
+            <motion.button
               key={amt}
               type="button"
-              onClick={() => {
-                setSelectedPreset(amt);
-                setCustomAmount("");
-              }}
-              className={`py-4 rounded-xl font-medium transition-all duration-300 border ${!customAmount && selectedPreset === amt
-                ? "bg-black border-brand-primary text-white shadow-lg scale-[1.02]"
-                : "bg-white border-neutral-200 text-brand-primary hover:border-brand-accent hover:bg-neutral-50"
-                }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => { setSelectedPreset(amt); setCustomAmount(""); }}
+              className={`py-7 rounded-2xl font-semibold transition-all ${
+                !customAmount && selectedPreset === amt ? "bg-blue-600 text-white" : "border border-slate-200 hover:border-blue-300"
+              }`}
             >
-              GH₵{amt}
-            </button>
+              {amt}
+            </motion.button>
           ))}
         </div>
 
-        <div className="group relative">
-          <input
-            type="number"
-            inputMode="decimal"
-            value={customAmount}
-            onChange={(e) => setCustomAmount(e.target.value)}
-            placeholder="Other Amount"
-            className="w-full bg-white px-6 py-5 text-lg font-medium rounded-xl border border-neutral-200 focus:border-brand-accent focus:ring-0 outline-none transition-all placeholder:text-neutral-300"
-          />
-          <div className="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-bold text-brand-accent tracking-widest uppercase pointer-events-none opacity-0 group-focus-within:opacity-100 transition-opacity">
-            Custom
-          </div>
-        </div>
-      </div>
-
-      {/* ── Donor Details ──────────────────────────────────── */}
-      <div className="space-y-6">
-        <h3 className="text-sm font-bold uppercase tracking-widest text-brand-primary/60 border-b border-brand-primary/10 pb-4">
-          Donor Details
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            name="firstName"
-            type="text"
-            required
-            placeholder="First Name"
-            className="w-full px-5 py-4 rounded-xl border border-neutral-200 bg-white/50 focus:bg-white focus:border-brand-accent outline-none transition-all"
-          />
-          <input
-            name="lastName"
-            type="text"
-            required
-            placeholder="Last Name"
-            className="w-full px-5 py-4 rounded-xl border border-neutral-200 bg-white/50 focus:bg-white focus:border-brand-accent outline-none transition-all"
-          />
-        </div>
         <input
-          name="email"
-          type="email"
-          required
-          placeholder="Email Address"
-          className="w-full px-5 py-4 rounded-xl border border-neutral-200 bg-white/50 focus:bg-white focus:border-brand-accent outline-none transition-all"
-        />
-        <textarea
-          name="note"
-          rows={2}
-          placeholder="Note or Dedication (Optional)"
-          className="w-full px-5 py-4 rounded-xl border border-neutral-200 bg-white/50 focus:bg-white focus:border-brand-accent resize-none outline-none transition-all"
+          type="number"
+          value={customAmount}
+          onChange={(e) => setCustomAmount(e.target.value)}
+          placeholder="Custom amount"
+          className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-8 py-7 text-2xl outline-none"
         />
       </div>
 
-      {/* ── Submit ─────────────────────────────────────────── */}
-      <div className="space-y-4">
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-5 rounded-xl bg-black hover:bg-blue-700 active:scale-[0.99] transition-all font-bold text-white shadow-xl shadow-brand-secondary/20 flex items-center justify-center gap-3 disabled:opacity-50"
-        >
-          {loading ? (
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-          ) : (
-            "Complete Secure Transaction"
-          )}
-        </button>
-        <p className="text-center text-[10px] uppercase tracking-[0.2em] text-neutral-400">
-          Encrypted Secure Checkout • GH₵ Currency
-        </p>
+      {/* Donor Details */}
+      <div className="space-y-6">
+        <h3 className="uppercase tracking-widest text-sm font-semibold text-slate-500">Your Information</h3>
+        <div className="grid md:grid-cols-2 gap-5">
+          <input name="firstName" type="text" required placeholder="First Name" className="border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" />
+          <input name="lastName" type="text" required placeholder="Last Name" className="border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" />
+        </div>
+        <input name="email" type="email" required placeholder="Email Address" className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" />
+        <textarea name="note" rows={3} placeholder="Note or prayer request (optional)" className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none resize-y" />
       </div>
+
+      <motion.button
+        type="submit"
+        disabled={loading}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.985 }}
+        className="w-full py-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl font-semibold text-2xl shadow-xl disabled:opacity-70 flex items-center justify-center gap-3"
+      >
+        {loading ? "Processing..." : `Donate GH₵${resolvedAmount} Now`}
+        {!loading && <FaCheckCircle />}
+      </motion.button>
     </form>
   );
 }
