@@ -71,10 +71,10 @@ export function ThankYouContent() {
   }
 
   return (
-    <main className="min-h-dvh bg-[#0F172A] relative overflow-hidden flex items-center justify-center p-6">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-primary/20 blur-[120px] rounded-full pointer-events-none" />
+    <main className="min-h-dvh bg-neutral-900 relative overflow-hidden flex items-center justify-center p-6">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-brand-primary/20 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="relative z-10 max-w-[480px] w-full">
+      <div className="relative z-10 max-w-120 w-full">
         <div className="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden text-center">
           <div
             className={`h-2 w-full ${

@@ -12,7 +12,7 @@ export default function ThankYouPage() {
 function LoadingFallback() {
   return (
     // Matches the dark "Professional" background of the main page
-    <main className="min-h-dvh bg-[#0F172A] flex items-center justify-center">
+    <main className="min-h-dvh bg-neutral-900 flex items-center justify-center">
       <div className="text-center space-y-6">
         <div className="relative mx-auto h-12 w-12">
           <div className="absolute inset-0 rounded-full border-2 border-brand-accent/20"></div>

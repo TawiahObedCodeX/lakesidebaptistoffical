@@ -145,7 +145,7 @@ export function DonationForm() {
         disabled={loading}
         whileHover={{ scale: 1.01 }}
         whileTap={{ scale: 0.985 }}
-        className="w-full py-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl font-semibold text-2xl shadow-xl disabled:opacity-70 flex items-center justify-center gap-3"
+        className="w-full py-8 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-3xl font-semibold text-2xl shadow-xl disabled:opacity-70 flex items-center justify-center gap-3"
       >
         {loading ? "Processing..." : `Donate GH₵${resolvedAmount} Now`}
         {!loading && <FaCheckCircle />}
