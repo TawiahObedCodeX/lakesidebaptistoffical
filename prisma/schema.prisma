@@ -1,0 +1,59 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Donation/Payment tracking table
+model Donation {
+  id              String   @id @default(uuid())
+  amount          Decimal  @db.Decimal(10, 2)
+  currency        String   @default("GHS")
+  purpose         String   @default("GIVE")
+  status          String   @default("PENDING")
+  giverName       String
+  giverEmail      String
+  giverPhone      String?
+  reference       String   @unique
+  accessCode      String?
+  note            String?
+  metadata        Json?
+  isAnonymous     Boolean  @default(false)
+  isVerified      Boolean  @default(false)
+  verifiedAt      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([giverEmail])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// Contact messages table
+model ContactMessage {
+  id              String    @id @default(uuid())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String?
+  message         String    @db.Text
+  category        String    @default("GENERAL")
+  status          String    @default("UNREAD")
+  isResolved      Boolean   @default(false)
+  resolvedAt      DateTime?
+  resolvedBy      String?
+  adminNotes      String?   @db.Text
+  repliedAt       DateTime?
+  replyMessage    String?   @db.Text
+  metadata        Json?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}

@@ -87,7 +87,7 @@ export function DonationForm() {
               whileTap={{ scale: 0.98 }}
               onClick={() => setPurpose(p.value)}
               className={`py-6 rounded-2xl font-medium border transition-all ${
-                purpose === p.value ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 hover:bg-slate-50"
+                purpose === p.value ? "bg-blue-600 text-white border-blue-600" : "border-slate-200 hover:bg-black"
               }`}
             >
               {p.label}
