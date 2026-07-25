@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { HomeHero } from "@/components/HomeHero";
 
 export default function HomePage() {
@@ -9,8 +10,6 @@ export default function HomePage() {
     <>
       {/* === CATCHY HERO CAROUSEL === */}
       <HomeHero />
-
-
 
       {/* About Us Section - Enhanced */}
       <section id="home-about" className="scroll-mt-28 py-24 bg-white">
@@ -22,56 +21,52 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl"
+                  className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl"
                 >
-                  <img src="/images/lem.jpg" alt="Church community" className="w-full h-full object-cover" />
+                  <Image 
+                    src="/images/lem.jpg" 
+                    alt="Church community gathering" 
+                    width={600}
+                    height={450}
+                    className="w-full h-full object-cover" 
+                  />
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.15 }}
-                  className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl mt-12"
+                  className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl mt-12"
                 >
-                  <img src="/images/use.jpg" alt="Worship moment" className="w-full h-full object-cover" />
+                  <Image 
+                    src="/images/use.jpg" 
+                    alt="Worship moment at church" 
+                    width={600}
+                    height={450}
+                    className="w-full h-full object-cover" 
+                  />
                 </motion.div>
               </div>
             </div>
 
             <div>
-             
-              
               <h2 className="text-5xl md:text-6xl leading-tight font-bold text-red-600 mb-8">
                 Faith, hope, and love in <span className="text-red-600">action every day</span>
               </h2>
 
               <div className="space-y-6 text-site-text text-[17px] leading-relaxed">
-                <p>We are a vibrant community of believers dedicated to worship, fellowship, and service. Our mission is to share God&apos;s love, grow in faith, and make a positive impact in the world through compassionate outreach and meaningful connections.</p>
-                <p>Our church is a welcoming place where everyone can find support, inspiration, and a sense of belonging. Together, we strive to live out our faith and make a difference.</p>
+                <p>
+                  We are a vibrant community of believers dedicated to worship, 
+                  fellowship, and service. Our mission is to share God&apos;s love, 
+                  grow in faith, and make a positive impact in the world through 
+                  compassionate outreach and meaningful connections.
+                </p>
+                <p>
+                  Our church is a welcoming place where everyone can find support, 
+                  inspiration, and a sense of belonging. Together, we strive to 
+                  live out our faith and make a difference.
+                </p>
               </div>
-
-              {/* <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
-                {[
-                  "Share God’s Love",
-                  "Foster Spiritual Growth",
-                  "Serve Our Community",
-                  "Build Strong Relationships"
-                ].map((text, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="flex gap-5"
-                  >
-                    <div className="mt-1 w-9 h-9 rounded-2xl bg-brand-accent-muted flex items-center justify-center shrink-0">
-                      <span className="text-brand-accent text-xl">✦</span>
-                    </div>
-                    <h4 className="font-semibold text-xl text-brand-primary">{text}</h4>
-                  </motion.div>
-                ))}
-              </div> */}
 
               <Link
                 href="/about"
@@ -83,10 +78,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Rest of your sections (Join Worship, Mission, Services, etc.) remain as before or follow the same enhanced pattern with more spacing, better shadows, and motion. */}
-
-      {/* You can continue adding the other sections from previous responses with the same quality level. */}
     </>
   );
 }

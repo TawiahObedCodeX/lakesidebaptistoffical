@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion, Variants, easeOut } from "framer-motion";
 import Image from "next/image";
-// import { NewsletterSubscribe } from "@/components/NewsletterSubscribe";
 
 export function SiteFooter() {
   const containerVariants: Variants = {
@@ -65,14 +64,12 @@ export function SiteFooter() {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-24">
           {/* 1. Brand Identity */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-5 space-y-6"
-          >
+          <motion.div variants={itemVariants} className="lg:col-span-5 space-y-6">
             <Link href="/" className="flex items-center gap-3">
+              {/* Fixed: Added proper width and height to Image */}
               <Image
                 src="/images/church_logo_blue-removebg-preview (1).png"
-                alt="Lakeside Baptist Church"
+                alt="Lakeside Baptist Church Logo"
                 width={80}
                 height={56}
                 className="h-14 w-auto brightness-0 invert"
@@ -104,11 +101,12 @@ export function SiteFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-11 h-11 flex items-center justify-center rounded-2xl bg-white/5 hover:bg-white/10 text-white transition-all duration-300 hover:scale-110 active:scale-95"
-                    aria-label={social.name}
+                    aria-label={`Follow us on ${social.name}`}
                   >
+                    {/* Fixed: Added proper width and height */}
                     <Image
                       src={social.icon}
-                      alt={social.name}
+                      alt={`${social.name} icon`}
                       width={28}
                       height={28}
                       className="h-7 w-7"
@@ -141,7 +139,7 @@ export function SiteFooter() {
                         {link}
                       </Link>
                     </li>
-                  ),
+                  )
                 )}
               </ul>
             </motion.div>
@@ -152,31 +150,24 @@ export function SiteFooter() {
                 Resources
               </h3>
               <ul className="space-y-3 text-base">
-                {[
-                  "Sermons",
-                  "Giving",
-                  "Prayer Request",
-                  "Media",
-                  "Contact",
-                ].map((link) => (
-                  <li key={link}>
-                    <Link
-                      href="#"
-                      className="text-white/70 hover:text-red-500 transition-all duration-200 hover:translate-x-1 inline-block"
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                ))}
+                {["Sermons", "Giving", "Prayer Request", "Media", "Contact"].map(
+                  (link) => (
+                    <li key={link}>
+                      <Link
+                        href="#"
+                        className="text-white/70 hover:text-red-500 transition-all duration-200 hover:translate-x-1 inline-block"
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  )
+                )}
               </ul>
             </motion.div>
           </div>
 
           {/* 3. Contact & Newsletter */}
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-4 space-y-8"
-          >
+          <motion.div variants={itemVariants} className="lg:col-span-4 space-y-8">
             <h3 className="text-white text-lg font-bold tracking-wider uppercase">
               Connect With Us
             </h3>
@@ -216,17 +207,6 @@ export function SiteFooter() {
                   </a>
                 </div>
               </div>
-
-              {/* Newsletter */}
-              {/* <div className="pt-6 border-t border-white/10">
-                <h4 className="text-white text-lg font-bold mb-3 tracking-wider uppercase">
-                  Newsletter
-                </h4>
-                <p className="text-white/60 text-sm mb-4">
-                  Get weekly updates and announcements delivered to your inbox.
-                </p>
-                <NewsletterSubscribe variant="inline" />
-              </div> */}
             </div>
           </motion.div>
         </div>
@@ -252,7 +232,7 @@ export function SiteFooter() {
                 >
                   {item}
                 </a>
-              ),
+              )
             )}
           </div>
         </motion.div>

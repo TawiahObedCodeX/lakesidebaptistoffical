@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenuAlt3, HiX, HiChevronDown } from "react-icons/hi";
+import Image from "next/image";
 
 const mainNavItems = [
   { href: "/", label: "Home" },
@@ -14,7 +15,6 @@ const mainNavItems = [
 
 const pagesDropdownItems = [
   { href: "/updates", label: "Updates" },
-  // { href: "/sermons", label: "Sermons" },
   { href: "/ministries", label: "Ministries" },
   { href: "/leaders", label: "Leaders" },
   { href: "/gallery", label: "Gallery" },
@@ -29,25 +29,33 @@ export function SiteHeader() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-100 transition-all duration-500 ${
         scrolled
-          ? "py-3 bg-blue-900  border-b border-white/10 shadow-2xl"
+          ? "py-3 bg-blue-900 border-b border-white/10 shadow-2xl"
           : "py-6 bg-transparent"
       }`}
     >
-      <div className="mx-auto px-5 lg:px-9   flex items-center justify-between">
+      <div className="mx-auto px-5 lg:px-9 flex items-center justify-between">
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-3 group relative z-110">
           <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-white/10 p-1 backdrop-blur-md transition-transform group-hover:scale-110">
-            <img
+            {/* Fixed: Added proper width and height */}
+            <Image
               src="/images/church_logo_blue-removebg-preview (1).png"
-              alt="Logo"
+              alt="Lakeside Baptist Church Logo"
+              width={48}
+              height={48}
               className="h-full w-full object-contain"
             />
           </div>
@@ -62,7 +70,7 @@ export function SiteHeader() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8 ">
+        <nav className="hidden lg:flex items-center gap-8">
           {mainNavItems.map((item) => (
             <Link
               key={item.href}
@@ -87,7 +95,11 @@ export function SiteHeader() {
             onMouseEnter={() => setPagesOpen(true)}
             onMouseLeave={() => setPagesOpen(false)}
           >
-            <button className="flex items-center gap-1 text-xl font-semibold text-white hover:text-red-700 transition-colors">
+            <button 
+              className="flex items-center gap-1 text-xl font-semibold text-white hover:text-red-700 transition-colors"
+              aria-expanded={pagesOpen}
+              aria-haspopup="true"
+            >
               Resources{" "}
               <HiChevronDown
                 className={`transition-transform duration-300 ${pagesOpen ? "rotate-180" : ""}`}
@@ -135,6 +147,7 @@ export function SiteHeader() {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="lg:hidden relative z-110 p-2 text-white"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
         >
           {mobileOpen ? <HiX size={32} /> : <HiMenuAlt3 size={32} />}
         </button>
@@ -148,7 +161,7 @@ export function SiteHeader() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-100 flex flex-col  bg-blue-900 opacity-80 p-8 lg:hidden"
+            className="fixed inset-0 z-100 flex flex-col bg-blue-900/95 p-8 lg:hidden"
           >
             <div className="mt-20 flex flex-col items-center gap-6">
               {[...mainNavItems, ...pagesDropdownItems].map((item, i) => (
@@ -161,12 +174,21 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="text-2xl font-bold text-white active:text-brand-accent"
+                    className="text-2xl font-bold text-white active:text-brand-accent hover:text-red-500 transition-colors"
                   >
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
+              
+              {/* Mobile Donation Button */}
+              <Link
+                href="/donation"
+                onClick={() => setMobileOpen(false)}
+                className="mt-4 rounded-full bg-white px-8 py-3 text-lg font-bold text-black hover:bg-red-600 hover:text-white transition-all"
+              >
+                GIVE ONLINE
+              </Link>
             </div>
           </motion.div>
         )}

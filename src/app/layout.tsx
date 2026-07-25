@@ -26,9 +26,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-x-hidden">
+    // Added suppressHydrationWarning to prevent hydration errors from browser extensions
+    // Browser extensions like ColorZilla add attributes (cz-shortcut-listen) that cause mismatches
+    <html lang="en" className="overflow-x-hidden" suppressHydrationWarning>
       <body
         className={`${fira.variable} antialiased bg-site-bg text-site-text overflow-x-hidden`}
+        suppressHydrationWarning
       >
         <Preloader />
         <SiteHeader />

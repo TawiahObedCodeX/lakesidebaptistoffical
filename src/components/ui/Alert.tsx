@@ -42,8 +42,9 @@ export function Alert({ kind = "error", children, className = "" }: Props) {
         animate-in fade-in slide-in-from-top-1 duration-300
         ${className}
       `}
+      role="alert"
     >
-      <span className={`text-xl shrink-0 mt-px ${current.iconColor}`}>
+      <span className={`text-xl shrink-0 mt-px ${current.iconColor}`} aria-hidden="true">
         {current.icon}
       </span>
       <div className="flex-1 pt-px">{children}</div>
