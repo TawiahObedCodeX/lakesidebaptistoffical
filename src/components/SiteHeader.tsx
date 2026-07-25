@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenuAlt3, HiX, HiChevronDown } from "react-icons/hi";
 import Image from "next/image";
@@ -27,16 +27,58 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [pagesOpen, setPagesOpen] = useState(false);
 
+  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    
+    // Use passive event listener for better performance
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    // Clean up the event listener when component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Empty dependency array - only runs on mount/unmount
+
+  // Close mobile menu when route changes
+  // Using useCallback to create a stable function reference
+  const closeMobileMenu = useCallback(() => {
+    setMobileOpen(false);
   }, []);
 
-  // Close mobile menu on route change
+  // Handle pathname change to close mobile menu
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
+    closeMobileMenu();
+  }, [pathname, closeMobileMenu]);
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && mobileOpen) {
+        closeMobileMenu();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [mobileOpen, closeMobileMenu]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
 
   return (
     <header
@@ -50,13 +92,13 @@ export function SiteHeader() {
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-3 group relative z-110">
           <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-white/10 p-1 backdrop-blur-md transition-transform group-hover:scale-110">
-            {/* Fixed: Added proper width and height */}
             <Image
               src="/images/church_logo_blue-removebg-preview (1).png"
               alt="Lakeside Baptist Church Logo"
               width={48}
               height={48}
               className="h-full w-full object-contain"
+              priority
             />
           </div>
           <div className="flex flex-col">
@@ -95,7 +137,7 @@ export function SiteHeader() {
             onMouseEnter={() => setPagesOpen(true)}
             onMouseLeave={() => setPagesOpen(false)}
           >
-            <button 
+            <button
               className="flex items-center gap-1 text-xl font-semibold text-white hover:text-red-700 transition-colors"
               aria-expanded={pagesOpen}
               aria-haspopup="true"
@@ -173,18 +215,18 @@ export function SiteHeader() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={closeMobileMenu}
                     className="text-2xl font-bold text-white active:text-brand-accent hover:text-red-500 transition-colors"
                   >
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
-              
+
               {/* Mobile Donation Button */}
               <Link
                 href="/donation"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobileMenu}
                 className="mt-4 rounded-full bg-white px-8 py-3 text-lg font-bold text-black hover:bg-red-600 hover:text-white transition-all"
               >
                 GIVE ONLINE

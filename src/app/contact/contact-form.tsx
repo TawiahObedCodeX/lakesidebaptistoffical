@@ -1,4 +1,4 @@
-// components/contact-form.tsx
+// components/contact-form.tsx (Alternative version with state-based floating labels)
 "use client";
 
 import { useState } from "react";
@@ -24,76 +24,57 @@ export function ContactForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  // This function runs when the form is submitted
+  // ===== SAME onSubmit FUNCTION AS ABOVE =====
   async function onSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
     setSuccess(false);
 
-    // Get all the form values and clean them up
     const firstName = String(formData.get("firstName") ?? "").trim();
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const phone = String(formData.get("phone") ?? "").trim();
     const message = String(formData.get("message") ?? "").trim();
 
-    // ===== CLIENT-SIDE VALIDATION =====
-    // This validates the form BEFORE sending to the server
-    // It gives users immediate feedback without waiting for server response
-    
-    // Validate first name
     if (!firstName || firstName.length < 2) {
       setError("First name is required and must be at least 2 characters.");
       setLoading(false);
       return;
     }
     
-    // Validate last name
     if (!lastName || lastName.length < 2) {
       setError("Last name is required and must be at least 2 characters.");
       setLoading(false);
       return;
     }
     
-    // Validate email format
     if (!email || !email.includes('@') || !email.includes('.')) {
       setError("Please enter a valid email address.");
       setLoading(false);
       return;
     }
     
-    // Validate message length (minimum 10 characters)
-    // This matches the server validation requirement
     if (!message || message.length < 10) {
       setError("Your message must be at least 10 characters long. Please provide more details so we can assist you better.");
       setLoading(false);
       return;
     }
 
-    // Send the message to our backend API
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          firstName, 
-          lastName, 
-          email, 
-          phone: phone || null, // Send null instead of empty string
-          message 
-        }),
+        body: JSON.stringify({ firstName, lastName, email, phone: phone || null, message }),
       });
 
       const data = await res.json().catch(() => null);
       
-      // Check if the submission was successful
       if (!res.ok || !data?.ok) {
         setError(data?.error || "Failed to send message. Please try again.");
         setLoading(false);
         return;
       }
 
-      // Success! Show the success message
       setSuccess(true);
       setLoading(false);
     } catch (err) {
@@ -102,33 +83,21 @@ export function ContactForm() {
     }
   }
 
-  // If the form was submitted successfully, show a thank you message
   if (success) {
     return (
       <div className="text-center py-12">
-        <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6">
-          ✓
-        </div>
-        <h4 className="text-2xl font-semibold text-slate-900 mb-3">
-          Message Sent Successfully!
-        </h4>
-        <p className="text-slate-600 mb-8">
-          Thank you for reaching out. Our team will respond to your message within 24 hours.
-        </p>
-        <button
-          onClick={() => setSuccess(false)}
-          className="px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 transition"
-        >
+        <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6">✓</div>
+        <h4 className="text-2xl font-semibold text-slate-900 mb-3">Message Sent Successfully!</h4>
+        <p className="text-slate-600 mb-8">Thank you for reaching out. Our team will respond to your message within 24 hours.</p>
+        <button onClick={() => setSuccess(false)} className="px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 transition">
           Send Another Message
         </button>
       </div>
     );
   }
 
-  // The actual contact form
   return (
     <form action={onSubmit} className="space-y-6" noValidate>
-      {/* Show error message if validation fails */}
       {error && (
         <Alert kind="error">
           <div className="flex items-start gap-3">
@@ -141,20 +110,15 @@ export function ContactForm() {
         </Alert>
       )}
 
-      {/* Name fields */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <FloatField name="firstName" label="First Name *" required />
         <FloatField name="lastName" label="Last Name *" required />
       </div>
 
-      {/* Contact fields */}
       <FloatField name="email" label="Email Address *" type="email" required />
       <FloatField name="phone" label="Phone Number (optional)" type="tel" />
-
-      {/* Message field */}
       <FloatArea name="message" label="Your Message (min. 10 characters) *" required rows={5} />
 
-      {/* Submit button */}
       <button
         type="submit"
         disabled={loading}
@@ -162,7 +126,6 @@ export function ContactForm() {
       >
         {loading ? (
           <>
-            {/* Loading spinner */}
             <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -178,17 +141,31 @@ export function ContactForm() {
 }
 
 // Reusable floating label input component
+// Uses JavaScript state to track if input has value
 function FloatField({ name, label, type = "text", required }: FloatFieldProps) {
+  const [hasValue, setHasValue] = useState(false);
+
   return (
     <div className="relative">
       <input
         name={name}
+        id={name}
         type={type}
         required={required}
         placeholder=" "
-        className="peer w-full px-5 pt-6 pb-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-amber-500 focus:ring-amber-200 outline-none transition"
+        onChange={(e) => setHasValue(e.target.value.length > 0)}
+        className="peer w-full px-5 pt-6 pb-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200"
       />
-      <label className="absolute left-5 top-5 text-slate-500 peer-placeholder-shown:top-5 peer-focus:top-2 peer-focus:text-xs peer-focus:text-amber-600 transition-all pointer-events-none">
+      <label 
+        htmlFor={name}
+        className={`absolute left-5 transition-all duration-200 pointer-events-none
+          ${hasValue 
+            ? 'top-1.5 text-xs text-amber-600 font-medium' 
+            : 'top-5 text-base text-slate-500'
+          }
+          peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-amber-600 peer-focus:font-medium
+        `}
+      >
         {label}
       </label>
     </div>
@@ -196,17 +173,31 @@ function FloatField({ name, label, type = "text", required }: FloatFieldProps) {
 }
 
 // Reusable floating label textarea component
+// Uses JavaScript state to track if textarea has value
 function FloatArea({ name, label, required, rows = 5 }: FloatAreaProps) {
+  const [hasValue, setHasValue] = useState(false);
+
   return (
     <div className="relative">
       <textarea
         name={name}
+        id={name}
         required={required}
         rows={rows}
         placeholder=" "
-        className="peer w-full px-5 pt-6 pb-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-amber-500 focus:ring-amber-200 outline-none transition resize-none"
+        onChange={(e) => setHasValue(e.target.value.length > 0)}
+        className="peer w-full px-5 pt-6 pb-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 resize-none"
       />
-      <label className="absolute left-5 top-5 text-slate-500 peer-placeholder-shown:top-5 peer-focus:top-2 peer-focus:text-xs peer-focus:text-amber-600 transition-all pointer-events-none">
+      <label 
+        htmlFor={name}
+        className={`absolute left-5 transition-all duration-200 pointer-events-none
+          ${hasValue 
+            ? 'top-1.5 text-xs text-amber-600 font-medium' 
+            : 'top-5 text-base text-slate-500'
+          }
+          peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-amber-600 peer-focus:font-medium
+        `}
+      >
         {label}
       </label>
     </div>
