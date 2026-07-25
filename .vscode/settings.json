@@ -58,6 +58,7 @@
         "SUPABASE",
         "Tema",
         "Tsibu",
+        "ussd",
         "yendork"
     ],
     "liveServer.settings.port": 5501

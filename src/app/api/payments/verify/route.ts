@@ -8,31 +8,37 @@ import { verifyPayment } from '@/lib/paystack'
 
 export async function POST(request: Request) {
   try {
-    // Get the reference from the request
-    // This reference was given to the frontend when payment was initialized
+    // Get the reference number from the frontend
+    // This reference was created when the payment was initialized
+    // It's like a claim ticket - it helps us find the specific transaction
     const { reference } = await request.json()
     
+    // Make sure a reference number was provided
+    // Without it, we can't find the payment to verify
     if (!reference) {
       return NextResponse.json(
         { ok: false, error: 'Payment reference is required' },
-        { status: 400 }
+        { status: 400 } // Bad Request
       )
     }
     
-    // Verify the payment with Paystack
-    // This is the most important security step
-    // Never trust client-side verification alone
+    // Ask Paystack to confirm if the payment was successful
+    // This is the most important security step - we never trust client-side verification
+    // Think of it like a bank confirming a check is valid before accepting it
     const verification = await verifyPayment(reference)
     
-    // Check if Paystack confirms the payment
-    if (!verification.data.status === 'success') {
-      // Update our database to reflect the failed payment
+    // Check if Paystack says the payment was successful
+    // We compare the status to 'success' (not checking if it's NOT success)
+    // Fixed: Using !== instead of !verification.data.status === 'success'
+    if (verification.data.status !== 'success') {
+      // Payment failed or was cancelled
+      // Update our database to show this donation didn't go through
       await prisma.donation.update({
         where: { reference: reference },
         data: { 
           status: 'FAILED',
           metadata: {
-            verification_response: verification
+            verification_response: verification // Store Paystack's response for records
           }
         }
       })
@@ -43,38 +49,43 @@ export async function POST(request: Request) {
       })
     }
     
-    // Payment is verified! Update our database
+    // Payment is verified and successful!
+    // Update our database to mark this donation as completed
     const donation = await prisma.donation.update({
       where: { reference: reference },
       data: {
-        status: 'SUCCESSFUL',
-        isVerified: true,
-        verifiedAt: new Date(),
-        // Store the complete verification response for record-keeping
+        status: 'SUCCESSFUL',        // Payment went through
+        isVerified: true,            // We've confirmed it's real
+        verifiedAt: new Date(),      // When we verified it
+        // Store the complete verification response for future reference
         metadata: {
-          verification_response: verification
+          verification_response: verification // Paystack's confirmation data
         }
       }
     })
     
-    // Here you could:
-    // 1. Send email receipt to donor
-    // 2. Update church financial records
-    // 3. Send notification to admin
-    // 4. Log the transaction for accounting
+    // At this point, you could also:
+    // 1. Send an email receipt to the donor (proof of their donation)
+    // 2. Update the church's financial records (for accounting)
+    // 3. Send a notification to the church admin (someone donated!)
+    // 4. Log the transaction for tax purposes (required in many countries)
     
     return NextResponse.json({
       ok: true,
       message: 'Payment verified successfully',
       data: {
-        amount: donation.amount,
-        purpose: donation.purpose,
-        reference: donation.reference
+        amount: donation.amount,       // How much was donated
+        purpose: donation.purpose,     // What the donation was for
+        reference: donation.reference  // The tracking number
       }
     })
     
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Log the error for developers to debug
     console.error('Payment verification error:', error)
+    
+    // Return a general error message
+    // We don't share specific errors to keep the system secure
     return NextResponse.json(
       { ok: false, error: 'Failed to verify payment' },
       { status: 500 }
