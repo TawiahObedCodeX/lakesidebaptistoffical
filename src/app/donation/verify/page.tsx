@@ -5,19 +5,29 @@ import { useEffect, useState, Suspense, useCallback, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaCheckCircle, FaDownload, FaHome, FaChurch } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaDownload,
+  FaHome,
+  FaChurch,
+  FaEnvelope,
+  FaPhone,
+  FaReceipt,
+  FaUser,
+  FaCalendarAlt,
+  FaHashtag,
+} from "react-icons/fa";
 
 // Types for the receipt data
 interface ReceiptData {
-  amount: number | string  // Accept both number and string from API
-  purpose: string
-  reference: string
-  donorName: string
-  donorEmail: string
-  date: string
+  amount: number | string;
+  purpose: string;
+  reference: string;
+  donorName: string;
+  donorEmail: string;
+  date: string;
 }
 
-// Main component wrapped in Suspense for useSearchParams
 export default function VerifyPaymentPage() {
   return (
     <Suspense fallback={<LoadingState />}>
@@ -26,36 +36,33 @@ export default function VerifyPaymentPage() {
   );
 }
 
-// Loading state shown while the page is loading
 function LoadingState() {
   return (
-    <main className="min-h-screen bg-linear-to-b from-blue-900 to-slate-900 flex items-center justify-center">
+    <main className="min-h-screen bg-gradient-to-b from-blue-900 to-slate-900 flex items-center justify-center px-4">
       <div className="text-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-6"></div>
-        <p className="text-white text-xl">Verifying your payment...</p>
+        <div className="animate-spin rounded-full h-12 w-12 sm:h-14 sm:w-14 border-b-2 border-white mx-auto mb-5"></div>
+        <p className="text-white text-base sm:text-lg tracking-wide">
+          Verifying your payment...
+        </p>
       </div>
     </main>
   );
 }
 
-// The actual verification and receipt display
 function VerifyPaymentContent() {
   const searchParams = useSearchParams();
   const reference = searchParams.get("reference") || searchParams.get("trxref");
-  
+
   const [receipt, setReceipt] = useState<ReceiptData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Use a ref to track if verification has been done
+
   const hasVerified = useRef(false);
 
-  // Define the verification function
   const verifyPayment = useCallback(async (ref: string) => {
-    // Prevent double verification
     if (hasVerified.current) return;
     hasVerified.current = true;
-    
+
     try {
       const res = await fetch("/api/payments/verify", {
         method: "POST",
@@ -69,16 +76,20 @@ function VerifyPaymentContent() {
         setReceipt(data.data);
         setLoading(false);
       } else {
-        setError(data.error || "Payment verification failed. Please contact the church office.");
+        setError(
+          data.error ||
+            "Payment verification failed. Please contact the church office."
+        );
         setLoading(false);
       }
-    } catch (err) {
-      setError("Unable to verify payment. Please contact the church office for confirmation.");
+    } catch {
+      setError(
+        "Unable to verify payment. Please contact the church office for confirmation."
+      );
       setLoading(false);
     }
   }, []);
 
-  // Start verification when the component mounts
   useEffect(() => {
     if (reference) {
       verifyPayment(reference);
@@ -88,221 +99,269 @@ function VerifyPaymentContent() {
     }
   }, [reference, verifyPayment]);
 
-  // Function to print the receipt
   function printReceipt() {
     window.print();
   }
 
-  // Helper function to safely format amount to 2 decimal places
   function formatAmount(amount: number | string): string {
     return Number(amount).toFixed(2);
   }
 
-  // Loading state
   if (loading) {
     return <LoadingState />;
   }
 
-  // Error state
+  // ───────────────────── ERROR STATE ─────────────────────
   if (error) {
     return (
-      <main className="min-h-screen bg-linear-to-b from-blue-900 to-slate-900 flex items-center justify-center px-6">
+      <main className="min-h-screen bg-gradient-to-b from-blue-900 to-slate-900 flex items-center justify-center px-4 py-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-lg w-full bg-white rounded-3xl p-10 text-center shadow-2xl"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-full max-w-sm sm:max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
         >
-          <div className="text-6xl mb-6">😔</div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-4">Verification Failed</h1>
-          <p className="text-slate-600 mb-8">{error}</p>
-          <div className="space-y-4">
-            <Link
-              href="/donation"
-              className="block w-full py-4 bg-blue-600 text-white rounded-2xl font-semibold hover:bg-blue-700 transition"
-            >
-              Try Again
-            </Link>
-            <Link
-              href="/contact"
-              className="block w-full py-4 bg-slate-100 text-slate-700 rounded-2xl font-semibold hover:bg-slate-200 transition"
-            >
-              Contact Church Office
-            </Link>
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 text-center">
+            <p className="text-white/90 text-xs sm:text-sm font-medium tracking-wide uppercase">
+              Payment Status
+            </p>
+          </div>
+          <div className="px-6 sm:px-8 py-8 sm:py-10 text-center">
+            <div className="text-4xl sm:text-5xl mb-4">😔</div>
+            <h1 className="text-lg sm:text-xl font-bold text-slate-900 mb-3">
+              Verification Failed
+            </h1>
+            <p className="text-slate-600 text-sm leading-relaxed mb-7">
+              {error}
+            </p>
+            <div className="space-y-3">
+              <Link
+                href="/donation"
+                className="block w-full py-3 sm:py-3.5 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition"
+              >
+                Try Again
+              </Link>
+              <Link
+                href="/contact"
+                className="block w-full py-3 sm:py-3.5 bg-slate-100 text-slate-700 rounded-xl font-semibold text-sm hover:bg-slate-200 transition"
+              >
+                Contact Church Office
+              </Link>
+            </div>
           </div>
         </motion.div>
       </main>
     );
   }
 
-  // Success state - Show receipt
+  // ───────────────────── SUCCESS STATE ─────────────────────
   if (receipt) {
     const purposeLabels: Record<string, string> = {
-      TITHE: 'Tithe',
-      OFFERING: 'Offering',
-      GIVE: 'General Giving',
-      EVENT_TICKET: 'Event / Project'
+      TITHE: "Tithe",
+      OFFERING: "Offering",
+      GIVE: "General Giving",
+      EVENT_TICKET: "Event / Project",
     };
 
     const receiptDate = new Date(receipt.date);
-    const formattedDate = receiptDate.toLocaleDateString('en-GH', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    const formattedDate = receiptDate.toLocaleDateString("en-GH", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
-    const formattedTime = receiptDate.toLocaleTimeString('en-GH', {
-      hour: '2-digit',
-      minute: '2-digit'
+    const formattedTime = receiptDate.toLocaleTimeString("en-GH", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
 
     return (
-      <main className="min-h-screen bg-linear-to-b from-blue-900 to-slate-900 py-12 px-6">
-        <div className="max-w-2xl mx-auto">
-          {/* Success Header */}
+      <main className="min-h-screen bg-gradient-to-b from-blue-900 to-slate-900 flex items-center justify-center px-3 sm:px-4 py-6 sm:py-10">
+        <div className="w-full max-w-[380px] sm:max-w-md mx-auto">
+          {/* Top success badge */}
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-8"
+            transition={{ duration: 0.4 }}
+            className="text-center mb-5 sm:mb-6"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-              className="inline-flex items-center justify-center w-24 h-24 bg-green-500 rounded-full mb-6 shadow-lg"
-            >
-              <FaCheckCircle className="text-white text-5xl" />
-            </motion.div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Thank You! 🎉
+            <div className="inline-flex items-center gap-2 bg-green-500/15 border border-green-400/30 text-green-300 text-xs sm:text-sm font-medium px-3.5 py-1.5 rounded-full mb-3">
+              <FaCheckCircle className="text-green-400 text-[11px]" />
+              Payment Verified
+            </div>
+            <h1 className="text-xl sm:text-2xl font-bold text-white">
+              Thank You
             </h1>
-            <p className="text-xl text-blue-200">
-              Your donation has been received and verified
+            <p className="text-blue-200 text-xs sm:text-sm mt-1">
+              Your donation has been received
             </p>
           </motion.div>
 
-          {/* Receipt Card */}
+          {/* ───── PROFESSIONAL RECEIPT CARD ───── */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+            transition={{ delay: 0.12, duration: 0.45 }}
+            className="bg-white rounded-2xl shadow-2xl overflow-hidden"
           >
-            {/* Receipt Header */}
-            <div className="bg-linear-to-r from-blue-600 to-indigo-600 p-8 text-white text-center">
-              <FaChurch className="text-3xl mx-auto mb-3" />
-              <h2 className="text-xl font-semibold">Lakeside Baptist Church</h2>
-              <p className="text-blue-200 text-sm mt-1">Official Donation Receipt</p>
-              <div className="mt-6">
-                {/* FIXED: Use formatAmount helper function */}
-                <p className="text-5xl font-bold">GH₵{formatAmount(receipt.amount)}</p>
-                <p className="text-blue-200 mt-2">{purposeLabels[receipt.purpose] || receipt.purpose}</p>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 sm:px-6 py-4 sm:py-5 text-center relative">
+              <div className="absolute top-2.5 right-3 text-[9px] sm:text-[10px] font-semibold tracking-widest text-blue-200/90 uppercase">
+                Official Receipt
+              </div>
+
+              <div className="flex justify-center mb-2">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/15 flex items-center justify-center">
+                  <FaChurch className="text-white text-lg sm:text-xl" />
+                </div>
+              </div>
+
+              <h2 className="text-sm sm:text-base font-semibold text-white tracking-wide">
+                Lakeside Baptist Church
+              </h2>
+              <p className="text-blue-200 text-[11px] sm:text-xs mt-0.5">
+                Donation Confirmation
+              </p>
+            </div>
+
+            {/* Amount band */}
+            <div className="bg-slate-50 border-b border-slate-100 px-5 sm:px-6 py-4 sm:py-5 text-center">
+              <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider mb-1">
+                Amount Received
+              </p>
+              <p className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                GH₵{formatAmount(receipt.amount)}
+              </p>
+              <p className="text-sm font-medium text-blue-600 mt-1">
+                {purposeLabels[receipt.purpose] || receipt.purpose}
+              </p>
+            </div>
+
+            {/* Details section */}
+            <div className="px-5 sm:px-6 py-4 sm:py-5 space-y-3.5">
+              {/* Receipt No */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2 text-slate-500 shrink-0">
+                  <FaHashtag className="text-[11px] text-slate-400" />
+                  <span className="text-xs sm:text-sm">Receipt No.</span>
+                </div>
+                <span className="font-mono text-[11px] sm:text-xs font-semibold text-slate-800 text-right break-all leading-snug">
+                  {receipt.reference}
+                </span>
+              </div>
+
+              {/* Donor */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2 text-slate-500 shrink-0">
+                  <FaUser className="text-[11px] text-slate-400" />
+                  <span className="text-xs sm:text-sm">Donor</span>
+                </div>
+                <span className="text-xs sm:text-sm font-medium text-slate-800 text-right">
+                  {receipt.donorName}
+                </span>
+              </div>
+
+              {/* Email */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2 text-slate-500 shrink-0">
+                  <FaEnvelope className="text-[11px] text-slate-400" />
+                  <span className="text-xs sm:text-sm">Email</span>
+                </div>
+                <span className="text-[11px] sm:text-xs text-slate-700 text-right break-all leading-snug">
+                  {receipt.donorEmail}
+                </span>
+              </div>
+
+              {/* Date */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2 text-slate-500 shrink-0">
+                  <FaCalendarAlt className="text-[11px] text-slate-400" />
+                  <span className="text-xs sm:text-sm">Date</span>
+                </div>
+                <span className="text-[11px] sm:text-xs text-slate-700 text-right leading-snug">
+                  {formattedDate}
+                  <br className="sm:hidden" />
+                  <span className="hidden sm:inline"> · </span>
+                  {formattedTime}
+                </span>
+              </div>
+
+              {/* Status */}
+              <div className="flex items-center justify-between gap-3 pt-1">
+                <div className="flex items-center gap-2 text-slate-500">
+                  <FaReceipt className="text-[11px] text-slate-400" />
+                  <span className="text-xs sm:text-sm">Status</span>
+                </div>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-green-50 text-green-700 rounded-full text-[11px] font-semibold border border-green-100">
+                  <FaCheckCircle className="text-[9px]" />
+                  Verified
+                </span>
               </div>
             </div>
 
-            {/* Receipt Details */}
-            <div className="p-8">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-600">Receipt Number</span>
-                  <span className="font-mono text-sm font-semibold text-slate-900">{receipt.reference}</span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-600">Donor Name</span>
-                  <span className="font-semibold text-slate-900">{receipt.donorName}</span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-600">Email</span>
-                  <span className="text-slate-900">{receipt.donorEmail}</span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-600">Amount</span>
-                  {/* FIXED: Use formatAmount helper function */}
-                  <span className="font-semibold text-slate-900">GH₵{formatAmount(receipt.amount)}</span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-600">Purpose</span>
-                  <span className="font-semibold text-slate-900">
-                    {purposeLabels[receipt.purpose] || receipt.purpose}
-                  </span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3 border-b border-slate-100">
-                  <span className="text-slate-600">Date</span>
-                  <span className="text-slate-900">{formattedDate} at {formattedTime}</span>
-                </div>
-                
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-slate-600">Status</span>
-                  <span className="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
-                    <FaCheckCircle className="text-xs" />
-                    Verified
-                  </span>
-                </div>
-              </div>
+            {/* Bible verse */}
+            <div className="mx-4 sm:mx-5 mb-4 sm:mb-5 px-3.5 sm:px-4 py-3 bg-amber-50 border border-amber-100 rounded-xl text-center">
+              <p className="text-amber-800/90 text-[11px] sm:text-xs italic leading-relaxed">
+                “Each of you should give what you have decided in your heart to
+                give, not reluctantly or under compulsion, for God loves a
+                cheerful giver.”
+              </p>
+              <p className="text-amber-600 text-[10px] sm:text-[11px] font-semibold mt-1.5">
+                — 2 Corinthians 9:7
+              </p>
+            </div>
 
-              {/* Bible Verse */}
-              <div className="mt-8 p-6 bg-amber-50 rounded-2xl text-center border border-amber-200">
-                <p className="text-amber-800 italic leading-relaxed">
-                  &ldquo;Each of you should give what you have decided in your heart to give, 
-                  not reluctantly or under compulsion, for God loves a cheerful giver.&rdquo;
-                </p>
-                <p className="text-amber-600 font-semibold mt-3">&mdash; 2 Corinthians 9:7</p>
-              </div>
+            {/* Action buttons */}
+            <div className="px-4 sm:px-5 pb-5 grid grid-cols-2 gap-2.5 sm:gap-3">
+              <button
+                onClick={printReceipt}
+                className="flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs sm:text-sm font-semibold transition active:scale-[0.98]"
+              >
+                <FaDownload className="text-[11px]" />
+                Print
+              </button>
+              <Link
+                href="/"
+                className="flex items-center justify-center gap-2 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs sm:text-sm font-semibold transition active:scale-[0.98]"
+              >
+                <FaHome className="text-[11px]" />
+                Home
+              </Link>
+            </div>
 
-              {/* Action Buttons */}
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                <button
-                  onClick={printReceipt}
-                  className="flex items-center justify-center gap-2 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl font-semibold transition"
-                >
-                  <FaDownload />
-                  Print Receipt
-                </button>
-                <Link
-                  href="/"
-                  className="flex items-center justify-center gap-2 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold transition"
-                >
-                  <FaHome />
-                  Go Home
-                </Link>
-              </div>
-
-              {/* Contact Info */}
-              <div className="mt-6 text-center text-sm text-slate-500">
-                <p>If you have any questions about your donation, please contact us:</p>
-                <p className="mt-1">
-                  📧 lakesidebaptistchurch1@gmail.com | 📞 +233 24 838 3745
-                </p>
+            {/* Contact footer */}
+            <div className="border-t border-slate-100 px-4 sm:px-5 py-3.5 bg-slate-50/90">
+              <div className="flex flex-col xs:flex-row items-center justify-center gap-x-4 gap-y-1.5 text-[10px] sm:text-[11px] text-slate-500">
+                <span className="inline-flex items-center gap-1.5">
+                  <FaEnvelope className="text-[9px] text-slate-400" />
+                  lakesidebaptistchurch1@gmail.com
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <FaPhone className="text-[9px] text-slate-400" />
+                  +233 24 838 3745
+                </span>
               </div>
             </div>
           </motion.div>
 
-          {/* Additional Links */}
+          {/* Secondary links */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="mt-8 text-center"
+            transition={{ delay: 0.5 }}
+            className="mt-5 sm:mt-6 flex justify-center gap-5 sm:gap-6 text-xs sm:text-sm"
           >
-            <div className="flex justify-center gap-6">
-              <Link
-                href="/services"
-                className="text-blue-200 hover:text-white transition"
-              >
-                Join Us for Service
-              </Link>
-              <Link
-                href="/contact"
-                className="text-blue-200 hover:text-white transition"
-              >
-                Contact Us
-              </Link>
-            </div>
+            <Link
+              href="/services"
+              className="text-blue-200/90 hover:text-white transition"
+            >
+              Join Us for Service
+            </Link>
+            <Link
+              href="/contact"
+              className="text-blue-200/90 hover:text-white transition"
+            >
+              Contact Us
+            </Link>
           </motion.div>
         </div>
       </main>
