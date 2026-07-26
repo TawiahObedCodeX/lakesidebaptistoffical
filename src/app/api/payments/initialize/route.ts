@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     // Format: CHURCH-TIMESTAMP-RANDOMSTRING
     // This reference works like a receipt number - it's unique and helps track the payment
     // Example: CHURCH-1620000000-a1b2c3d4
-    const reference = `CHURCH-${Date.now()}-${uuidv4().slice(0, 8)}`
+   const reference = `LBC-${uuidv4().replace(/-/g, '').slice(0, 16).toUpperCase()}`
     
     // Save the donation record to our database BEFORE sending to Paystack
     // This creates a paper trail - we record every donation attempt, even if it fails

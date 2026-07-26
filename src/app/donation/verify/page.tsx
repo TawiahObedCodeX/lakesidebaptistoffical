@@ -9,7 +9,7 @@ import { FaCheckCircle, FaDownload, FaHome, FaChurch } from "react-icons/fa";
 
 // Types for the receipt data
 interface ReceiptData {
-  amount: number
+  amount: number | string  // Accept both number and string from API
   purpose: string
   reference: string
   donorName: string
@@ -48,11 +48,9 @@ function VerifyPaymentContent() {
   const [error, setError] = useState<string | null>(null);
   
   // Use a ref to track if verification has been done
-  // This prevents double verification in development mode
   const hasVerified = useRef(false);
 
   // Define the verification function
-  // This sends the payment reference to our API for verification
   const verifyPayment = useCallback(async (ref: string) => {
     // Prevent double verification
     if (hasVerified.current) return;
@@ -81,21 +79,23 @@ function VerifyPaymentContent() {
   }, []);
 
   // Start verification when the component mounts
-  // We use useEffect to trigger the verification when we have a reference
   useEffect(() => {
     if (reference) {
-      // Start verification asynchronously without calling setState directly
       verifyPayment(reference);
     } else {
       setError("No payment reference found. Please try your donation again.");
       setLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reference]);
+  }, [reference, verifyPayment]);
 
   // Function to print the receipt
   function printReceipt() {
     window.print();
+  }
+
+  // Helper function to safely format amount to 2 decimal places
+  function formatAmount(amount: number | string): string {
+    return Number(amount).toFixed(2);
   }
 
   // Loading state
@@ -194,7 +194,8 @@ function VerifyPaymentContent() {
               <h2 className="text-xl font-semibold">Lakeside Baptist Church</h2>
               <p className="text-blue-200 text-sm mt-1">Official Donation Receipt</p>
               <div className="mt-6">
-                <p className="text-5xl font-bold">GH₵{receipt.amount.toFixed(2)}</p>
+                {/* FIXED: Use formatAmount helper function */}
+                <p className="text-5xl font-bold">GH₵{formatAmount(receipt.amount)}</p>
                 <p className="text-blue-200 mt-2">{purposeLabels[receipt.purpose] || receipt.purpose}</p>
               </div>
             </div>
@@ -219,7 +220,8 @@ function VerifyPaymentContent() {
                 
                 <div className="flex justify-between items-center py-3 border-b border-slate-100">
                   <span className="text-slate-600">Amount</span>
-                  <span className="font-semibold text-slate-900">GH₵{receipt.amount.toFixed(2)}</span>
+                  {/* FIXED: Use formatAmount helper function */}
+                  <span className="font-semibold text-slate-900">GH₵{formatAmount(receipt.amount)}</span>
                 </div>
                 
                 <div className="flex justify-between items-center py-3 border-b border-slate-100">
@@ -274,7 +276,7 @@ function VerifyPaymentContent() {
               <div className="mt-6 text-center text-sm text-slate-500">
                 <p>If you have any questions about your donation, please contact us:</p>
                 <p className="mt-1">
-                  📧 info@lakesidebaptistgh.org | 📞 +233 24 123 4567
+                  📧 lakesidebaptistchurch1@gmail.com | 📞 +233 24 838 3745
                 </p>
               </div>
             </div>

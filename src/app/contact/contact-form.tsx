@@ -1,22 +1,21 @@
-// components/contact-form.tsx (Alternative version with state-based floating labels)
+// src/app/contact/contact-form.tsx
 "use client";
 
 import { useState } from "react";
-import { Alert } from "@/components/ui/Alert";
 
-// Define proper types for our component props
-interface FloatFieldProps {
-  name: string
-  label: string
-  type?: string
-  required?: boolean
-}
+// Simple inline Alert component (no external dependency needed)
+function Alert({ children, kind = "error" }: { children: React.ReactNode; kind?: "error" | "success" | "info" }) {
+  const colors = {
+    error: "bg-red-50 border-red-200 text-red-800",
+    success: "bg-green-50 border-green-200 text-green-800",
+    info: "bg-amber-50 border-amber-200 text-amber-800",
+  };
 
-interface FloatAreaProps {
-  name: string
-  label: string
-  required?: boolean
-  rows?: number
+  return (
+    <div className={`${colors[kind]} rounded-2xl border px-5 py-4 text-sm`}>
+      {children}
+    </div>
+  );
 }
 
 export function ContactForm() {
@@ -24,101 +23,192 @@ export function ContactForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  // ===== SAME onSubmit FUNCTION AS ABOVE =====
   async function onSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
     setSuccess(false);
 
+    // Get all form values
     const firstName = String(formData.get("firstName") ?? "").trim();
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
     const phone = String(formData.get("phone") ?? "").trim();
     const message = String(formData.get("message") ?? "").trim();
 
+    // Validate first name
     if (!firstName || firstName.length < 2) {
-      setError("First name is required and must be at least 2 characters.");
+      setError("Please enter your first name (at least 2 characters).");
       setLoading(false);
       return;
     }
-    
+
+    // Validate last name
     if (!lastName || lastName.length < 2) {
-      setError("Last name is required and must be at least 2 characters.");
+      setError("Please enter your last name (at least 2 characters).");
       setLoading(false);
       return;
     }
-    
-    if (!email || !email.includes('@') || !email.includes('.')) {
+
+    // Validate email
+    if (!email || !email.includes("@") || !email.includes(".")) {
       setError("Please enter a valid email address.");
       setLoading(false);
       return;
     }
-    
+
+    // Validate message - minimum 10 characters
     if (!message || message.length < 10) {
-      setError("Your message must be at least 10 characters long. Please provide more details so we can assist you better.");
+      const needed = 10 - (message?.length || 0);
+      setError(
+        `Please enter a message with at least 10 characters. You need ${needed} more character${needed > 1 ? "s" : ""}.`
+      );
       setLoading(false);
       return;
     }
 
+    // Send to server
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, email, phone: phone || null, message }),
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          phone: phone || null,
+          message,
+        }),
       });
 
       const data = await res.json().catch(() => null);
-      
+
       if (!res.ok || !data?.ok) {
         setError(data?.error || "Failed to send message. Please try again.");
         setLoading(false);
         return;
       }
 
+      // Success!
       setSuccess(true);
       setLoading(false);
     } catch (err) {
-      setError("Unable to connect to the server. Please check your internet connection and try again.");
+      setError("Unable to connect to the server. Please check your internet connection.");
       setLoading(false);
     }
   }
 
+  // Success view
   if (success) {
     return (
       <div className="text-center py-12">
-        <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6">✓</div>
-        <h4 className="text-2xl font-semibold text-slate-900 mb-3">Message Sent Successfully!</h4>
-        <p className="text-slate-600 mb-8">Thank you for reaching out. Our team will respond to your message within 24 hours.</p>
-        <button onClick={() => setSuccess(false)} className="px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 transition">
+        <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-4xl mb-6">
+          ✓
+        </div>
+        <h4 className="text-2xl font-semibold text-slate-900 mb-3">
+          Message Sent Successfully!
+        </h4>
+        <p className="text-slate-600 mb-8">
+          Thank you for reaching out. We will respond within 24 hours.
+        </p>
+        <button
+          onClick={() => setSuccess(false)}
+          className="px-8 py-3 bg-slate-900 text-white rounded-full font-medium hover:bg-slate-800 transition"
+        >
           Send Another Message
         </button>
       </div>
     );
   }
 
+  // Contact form
   return (
     <form action={onSubmit} className="space-y-6" noValidate>
+      {/* Error display */}
       {error && (
         <Alert kind="error">
           <div className="flex items-start gap-3">
-            <span className="text-xl flex-shrink-0">⚠️</span>
-            <div>
-              <p className="font-semibold mb-1">Please check the following:</p>
-              <p className="text-sm opacity-90">{error}</p>
-            </div>
+            <span className="text-lg flex-shrink-0">⚠️</span>
+            <p className="text-sm">{error}</p>
           </div>
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <FloatField name="firstName" label="First Name *" required />
-        <FloatField name="lastName" label="Last Name *" required />
+      {/* First Name */}
+      <div>
+        <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-1.5">
+          First Name <span className="text-red-500">*</span>
+        </label>
+        <input
+          id="firstName"
+          name="firstName"
+          type="text"
+          required
+          placeholder="Enter your first name"
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+        />
       </div>
 
-      <FloatField name="email" label="Email Address *" type="email" required />
-      <FloatField name="phone" label="Phone Number (optional)" type="tel" />
-      <FloatArea name="message" label="Your Message (min. 10 characters) *" required rows={5} />
+      {/* Last Name */}
+      <div>
+        <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-1.5">
+          Last Name <span className="text-red-500">*</span>
+        </label>
+        <input
+          id="lastName"
+          name="lastName"
+          type="text"
+          required
+          placeholder="Enter your last name"
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+        />
+      </div>
 
+      {/* Email */}
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
+          Email Address <span className="text-red-500">*</span>
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          placeholder="your@email.com"
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+        />
+      </div>
+
+      {/* Phone (optional) */}
+      <div>
+        <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1.5">
+          Phone Number <span className="text-slate-400">(optional)</span>
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          placeholder="+233 24 123 4567"
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+        />
+      </div>
+
+      {/* Message */}
+      <div>
+        <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1.5">
+          Your Message <span className="text-red-500">*</span>
+          <span className="text-slate-400 text-xs ml-2">(minimum 10 characters)</span>
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows={5}
+          placeholder="Tell us how we can help you... (at least 10 characters)"
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition resize-none"
+        />
+      </div>
+
+      {/* Submit */}
       <button
         type="submit"
         disabled={loading}
@@ -127,79 +217,15 @@ export function ContactForm() {
         {loading ? (
           <>
             <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
             Sending Message...
           </>
         ) : (
-          <>Send Message →</>
+          "Send Message →"
         )}
       </button>
     </form>
-  );
-}
-
-// Reusable floating label input component
-// Uses JavaScript state to track if input has value
-function FloatField({ name, label, type = "text", required }: FloatFieldProps) {
-  const [hasValue, setHasValue] = useState(false);
-
-  return (
-    <div className="relative">
-      <input
-        name={name}
-        id={name}
-        type={type}
-        required={required}
-        placeholder=" "
-        onChange={(e) => setHasValue(e.target.value.length > 0)}
-        className="peer w-full px-5 pt-6 pb-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200"
-      />
-      <label 
-        htmlFor={name}
-        className={`absolute left-5 transition-all duration-200 pointer-events-none
-          ${hasValue 
-            ? 'top-1.5 text-xs text-amber-600 font-medium' 
-            : 'top-5 text-base text-slate-500'
-          }
-          peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-amber-600 peer-focus:font-medium
-        `}
-      >
-        {label}
-      </label>
-    </div>
-  );
-}
-
-// Reusable floating label textarea component
-// Uses JavaScript state to track if textarea has value
-function FloatArea({ name, label, required, rows = 5 }: FloatAreaProps) {
-  const [hasValue, setHasValue] = useState(false);
-
-  return (
-    <div className="relative">
-      <textarea
-        name={name}
-        id={name}
-        required={required}
-        rows={rows}
-        placeholder=" "
-        onChange={(e) => setHasValue(e.target.value.length > 0)}
-        className="peer w-full px-5 pt-6 pb-3 bg-slate-50 border border-slate-200 rounded-2xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all duration-200 resize-none"
-      />
-      <label 
-        htmlFor={name}
-        className={`absolute left-5 transition-all duration-200 pointer-events-none
-          ${hasValue 
-            ? 'top-1.5 text-xs text-amber-600 font-medium' 
-            : 'top-5 text-base text-slate-500'
-          }
-          peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-amber-600 peer-focus:font-medium
-        `}
-      >
-        {label}
-      </label>
-    </div>
   );
 }

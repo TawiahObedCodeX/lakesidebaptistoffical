@@ -61,6 +61,7 @@
         "trxref",
         "Tsibu",
         "ussd",
+        "uuidv",
         "yendork"
     ],
     "liveServer.settings.port": 5501
