@@ -1,8 +1,10 @@
 // src/app/api/payments/verify/route.ts
+// UPDATED: Now supports both direct Paystack verification and OTP-verified payments
+// This endpoint is called from the verify page to confirm payment status
+
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { verifyPayment } from '@/lib/paystack'
-import { sendDonationReceipt } from '@/lib/email' // Import email function
 
 export async function POST(request: Request) {
   try {
@@ -36,40 +38,32 @@ export async function POST(request: Request) {
       })
     }
     
-    // Payment is verified! Update our database
-    const donation = await prisma.donation.update({
-      where: { reference: reference },
-      data: {
-        status: 'SUCCESSFUL',
-        isVerified: true,
-        verifiedAt: new Date(),
-        metadata: {
-          verification_response: JSON.parse(JSON.stringify(verification))
-        }
-      }
+    // Get the donation record
+    const donation = await prisma.donation.findUnique({
+      where: { reference: reference }
     })
     
-    // Send donation receipt email to the donor
-    // This gives them a record of their generous gift
-    await sendDonationReceipt({
-      donorName: donation.giverName,
-      donorEmail: donation.giverEmail,
-      amount: Number(donation.amount),
-      currency: donation.currency,
-      purpose: donation.purpose,
-      reference: donation.reference,
-      date: new Date()
-    })
+    if (!donation) {
+      return NextResponse.json(
+        { ok: false, error: 'Donation record not found' },
+        { status: 404 }
+      )
+    }
     
+    // Return the donation status
+    // The frontend will use this to determine if OTP is still needed
     return NextResponse.json({
       ok: true,
-      message: 'Payment verified successfully',
+      message: 'Payment status retrieved successfully',
       data: {
         amount: donation.amount,
         purpose: donation.purpose,
         reference: donation.reference,
         donorName: donation.giverName,
         donorEmail: donation.giverEmail,
+        donorPhone: donation.giverPhone,
+        status: donation.status,
+        isVerified: donation.isVerified,
         date: donation.verifiedAt
       }
     })

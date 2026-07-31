@@ -2,13 +2,14 @@
 // This endpoint receives automatic notifications from Paystack
 // It's called by Paystack's servers, not by the donor's browser
 // This is the most reliable way to confirm payments
+// UPDATED: Now triggers OTP flow after successful payment
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import crypto from 'crypto'
+import { sendOtpToUser } from '@/lib/otp'
 
 // Define types for Paystack webhook data
-// This helps TypeScript understand the structure of Paystack's data
 interface PaystackWebhookData {
   reference: string
   channel?: string
@@ -17,7 +18,10 @@ interface PaystackWebhookData {
     card_type?: string
     bank?: string
   }
-  metadata?: Record<string, unknown>
+  metadata?: {
+    donation_id?: string
+    giver_phone?: string
+  }
 }
 
 interface PaystackWebhookEvent {
@@ -35,12 +39,11 @@ export async function POST(request: Request) {
     // Paystack adds a special signature to prove the webhook is really from them
     const signature = request.headers.get('x-paystack-signature')
     
-    // If there's no signature, this might be a fake request
-    // We reject it to prevent fraud
+    // If there's no signature, this might be a fake request - reject it
     if (!signature) {
       return NextResponse.json(
         { error: 'Missing Paystack signature' },
-        { status: 401 } // Unauthorized
+        { status: 401 }
       )
     }
     
@@ -65,7 +68,6 @@ export async function POST(request: Request) {
     const event: PaystackWebhookEvent = JSON.parse(body)
     
     // Handle different types of events Paystack might send us
-    // Each event type means something different happened with a payment
     switch (event.event) {
       case 'charge.success':
         // A payment was completed successfully
@@ -73,7 +75,7 @@ export async function POST(request: Request) {
         break
         
       case 'charge.failed':
-        // A payment attempt failed (insufficient funds, wrong card, etc.)
+        // A payment attempt failed
         await handleFailedPayment(event.data)
         break
         
@@ -83,84 +85,84 @@ export async function POST(request: Request) {
         break
         
       default:
-        // For any other event types we don't handle
         console.log(`Unhandled webhook event: ${event.event}`)
     }
     
-    // Always return 200 OK to Paystack
-    // If we return an error, Paystack will keep trying to send the webhook
-    // This could cause duplicate processing
+    // Always return 200 OK to Paystack to prevent retries
     return NextResponse.json({ received: true })
     
   } catch (error: unknown) {
-    // Log the error for debugging
     console.error('Webhook error:', error)
-    
-    // Even if there's an error, return 200 to prevent Paystack from retrying
-    // We log the error so we can fix it later
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json({ received: true, error: errorMessage })
   }
 }
 
-// Helper function to handle successful payments from webhook
-// This is called when Paystack tells us a payment was successful
+// Handle successful payments from webhook
 async function handleSuccessfulPayment(data: PaystackWebhookData) {
-  const { reference } = data
+  const { reference, metadata } = data
   
-  // Update the donation record to show it was successful
-  // We use JSON.parse(JSON.stringify()) to convert the typed object to a plain JSON object
-  // This is necessary because Prisma's Json field requires plain objects without TypeScript interfaces
+  // Get the donation ID from the metadata we sent to Paystack
+  const donationId = metadata?.donation_id
+  
+  if (!donationId) {
+    console.error('No donation ID in webhook metadata for reference:', reference)
+    return
+  }
+  
+  // Update the donation record to show payment was successful
   await prisma.donation.update({
     where: { reference: reference },
     data: {
-      status: 'SUCCESSFUL',  // Payment completed
-      isVerified: true,      // We've confirmed it's real
-      verifiedAt: new Date(), // When it was verified
+      status: 'SUCCESSFUL',
+      isVerified: false, // Still needs OTP verification
+      verifiedAt: new Date(),
       metadata: {
-        payment_method: data.channel,              // How they paid (card, bank, etc.)
-        card_type: data.authorization?.card_type,  // Type of card used
-        bank: data.authorization?.bank,            // Bank name if bank transfer
-        webhook_data: JSON.parse(JSON.stringify(data)) // Convert to plain JSON object for Prisma
+        payment_method: data.channel,
+        card_type: data.authorization?.card_type,
+        bank: data.authorization?.bank,
+        webhook_data: JSON.parse(JSON.stringify(data))
       }
     }
   })
   
-  // TODO: Send receipt email to donor
-  // TODO: Notify church admin of new donation
-  // TODO: Update church financial records for accounting
+  // NEW: Send OTP to the donor's phone for verification
+  // Only send if we have the phone number in metadata
+  const donorPhone = metadata?.giver_phone
+  if (donorPhone && donationId) {
+    console.log(`Sending OTP to donor phone: ${donorPhone} for donation: ${donationId}`)
+    await sendOtpToUser(donorPhone, donationId)
+  } else {
+    console.warn('No phone number in webhook metadata. OTP not sent.')
+  }
 }
 
-// Helper function to handle failed payments from webhook
-// This is called when Paystack tells us a payment attempt failed
+// Handle failed payments from webhook
 async function handleFailedPayment(data: PaystackWebhookData) {
   const { reference } = data
   
-  // Update the donation record to show it failed
   await prisma.donation.update({
     where: { reference: reference },
     data: {
-      status: 'FAILED', // Payment didn't go through
+      status: 'FAILED',
       metadata: {
-        failure_reason: data.gateway_response, // Why it failed (from Paystack)
-        webhook_data: JSON.parse(JSON.stringify(data)) // Convert to plain JSON for Prisma
+        failure_reason: data.gateway_response,
+        webhook_data: JSON.parse(JSON.stringify(data))
       }
     }
   })
 }
 
-// Helper function to handle refunds from webhook
-// This is called when a refund is processed
+// Handle refunds from webhook
 async function handleRefund(data: PaystackWebhookData) {
   const { reference } = data
   
-  // Update the donation record to show it was refunded
   await prisma.donation.update({
     where: { reference: reference },
     data: {
-      status: 'REFUNDED', // Money was returned to donor
+      status: 'REFUNDED',
       metadata: {
-        refund_data: JSON.parse(JSON.stringify(data)) // Convert to plain JSON for Prisma
+        refund_data: JSON.parse(JSON.stringify(data))
       }
     }
   })
