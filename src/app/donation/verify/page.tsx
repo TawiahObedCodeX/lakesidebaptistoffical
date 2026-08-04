@@ -181,14 +181,14 @@ function VerifyPaymentContent() {
   // Show error message if verification failed
   if (error) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-blue-900 to-slate-900 flex items-center justify-center px-4 py-8">
+      <main className="min-h-screen bg-linear-to-b from-blue-900 to-slate-900 flex items-center justify-center px-4 py-8">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           className="w-full max-w-sm sm:max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
         >
           {/* Error header */}
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 text-center">
+          <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-5 py-4 text-center">
             <p className="text-white/90 text-xs sm:text-sm font-medium tracking-wide uppercase">
               Payment Status
             </p>
@@ -248,8 +248,8 @@ function VerifyPaymentContent() {
     });
 
     return (
-      <main className="min-h-screen bg-gradient-to-b from-blue-900 to-slate-900 flex items-center justify-center px-3 sm:px-4 py-6 sm:py-10">
-        <div className="w-full max-w-[380px] sm:max-w-md mx-auto">
+      <main className="min-h-screen bg-linear-to-b from-blue-900 to-slate-900 flex items-center justify-center px-3 sm:px-4 py-6 sm:py-10">
+        <div className="w-full max-w-95 sm:max-w-md mx-auto">
           {/* Top success badge - animated entrance */}
           <motion.div
             initial={{ opacity: 0, y: -16 }}
@@ -277,7 +277,7 @@ function VerifyPaymentContent() {
             className="bg-white rounded-2xl shadow-2xl overflow-hidden"
           >
             {/* Header with church name */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 sm:px-6 py-4 sm:py-5 text-center relative">
+            <div className="bg-linear-to-r from-blue-600 to-indigo-600 px-5 sm:px-6 py-4 sm:py-5 text-center relative">
               <div className="absolute top-2.5 right-3 text-[9px] sm:text-[10px] font-semibold tracking-widest text-blue-200/90 uppercase">
                 Official Receipt
               </div>
