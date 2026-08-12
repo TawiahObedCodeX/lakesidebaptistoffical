@@ -1,6 +1,6 @@
 // src/lib/sms.ts
 // SMS Service using Twilio - Handles all SMS communications for the church
-// UPDATED: Fixed Twilio v6 types, correct phone number from .env
+// UPDATED: Added trial mode support with verification instructions
 
 import Twilio from 'twilio';
 import crypto from 'crypto';
@@ -12,7 +12,6 @@ const twilioClient = Twilio(
 );
 
 // The phone number we send messages FROM
-// This is your Twilio US number: +18315316810
 const FROM_PHONE = process.env.TWILIO_PHONE_NUMBER;
 
 // Interface: Defines the structure for sending an SMS
@@ -26,6 +25,42 @@ interface SmsResponse {
   success: boolean;
   messageId?: string;
   error?: string;
+  isTrialError?: boolean;
+  verificationUrl?: string;
+}
+
+/**
+ * Check if Twilio account is in trial mode
+ * Trial accounts can only send to verified numbers
+ */
+async function checkTwilioAccountStatus(): Promise<boolean> {
+  try {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    
+    if (!accountSid || !authToken) {
+      return false;
+    }
+    
+    // Make a simple API call to check account status
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}.json`,
+      {
+        headers: {
+          'Authorization': `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString('base64')}`
+        }
+      }
+    );
+    
+    if (response.ok) {
+      const data = await response.json();
+      return data.type === 'Trial';
+    }
+    
+    return false;
+  } catch {
+    return false;
+  }
 }
 
 /**
@@ -48,15 +83,17 @@ async function sendSms({ to, message }: SmsPayload): Promise<SmsResponse> {
       throw new Error('Message content cannot be empty');
     }
 
+    // Check if we're in trial mode
+    const isTrial = await checkTwilioAccountStatus();
+    
     // Build message options
-    // Using 'any' type to avoid Twilio v6 TypeScript compatibility issues
     const messageOptions: any = {
       body: message,
       from: FROM_PHONE,
       to: to,
     };
 
-    // ONLY add StatusCallback in production with a real domain
+    // Add status callback URL for delivery tracking
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
     if (appUrl && !appUrl.includes('localhost') && !appUrl.includes('127.0.0.1')) {
       messageOptions.statusCallback = `${appUrl}/api/sms/status-callback`;
@@ -70,25 +107,51 @@ async function sendSms({ to, message }: SmsPayload): Promise<SmsResponse> {
       to: to,
       messageId: twilioMessage.sid,
       status: twilioMessage.status,
+      isTrialAccount: isTrial,
       timestamp: new Date().toISOString()
     });
 
     return {
       success: true,
-      messageId: twilioMessage.sid
+      messageId: twilioMessage.sid,
+      isTrialError: false
     };
 
-  } catch (error) {
+  } catch (error: any) {
+    // Check if this is a trial account restriction error
+    const isTrialError = error?.code === 21608 || // 'From' number not verified
+                        error?.code === 21606 || // 'To' number not verified  
+                        error?.code === 21211 || // Invalid phone number
+                        error?.message?.includes('Trial');
+    
+    // Generate verification URL for trial accounts
+    let verificationUrl = '';
+    if (isTrialError && to.startsWith('+233')) {
+      verificationUrl = `https://console.twilio.com/us1/develop/phone-numbers/manage/verified?phoneNumber=${encodeURIComponent(to)}`;
+    }
+
     // Log the error details
     console.error('❌ SMS sending failed:', {
       recipient: to,
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
+      errorCode: error?.code || 'Unknown',
+      errorMessage: error?.message || 'Unknown error occurred',
+      isTrialError: isTrialError,
       timestamp: new Date().toISOString()
     });
 
+    // Provide helpful error message for trial accounts
+    let errorMessage = error?.message || 'Failed to send SMS notification.';
+    
+    if (isTrialError) {
+      errorMessage = `Trial account restriction: You need to verify this phone number (${to}) in your Twilio console. ` +
+                    `Visit: ${verificationUrl}`;
+    }
+
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Failed to send SMS notification.'
+      error: errorMessage,
+      isTrialError: isTrialError,
+      verificationUrl: verificationUrl
     };
   }
 }
@@ -138,5 +201,40 @@ function formatGhanaPhone(phone: string): string {
   );
 }
 
+/**
+ * Verify a phone number in Twilio trial account
+ * This helps users set up their trial account
+ */
+function getTwilioVerificationInstructions(phoneNumber: string): string {
+  const verificationUrl = `https://console.twilio.com/us1/develop/phone-numbers/manage/verified?phoneNumber=${encodeURIComponent(phoneNumber)}`;
+  
+  return `
+========================================
+📱 TWILIO TRIAL ACCOUNT SETUP
+========================================
+To send SMS to ${phoneNumber}, you need to verify this number in your Twilio account:
+
+1. Go to: https://console.twilio.com/us1/develop/phone-numbers/manage/verified
+2. Click "Add a new Caller ID"
+3. Enter: ${phoneNumber}
+4. Click "Verify"
+5. Check your phone for the verification code
+6. Enter the code on the Twilio website
+
+Or use this direct link:
+${verificationUrl}
+
+After verification, you can send SMS to this number.
+========================================
+`;
+}
+
 // Export functions and types
-export { sendSms, generateOtp, formatGhanaPhone, type SmsPayload, type SmsResponse };
+export { 
+  sendSms, 
+  generateOtp, 
+  formatGhanaPhone, 
+  getTwilioVerificationInstructions,
+  type SmsPayload, 
+  type SmsResponse 
+};

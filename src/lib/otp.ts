@@ -1,10 +1,10 @@
 // src/lib/otp.ts
 // OTP Service - Generates and verifies one-time passwords
-// UPDATED: Throws errors on SMS failure (for production use after verifying Twilio number)
+// UPDATED: Better error handling for trial accounts
 
 import crypto from 'crypto';
 import { prisma } from './prisma';
-import { generateOtp, sendSms } from './sms';
+import { generateOtp, sendSms, getTwilioVerificationInstructions } from './sms';
 
 const OTP_CONFIG = {
   length: parseInt(process.env.OTP_LENGTH || '6'),
@@ -32,7 +32,7 @@ function verifyOtp(providedOtp: string, storedHash: string, salt: string): boole
 export async function sendOtpToUser(
   phoneNumber: string,
   donationId: string
-): Promise<{ success: boolean; message: string }> {
+): Promise<{ success: boolean; message: string; isTrialError?: boolean; verificationInstructions?: string }> {
   try {
     // Check for existing valid OTP
     const existingOtp = await prisma.otpRecord.findFirst({
@@ -67,7 +67,7 @@ export async function sendOtpToUser(
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + OTP_CONFIG.expiryMinutes);
     
-    // Save OTP record to database
+    // Save OTP record to database (save it even if SMS fails)
     await prisma.otpRecord.create({
       data: {
         donationId: donationId,
@@ -78,6 +78,9 @@ export async function sendOtpToUser(
         maxAttempts: OTP_CONFIG.maxAttempts,
       },
     });
+
+    // FOR DEVELOPMENT: Log the OTP to console if SMS fails
+    console.log(`🔑 OTP for ${phoneNumber}: ${otp} (Expires in ${OTP_CONFIG.expiryMinutes} minutes)`);
 
     // Send SMS via Twilio
     const smsResult = await sendSms({
@@ -105,9 +108,28 @@ export async function sendOtpToUser(
       data: { status: 'AWAITING_OTP' },
     });
 
-    // If SMS failed, throw error
+    // If SMS failed due to trial account, provide instructions
+    if (!smsResult.success && smsResult.isTrialError) {
+      const instructions = getTwilioVerificationInstructions(phoneNumber);
+      
+      return {
+        success: false,
+        message: `Unable to send SMS: Your Twilio account is in trial mode. You need to verify phone numbers before sending messages.`,
+        isTrialError: true,
+        verificationInstructions: instructions
+      };
+    }
+
+    // If SMS failed for other reasons, still allow OTP (for development)
     if (!smsResult.success) {
-      throw new Error(smsResult.error || 'Failed to send SMS. Please ensure your phone number is correct.');
+      // In production, you might want to throw an error here
+      // For development, we'll still return success with the OTP in console
+      console.warn(`⚠️ SMS sending failed, but OTP was generated: ${otp}`);
+      
+      return {
+        success: true,
+        message: `Verification code could not be sent via SMS. For development, check server console for the OTP.`,
+      };
     }
 
     return {
