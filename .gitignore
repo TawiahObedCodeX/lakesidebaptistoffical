@@ -53,3 +53,5 @@ prisma/migrations/
 prisma/*.db
 prisma/*.db-journal.env
 .env.local
+.env
+test-twilio.mjs
