@@ -1,49 +1,62 @@
 // src/app/api/sms/status-callback/route.ts
-// Twilio Status Callback - Receives delivery status updates for SMS messages
+// Africa's Talking Delivery Status Callback
+// Receives delivery status updates for SMS messages
 
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+interface AfricaTalkingCallback {
+  id?: string;
+  status?: string;
+  phoneNumber?: string;
+  networkCode?: string;
+  failureReason?: string;
+  retryCount?: number;
+}
+
 export async function POST(request: Request) {
   try {
-    // Twilio sends delivery status as form data
-    const formData = await request.formData();
+    // Africa's Talking sends delivery status as JSON
+    const body = await request.json() as AfricaTalkingCallback;
     
-    const messageSid = formData.get('MessageSid') as string;
-    const messageStatus = formData.get('MessageStatus') as string;
-    const errorCode = formData.get('ErrorCode') as string;
-    
-    console.log('📱 Twilio Status Callback:', {
-      messageSid,
-      messageStatus,
-      errorCode: errorCode || 'None',
+    console.log('📱 Africa\'s Talking Status Callback:', {
+      body,
       timestamp: new Date().toISOString()
     });
     
-    // Map Twilio status to our database status
+    const messageId = body.id;
+    const deliveryStatus = body.status;
+    const failureReason = body.failureReason;
+    
+    // Map Africa's Talking status to our database status
     let smsStatus = 'SENT';
-    if (messageStatus === 'delivered') {
+    if (deliveryStatus === 'Success' || deliveryStatus === 'Delivered') {
       smsStatus = 'DELIVERED';
-    } else if (['failed', 'undelivered'].includes(messageStatus)) {
+    } else if (deliveryStatus === 'Failed' || deliveryStatus === 'Rejected' || deliveryStatus === 'Expired') {
       smsStatus = 'FAILED';
     }
     
     // Update the SMS notification record
-    if (messageSid) {
-      await prisma.smsNotification.updateMany({
-        where: { twilioSid: messageSid },
+    if (messageId) {
+      const result = await prisma.smsNotification.updateMany({
+        where: { 
+          smsProviderId: messageId 
+        },
         data: {
           smsStatus: smsStatus,
-          errorMessage: errorCode ? `Twilio Error ${errorCode}: ${formData.get('ErrorMessage') || 'Unknown error'}` : null
+          errorMessage: failureReason || null
         }
       });
+      
+      console.log(`📱 Updated ${result.count} SMS notification record(s)`);
     }
     
     return NextResponse.json({ received: true });
     
-  } catch (error) {
-    console.error('Status callback error:', error);
-    // Always return 200 to Twilio to prevent retries
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Status callback error:', errorMessage);
+    // Always return 200 to prevent retries
     return NextResponse.json({ received: true });
   }
 }

@@ -20,6 +20,8 @@ export function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [messageLength, setMessageLength] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
 
   async function onSubmit(formData: FormData) {
     setLoading(true);
@@ -50,10 +52,16 @@ export function ContactForm() {
       return;
     }
 
-    // CHANGED: Minimum from 10 to 3
     if (!message || message.length < 3) {
-      const needed = 3 - (message?.length || 0);
-      setError(`Please enter a message with at least 3 characters. You need ${needed} more character${needed > 1 ? "s" : ""}.`);
+      setError("Please enter a message with at least 3 characters.");
+      setLoading(false);
+      return;
+    }
+
+    // Check word count (200 words max)
+    const words = message.split(/\s+/).length;
+    if (words > 200) {
+      setError(`Your message is ${words} words. Please reduce it to 200 words or less.`);
       setLoading(false);
       return;
     }
@@ -81,6 +89,12 @@ export function ContactForm() {
     }
   }
 
+  function handleMessageChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const text = e.target.value;
+    setMessageLength(text.length);
+    setWordCount(text.trim() ? text.trim().split(/\s+/).length : 0);
+  }
+
   if (success) {
     return (
       <div className="text-center py-12">
@@ -99,7 +113,7 @@ export function ContactForm() {
       {error && (
         <Alert kind="error">
           <div className="flex items-start gap-3">
-            <span className="text-lg flex-shrink-0">⚠️</span>
+            <span className="text-lg shrink-0">⚠️</span>
             <p className="text-sm">{error}</p>
           </div>
         </Alert>
@@ -126,11 +140,36 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1.5">Your Message <span className="text-red-500">*</span> <span className="text-slate-400 text-xs">(minimum 3 characters)</span></label>
-        <textarea id="message" name="message" required rows={5} placeholder="Tell us how we can help you..." className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition resize-none" />
+        <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1.5">
+          Your Message <span className="text-red-500">*</span>
+        </label>
+        <textarea 
+          id="message" 
+          name="message" 
+          required 
+          rows={5} 
+          placeholder="Tell us how we can help you... (max 200 words)"
+          onChange={handleMessageChange}
+          maxLength={2000}
+          className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition resize-none" 
+        />
+        <div className="flex justify-between items-center mt-2">
+          <span className={`text-xs ${wordCount > 200 ? 'text-red-600 font-semibold' : 'text-slate-400'}`}>
+            {wordCount}/200 words
+          </span>
+          {wordCount > 200 && (
+            <span className="text-xs text-red-600 font-semibold">
+              Please reduce to 200 words or less
+            </span>
+          )}
+        </div>
       </div>
 
-      <button type="submit" disabled={loading} className="w-full py-4 bg-black hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold rounded-2xl transition-all duration-200 flex items-center justify-center gap-3">
+      <button 
+        type="submit" 
+        disabled={loading || wordCount > 200} 
+        className="w-full py-4 bg-black hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold rounded-2xl transition-all duration-200 flex items-center justify-center gap-3"
+      >
         {loading ? "Sending..." : "Send Message →"}
       </button>
     </form>

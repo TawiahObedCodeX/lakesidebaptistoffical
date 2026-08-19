@@ -9,16 +9,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Donation/Payment tracking table (UPDATED)
-// Stores every donation attempt - successful or failed
-// This is the central record for all payment activity
 model Donation {
   id                String        @id @default(uuid())
   amount            Decimal       @db.Decimal(10, 2)
   currency          String        @default("GHS")
   purpose           String        @default("GIVE")
-  // Status flow: PENDING → PROCESSING → SUCCESSFUL (or FAILED)
-  // After webhook: AWAITING_OTP → (after OTP verify) → stays SUCCESSFUL with isVerified=true
   status            String        @default("PENDING")
   giverName         String
   giverEmail        String
@@ -28,115 +23,14 @@ model Donation {
   note              String?
   metadata          Json?
   isAnonymous       Boolean       @default(false)
-  isVerified        Boolean       @default(false)
-  verifiedAt        DateTime?
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
-  
-  // Relationships to new tables
-  // A donation can have multiple OTP attempts (if user requests resend)
-  otpRecords        OtpRecord[]
-  // A donation generates multiple SMS notifications (OTP, sender confirmation, receiver alert)
-  smsNotifications  SmsNotification[]
 
   @@index([giverEmail])
   @@index([status])
   @@index([createdAt])
-  @@index([giverPhone])  // Index for faster phone number lookups
 }
 
-// NEW: OTP Verification Records Table
-// Stores all One-Time Password verification attempts securely
-// Security: OTP codes are NEVER stored in plain text - only hashed versions
-// Each record tracks the entire lifecycle of an OTP from creation to verification
-model OtpRecord {
-  id            String    @id @default(uuid())
-  
-  // The hashed OTP code - uses HMAC-SHA256 with a unique salt
-  // Example of what's stored: "a7b3c9d2e1f..." (not the actual 6-digit code)
-  codeHash      String    // Hashed version of the OTP - never the actual code
-  
-  // ADDED: The salt used for hashing (was missing in your schema)
-  // The salt is like a unique seasoning - it ensures identical OTPs produce different hashes
-  // This prevents rainbow table attacks where attackers use pre-computed hash tables
-  salt          String    // Random salt value used during hashing (16 bytes hex)
-  
-  // Which donation this OTP belongs to
-  // Links back to the Donation table for full audit trail
-  donationId    String
-  donation      Donation  @relation(fields: [donationId], references: [id])
-  
-  // The phone number that received this OTP
-  // Always stored in international format: +233XXXXXXXXX
-  phoneNumber   String
-  
-  // Security tracking fields
-  attempts      Int       @default(0)   // How many times user tried entering the OTP
-  maxAttempts   Int       @default(3)   // Maximum allowed attempts (locks after exceeding)
-  isUsed        Boolean   @default(false) // Whether OTP was successfully verified
-  isExpired     Boolean   @default(false) // Whether OTP passed its expiry time
-  
-  // Timing fields
-  expiresAt     DateTime  // When this OTP becomes invalid (createdAt + OTP_EXPIRY_MINUTES)
-  verifiedAt    DateTime? // When user successfully entered the correct OTP
-  createdAt     DateTime  @default(now()) // When this OTP was generated and sent
-  
-  @@index([donationId])
-  @@index([phoneNumber])
-  @@index([createdAt])
-}
-
-// NEW: SMS Notification Tracking Table
-// Complete audit trail of all SMS communications
-// Tracks messages sent to both donors (senders) and church (receivers)
-model SmsNotification {
-  id              String    @id @default(uuid())
-  
-  // Which payment this SMS relates to
-  donationId      String
-  donation        Donation  @relation(fields: [donationId], references: [id])
-  
-  // Who received this SMS
-  // "SENDER" = the person who made the donation
-  // "RECEIVER" = the church mobile money account holder
-  recipientType   String
-  
-  // The phone number that received the SMS (international format: +233XXXXXXXXX)
-  recipientPhone  String
-  
-  // The actual text content of the SMS that was sent
-  messageContent  String    @db.Text
-  
-  // Type of notification
-  // "OTP" = verification code message
-  // "PAYMENT_CONFIRMATION" = sent to donor after successful payment
-  // "PAYMENT_RECEIVED" = sent to church when payment is received
-  messageType     String
-  
-  // Delivery tracking
-  // "SENT" = accepted by Twilio for delivery
-  // "DELIVERED" = confirmed delivered to recipient's phone
-  // "FAILED" = delivery failed (wrong number, network issue, etc.)
-  smsStatus       String    @default("SENT")
-  
-  // Twilio's unique message identifier for tracking in their system
-  // Format: SMXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-  twilioSid       String?
-  
-  // Error details if SMS failed to send
-  errorMessage    String?
-  
-  // Number of delivery attempts (for retry logic)
-  deliveryAttempts Int      @default(1)
-  
-  createdAt       DateTime  @default(now())
-  
-  @@index([donationId])
-  @@index([recipientPhone])
-  @@index([createdAt])
-}
-
-// Contact messages table (UNCHANGED)
 model ContactMessage {
   id              String    @id @default(uuid())
   firstName       String

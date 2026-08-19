@@ -1,12 +1,11 @@
 // src/app/api/payments/webhook/route.ts
-// UPDATED: Now triggers SMS notifications after successful payment and OTP verification
+// REMOVED: SMS notifications, now uses email receipts only
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import crypto from 'crypto'
-import { sendSenderConfirmation, sendReceiverNotification } from '@/lib/payment-sms'
+import { sendDonationReceipt } from '@/lib/email'
 
-// Define types for Paystack webhook data
 interface PaystackWebhookData {
   reference: string
   channel?: string
@@ -19,9 +18,15 @@ interface PaystackWebhookData {
     donation_id?: string
     giver_phone?: string
     giver_name?: string
+    giver_email?: string
     purpose?: string
   }
   amount?: number
+  customer?: {
+    email?: string
+    first_name?: string
+    last_name?: string
+  }
 }
 
 interface PaystackWebhookEvent {
@@ -97,7 +102,6 @@ async function handleSuccessfulPayment(data: PaystackWebhookData) {
     where: { reference: reference },
     data: {
       status: 'SUCCESSFUL',
-      verifiedAt: new Date(),
       metadata: {
         payment_method: data.channel,
         card_type: data.authorization?.card_type,
@@ -107,36 +111,24 @@ async function handleSuccessfulPayment(data: PaystackWebhookData) {
     }
   })
   
-  // Send SMS notifications to both sender and receiver
+  // Send email receipt to donor
   const donation = await prisma.donation.findUnique({
     where: { reference: reference }
   })
   
-  if (donation && donation.giverPhone) {
-    // Send confirmation to donor (sender)
-    await sendSenderConfirmation({
-      donationId: donation.id,
+  if (donation) {
+    await sendDonationReceipt({
+      donorName: donation.giverName,
+      donorEmail: donation.giverEmail,
       amount: Number(data.amount) / 100, // Convert from pesewas to cedis
       currency: donation.currency,
-      purpose: metadata?.purpose || 'GIVE',
+      purpose: donation.purpose,
       reference: reference,
-      senderPhone: donation.giverPhone,
-      senderName: metadata?.giver_name || donation.giverName
-    })
-    
-    // Send notification to church (receiver)
-    await sendReceiverNotification({
-      donationId: donation.id,
-      amount: Number(data.amount) / 100,
-      currency: donation.currency,
-      purpose: metadata?.purpose || 'GIVE',
-      reference: reference,
-      senderPhone: donation.giverPhone,
-      senderName: metadata?.giver_name || donation.giverName
+      date: new Date()
     })
   }
   
-  console.log(`✅ Payment successful and notifications sent for reference: ${reference}`)
+  console.log(`✅ Payment successful and email receipt sent for reference: ${reference}`)
 }
 
 async function handleFailedPayment(data: PaystackWebhookData) {
