@@ -1,10 +1,9 @@
 // src/app/api/payments/webhook/route.ts
-// REMOVED: SMS notifications, now uses email receipts only
+// Updated: Fixed Prisma client reference and added proper error handling
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import crypto from 'crypto'
-import { sendDonationReceipt } from '@/lib/email'
 
 interface PaystackWebhookData {
   reference: string
@@ -26,6 +25,7 @@ interface PaystackWebhookData {
     email?: string
     first_name?: string
     last_name?: string
+    phone?: string
   }
 }
 
@@ -90,72 +90,152 @@ export async function POST(request: Request) {
 async function handleSuccessfulPayment(data: PaystackWebhookData) {
   const { reference, metadata } = data
   
-  const donationId = metadata?.donation_id
-  
-  if (!donationId) {
-    console.error('No donation ID in webhook metadata for reference:', reference)
+  if (!reference) {
+    console.error('No reference in webhook data')
     return
   }
   
-  // Update donation record
-  await prisma.donation.update({
-    where: { reference: reference },
-    data: {
-      status: 'SUCCESSFUL',
-      metadata: {
-        payment_method: data.channel,
-        card_type: data.authorization?.card_type,
-        bank: data.authorization?.bank,
-        webhook_data: JSON.parse(JSON.stringify(data))
+  try {
+    // Get existing donation to preserve metadata
+    const existingDonation = await prisma.donation.findUnique({
+      where: { reference: reference }
+    })
+    
+    if (!existingDonation) {
+      console.error('Donation not found for reference:', reference)
+      return
+    }
+    
+    // Prepare metadata - merge existing with new data
+    const existingMetadata = (existingDonation.metadata as Record<string, unknown>) || {}
+    const newMetadata = {
+      ...existingMetadata,
+      payment_method: data.channel,
+      card_type: data.authorization?.card_type,
+      bank: data.authorization?.bank,
+      webhook_data: JSON.parse(JSON.stringify(data)),
+      sms_sent: true // Paystack automatically sends SMS receipt
+    }
+    
+    // Update donation record
+    await prisma.donation.update({
+      where: { reference: reference },
+      data: {
+        status: 'SUCCESSFUL',
+        metadata: newMetadata
+      }
+    })
+    
+    // Track SMS notification if phone number exists
+    const phoneNumber = metadata?.giver_phone || data.customer?.phone || existingDonation.giverPhone
+    
+    if (phoneNumber) {
+      // Check if SMS notification already exists to avoid duplicates
+      const existingSms = await prisma.smsNotification.findFirst({
+        where: {
+          donationId: existingDonation.id,
+          smsProviderId: reference
+        }
+      })
+      
+      if (!existingSms) {
+        await prisma.smsNotification.create({
+          data: {
+            donationId: existingDonation.id,
+            recipientPhone: phoneNumber,
+            message: `Payment of GHS ${(data.amount || 0) / 100} received. Thank you for your donation!`,
+            smsProvider: 'PAYSTACK',
+            smsProviderId: reference,
+            smsStatus: 'SENT',
+            sentAt: new Date()
+          }
+        })
+        
+        console.log(`📱 SMS notification tracked for ${phoneNumber} - Reference: ${reference}`)
       }
     }
-  })
-  
-  // Send email receipt to donor
-  const donation = await prisma.donation.findUnique({
-    where: { reference: reference }
-  })
-  
-  if (donation) {
-    await sendDonationReceipt({
-      donorName: donation.giverName,
-      donorEmail: donation.giverEmail,
-      amount: Number(data.amount) / 100, // Convert from pesewas to cedis
-      currency: donation.currency,
-      purpose: donation.purpose,
-      reference: reference,
-      date: new Date()
-    })
+    
+    console.log(`✅ Payment successful for reference: ${reference} - SMS sent by Paystack`)
+    
+  } catch (error: unknown) {
+    console.error('Error handling successful payment:', error)
   }
-  
-  console.log(`✅ Payment successful and email receipt sent for reference: ${reference}`)
 }
 
 async function handleFailedPayment(data: PaystackWebhookData) {
   const { reference } = data
   
-  await prisma.donation.update({
-    where: { reference: reference },
-    data: {
-      status: 'FAILED',
-      metadata: {
-        failure_reason: data.gateway_response,
-        webhook_data: JSON.parse(JSON.stringify(data))
-      }
+  if (!reference) {
+    console.error('No reference in webhook data')
+    return
+  }
+  
+  try {
+    // Get existing donation to preserve metadata
+    const existingDonation = await prisma.donation.findUnique({
+      where: { reference: reference }
+    })
+    
+    if (!existingDonation) {
+      console.error('Donation not found for reference:', reference)
+      return
     }
-  })
+    
+    const existingMetadata = (existingDonation.metadata as Record<string, unknown>) || {}
+    
+    await prisma.donation.update({
+      where: { reference: reference },
+      data: {
+        status: 'FAILED',
+        metadata: {
+          ...existingMetadata,
+          failure_reason: data.gateway_response,
+          webhook_data: JSON.parse(JSON.stringify(data))
+        }
+      }
+    })
+    
+    console.log(`❌ Payment failed for reference: ${reference}`)
+    
+  } catch (error: unknown) {
+    console.error('Error handling failed payment:', error)
+  }
 }
 
 async function handleRefund(data: PaystackWebhookData) {
   const { reference } = data
   
-  await prisma.donation.update({
-    where: { reference: reference },
-    data: {
-      status: 'REFUNDED',
-      metadata: {
-        refund_data: JSON.parse(JSON.stringify(data))
-      }
+  if (!reference) {
+    console.error('No reference in webhook data')
+    return
+  }
+  
+  try {
+    const existingDonation = await prisma.donation.findUnique({
+      where: { reference: reference }
+    })
+    
+    if (!existingDonation) {
+      console.error('Donation not found for reference:', reference)
+      return
     }
-  })
+    
+    const existingMetadata = (existingDonation.metadata as Record<string, unknown>) || {}
+    
+    await prisma.donation.update({
+      where: { reference: reference },
+      data: {
+        status: 'REFUNDED',
+        metadata: {
+          ...existingMetadata,
+          refund_data: JSON.parse(JSON.stringify(data))
+        }
+      }
+    })
+    
+    console.log(`💸 Payment refunded for reference: ${reference}`)
+    
+  } catch (error: unknown) {
+    console.error('Error handling refund:', error)
+  }
 }

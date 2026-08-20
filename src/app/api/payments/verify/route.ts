@@ -1,6 +1,5 @@
 // src/app/api/payments/verify/route.ts
-// UPDATED: Now supports both direct Paystack verification and OTP-verified payments
-// This endpoint is called from the verify page to confirm payment status
+// Updated: Removed non-existent fields from the response
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
@@ -50,21 +49,33 @@ export async function POST(request: Request) {
       )
     }
     
-    // Return the donation status
-    // The frontend will use this to determine if OTP is still needed
+    // Update donation status to SUCCESSFUL if not already done
+    if (donation.status !== 'SUCCESSFUL') {
+      await prisma.donation.update({
+        where: { reference: reference },
+        data: { 
+          status: 'SUCCESSFUL',
+          metadata: {
+            ...(donation.metadata as object || {}),
+            verification_response: JSON.parse(JSON.stringify(verification))
+          }
+        }
+      })
+    }
+    
+    // Return the donation data (only fields that exist in schema)
     return NextResponse.json({
       ok: true,
-      message: 'Payment status retrieved successfully',
+      message: 'Payment verified successfully',
       data: {
-        amount: donation.amount,
+        amount: Number(donation.amount), // Convert Decimal to number
         purpose: donation.purpose,
         reference: donation.reference,
         donorName: donation.giverName,
         donorEmail: donation.giverEmail,
         donorPhone: donation.giverPhone,
         status: donation.status,
-        isVerified: donation.isVerified,
-        date: donation.verifiedAt
+        date: donation.updatedAt || donation.createdAt
       }
     })
     

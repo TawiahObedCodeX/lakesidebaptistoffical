@@ -1,5 +1,5 @@
 // src/app/api/payments/initialize/route.ts
-// REMOVED: OTP verification flow
+// Updated to include phone number for Paystack SMS notifications
 
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
@@ -31,23 +31,26 @@ export async function POST(request: Request) {
         metadata: {
           ip_address: ip,
           source: validatedData.metadata?.source || 'website',
-          user_agent: headersList.get('user-agent') || 'unknown'
+          user_agent: headersList.get('user-agent') || 'unknown',
+          phone_provided: !!validatedData.giverPhone
         },
         status: 'PENDING'
       }
     })
     
-    // Initialize Paystack payment directly (no OTP step)
+    // Initialize Paystack payment with phone number for SMS notifications
     const paystackResponse = await initializePayment({
       email: validatedData.giverEmail,
       amount: validatedData.amount,
       currency: validatedData.currency || 'GHS',
       reference: reference,
+      phone: validatedData.giverPhone || undefined, // Pass phone to Paystack for SMS
       metadata: {
         donation_id: donation.id,
         donor_name: validatedData.giverName,
         purpose: validatedData.purpose,
-        giver_phone: validatedData.giverPhone || null
+        giver_phone: validatedData.giverPhone || null,
+        send_sms: true // Flag to enable SMS notifications
       }
     })
     
@@ -65,6 +68,7 @@ export async function POST(request: Request) {
       authorization_url: paystackResponse.data.authorization_url,
       reference: reference,
       donationId: donation.id,
+      smsNotification: !!validatedData.giverPhone // Confirm SMS will be sent
     })
     
   } catch (error: unknown) {

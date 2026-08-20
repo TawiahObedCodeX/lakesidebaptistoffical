@@ -25,6 +25,7 @@ model Donation {
   isAnonymous       Boolean       @default(false)
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
+  smsNotifications  SmsNotification[]
 
   @@index([giverEmail])
   @@index([status])
@@ -52,5 +53,24 @@ model ContactMessage {
 
   @@index([email])
   @@index([status])
+  @@index([createdAt])
+}
+
+model SmsNotification {
+  id              String    @id @default(uuid())
+  donationId      String?
+  recipientPhone  String
+  message         String    @db.Text
+  smsProvider     String    @default("PAYSTACK")
+  smsProviderId   String?
+  smsStatus       String    @default("PENDING")
+  errorMessage    String?
+  createdAt       DateTime  @default(now())
+  sentAt          DateTime?
+  deliveredAt     DateTime?
+  donation        Donation? @relation(fields: [donationId], references: [id])
+
+  @@index([donationId])
+  @@index([smsStatus])
   @@index([createdAt])
 }

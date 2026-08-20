@@ -1,4 +1,6 @@
 // src/lib/validation.ts
+// Updated to make phone number required for donations
+
 import { z } from 'zod'
 
 export const paymentSchema = z.object({
@@ -21,11 +23,10 @@ export const paymentSchema = z.object({
     .toLowerCase()
     .trim(),
   
-  // Phone is now optional since OTP is removed
+  // Phone is now REQUIRED for SMS notifications
   giverPhone: z.string()
     .regex(/^(0|\+?233)\d{9}$/, 'Please enter a valid Ghana phone number (e.g., 0241234567)')
-    .optional()
-    .nullable(),
+    .transform(val => val.replace(/\s/g, '')),
   
   metadata: z.object({
     note: z.string().max(500, 'Note must be less than 500 characters').optional(),
@@ -33,7 +34,6 @@ export const paymentSchema = z.object({
   }).optional()
 })
 
-// Updated contact schema with 200-word limit
 export const contactSchema = z.object({
   firstName: z.string()
     .min(2, 'First name must be at least 2 characters')
@@ -56,7 +56,6 @@ export const contactSchema = z.object({
     .optional()
     .nullable(),
   
-  // Message with 200-word limit
   message: z.string()
     .min(3, 'Message must be at least 3 characters')
     .max(2000, 'Message must be less than 2000 characters')
