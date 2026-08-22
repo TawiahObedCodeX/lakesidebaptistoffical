@@ -21,7 +21,7 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl"
+                  className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl"
                 >
                   <Image 
                     src="/images/lem.jpg" 
@@ -36,7 +36,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.15 }}
-                  className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl mt-12"
+                  className="aspect-4/3 rounded-3xl overflow-hidden shadow-2xl mt-12"
                 >
                   <Image 
                     src="/images/use.jpg" 

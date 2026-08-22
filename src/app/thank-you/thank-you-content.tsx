@@ -28,7 +28,7 @@ export function ThankYouContent() {
       return;
     }
 
-    console.log("🔵 Verifying payment reference:", reference);
+    console.log(" Verifying payment reference:", reference);
 
     // Call the verify proxy → forwards to Church Backend API
     fetch("/api/payments/paystack/verify", {
