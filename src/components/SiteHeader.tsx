@@ -176,12 +176,12 @@ export function SiteHeader() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/donation"
-            className="group relative overflow-hidden rounded-full bg-white px-8 py-2.5 text-lg font-bold text-black transition-all hover:pr-10"
+            className="group relative overflow-hidden rounded-full bg-white px-8 py-2.5 text-lg font-bold text-black  hover:bg-black hover:text-white "
           >
             <span className="relative z-10">GIVE ONLINE</span>
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100">
+            {/* <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 transition-all group-hover:opacity-100">
               →
-            </div>
+            </div> */}
           </Link>
         </div>
 

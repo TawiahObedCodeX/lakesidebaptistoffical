@@ -70,9 +70,9 @@ export default function HomePage() {
 
               <Link
                 href="/about"
-                className="mt-14 inline-block px-10 py-4 border-2 border-brand-primary hover:bg-brand-primary hover:text-white rounded-full font-semibold text-lg transition-all duration-300"
+                className="mt-14 inline-block px-10 py-4 border-2 border-brand-primary hover:bg-black hover:text-white rounded-full font-semibold text-lg transition-all duration-300"
               >
-                Read More About Us →
+                Read More About Us 
               </Link>
             </div>
           </div>
