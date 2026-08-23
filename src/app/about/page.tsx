@@ -196,7 +196,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
             {/* LEFT — Image + badge */}
             <FadeUp className="relative order-1">
-              <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] max-w-md mx-auto lg:max-w-none">
+              <div className="relative aspect-4/5 sm:aspect-3/4 lg:aspect-4/5 max-w-md mx-auto lg:max-w-none">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.94, y: 30 }}
                   whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -224,7 +224,7 @@ export default function AboutPage() {
                   }}
                   className="absolute -bottom-4 -right-2 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-10"
                 >
-                  <div className="bg-[#C4A35A] text-[#1a1a1a] rounded-xl px-5 py-4 sm:px-6 sm:py-5 shadow-xl text-center min-w-[110px]">
+                  <div className="bg-blue-900 text-white rounded-xl px-5 py-4 sm:px-6 sm:py-5 shadow-xl text-center min-w-27.5">
                     <div className="flex justify-center mb-1.5">
                       {/* Fixed complete SVG path */}
                       <svg
@@ -234,7 +234,7 @@ export default function AboutPage() {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.8"
-                        className="text-[#1a1a1a]"
+                        className="text-white"
                       >
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                       </svg>
@@ -253,7 +253,7 @@ export default function AboutPage() {
             {/* RIGHT — Content */}
             <div className="order-2">
               <FadeUp>
-                <p className="text-[#B85C38] text-xs sm:text-sm tracking-[0.25em] font-semibold uppercase mb-5">
+                <p className="text-[#B85C38] text-xs sm:text-lg tracking-[0.25em] font-semibold uppercase mb-5">
                   WHO WE ARE
                 </p>
               </FadeUp>
@@ -269,7 +269,7 @@ export default function AboutPage() {
               </FadeUp>
 
               <FadeUp delay={0.16}>
-                <div className="space-y-5 text-[#5c5c5c] text-base sm:text-lg leading-relaxed max-w-lg">
+                <div className="space-y-5 text-[#5c5c5c] text-base sm:text-xl leading-relaxed max-w-lg">
                   <p>
                     We are a diverse family learning to follow Jesus together.
                     Our doors are open to the curious, the certain, the
@@ -282,17 +282,7 @@ export default function AboutPage() {
                 </div>
               </FadeUp>
 
-              <FadeUp delay={0.28}>
-                <Link
-                  href="/our-story"
-                  className="group inline-flex items-center gap-2 mt-10 text-[#B85C38] text-sm font-semibold tracking-[0.15em] uppercase hover:gap-3 transition-all duration-300"
-                >
-                  DISCOVER OUR STORY
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    ↗
-                  </span>
-                </Link>
-              </FadeUp>
+
             </div>
           </div>
         </div>
@@ -301,7 +291,7 @@ export default function AboutPage() {
       {/* ══════════════════════════
           3. OUR FOUNDATION  (matches second UI)
       ══════════════════════════ */}
-      <section className="py-24 sm:py-28 lg:py-36 bg-[#0F1419] relative overflow-hidden">
+      <section className="py-24 sm:py-28 lg:py-36 bg-blue-900/95 relative overflow-hidden">
         {/* subtle grid */}
         <div
           className="absolute inset-0 opacity-[0.035]"
@@ -315,7 +305,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
           {/* Header */}
           <FadeUp className="mb-14 sm:mb-16 lg:mb-20">
-            <p className="text-[#C45C3A] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-5">
+            <p className="text-[#C45C3A] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-5">
               OUR FOUNDATION
             </p>
             <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] text-[#F5F0E8] leading-[1.15] max-w-2xl">
@@ -351,7 +341,7 @@ export default function AboutPage() {
                       }`}
                     >
                       <span
-                        className={`text-lg sm:text-xl font-medium tracking-wide transition-colors duration-300 ${
+                        className={`text-lg sm:text-xl font-medium tracking-wide transition-colors px-5 duration-300 ${
                           isActive ? "text-[#E8A87C]" : ""
                         }`}
                       >
@@ -370,7 +360,7 @@ export default function AboutPage() {
                       {isActive && (
                         <motion.div
                           layoutId="foundation-active"
-                          className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#E8A87C]"
+                          className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#E8A87C]"
                           transition={{
                             type: "spring",
                             stiffness: 380,
@@ -386,7 +376,7 @@ export default function AboutPage() {
             </div>
 
             {/* RIGHT — Content panel */}
-            <div className="lg:col-span-7 relative min-h-[220px] sm:min-h-[260px]">
+            <div className="lg:col-span-7 relative min-h-55 sm:min-h-65">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeContent.id}
@@ -501,13 +491,13 @@ export default function AboutPage() {
       {/* ══════════════════════════
     PASTOR QUOTE SECTION  (matches first image)
 ══════════════════════════ */}
-<section className="bg-[#9B2C2C] py-20 sm:py-24 lg:py-32 overflow-hidden">
+<section className="bg-blue-900/95 py-20 sm:py-24 lg:py-32 overflow-hidden">
   <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
     <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
       {/* LEFT — Quote */}
       <div className="order-2 lg:order-1">
         <FadeUp>
-          <blockquote className="font-serif text-[1.85rem] sm:text-4xl lg:text-[2.75rem] xl:text-[3.1rem] leading-[1.25] text-[#F8EDE3] mb-8 sm:mb-10">
+          <blockquote className="font-serif text-[1.85rem] sm:text-4xl lg:text-[2.75rem] xl:text-[3.1rem] leading-tight text-[#F8EDE3] mb-8 sm:mb-10">
             “You don&apos;t have to
             <br className="hidden sm:block" />
             have it all together to
@@ -517,7 +507,7 @@ export default function AboutPage() {
         </FadeUp>
 
         <FadeUp delay={0.12}>
-          <p className="text-[#E8C9B8] text-base sm:text-lg leading-relaxed max-w-md mb-8 sm:mb-10">
+          <p className="text-[#E8C9B8] text-base sm:text-xl leading-relaxed max-w-md mb-8 sm:mb-10">
             We are becoming whole, together — through worship, honest
             friendship, and a faith that meets us exactly where we are.
           </p>
@@ -540,7 +530,7 @@ export default function AboutPage() {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative aspect-[4/3] sm:aspect-[5/4] rounded-sm overflow-hidden shadow-2xl"
+          className="relative aspect-4/3 sm:aspect-5/4 rounded-sm overflow-hidden shadow-2xl"
         >
           <ParallaxImage
             src="/images/aboutimg2.png"
@@ -575,7 +565,7 @@ export default function AboutPage() {
     </FadeUp>
 
     <FadeUp delay={0.2}>
-      <p className="text-[#5C5C5C] text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-10 sm:mb-12">
+      <p className="text-[#5C5C5C] text-base sm:text-xl leading-relaxed max-w-xl mx-auto mb-10 sm:mb-12">
         Join us this Sunday at 9:00 or 11:00 AM. Come early
         <br className="hidden sm:block" />
         for coffee. Stay for the conversation.
@@ -584,8 +574,8 @@ export default function AboutPage() {
 
     <FadeUp delay={0.3}>
       <Link
-        href="/visit"
-        className="group inline-flex items-center gap-2.5 bg-[#9B2C2C] text-white px-8 py-4 sm:px-10 sm:py-4.5 text-sm font-semibold tracking-[0.12em] uppercase rounded-sm hover:bg-[#7A2222] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+        href="https://maps.app.goo.gl/Yz2cagLBaWCynadDA?g_st=ic"
+        className="group inline-flex items-center gap-2.5 bg-blue-900 text-white px-8 py-4 sm:px-10 sm:py-4.5 text-sm font-semibold tracking-[0.12em] uppercase rounded-lg hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-0.5"
       >
         PLAN YOUR VISIT
         <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">

@@ -98,7 +98,7 @@ export function DonationForm() {
 
       {/* 1. SELECT PURPOSE */}
       <div>
-        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
+        <p className="text-lg font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
           1. Select Purpose
         </p>
         <div className="grid grid-cols-2 gap-3">
@@ -109,7 +109,7 @@ export function DonationForm() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setPurpose(p.value)}
-              className={`py-3.5 px-4 rounded-xl text-sm font-medium border transition-all duration-300 ${
+              className={`py-3.5 px-4 rounded-xl text-lg font-medium border transition-all duration-300 ${
                 purpose === p.value
                   ? "bg-slate-900 text-white border-slate-900 shadow-md"
                   : "bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:bg-slate-50"
@@ -123,7 +123,7 @@ export function DonationForm() {
 
       {/* 2. CHOOSE AMOUNT */}
       <div>
-        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
+        <p className="text-lg font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
           2. Choose Amount
         </p>
         <div className="grid grid-cols-3 gap-3 mb-4">
@@ -137,7 +137,7 @@ export function DonationForm() {
                 setSelectedPreset(amt);
                 setCustomAmount("");
               }}
-              className={`py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
+              className={`py-3.5 rounded-xl text-lg font-semibold transition-all duration-300 ${
                 !customAmount && selectedPreset === amt
                   ? "bg-slate-900 text-white shadow-md"
                   : "bg-white text-slate-700 border border-slate-200 hover:border-slate-400"
@@ -180,7 +180,7 @@ export function DonationForm() {
 
       {/* 3. DONOR DETAILS */}
       <div>
-        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
+        <p className="text-lg font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
           3. Donor Details
         </p>
         <div className="space-y-3">
@@ -225,24 +225,24 @@ export function DonationForm() {
       {/* Summary bar */}
       <div className="bg-slate-50 rounded-xl px-5 py-4 flex items-center justify-between text-sm border border-slate-100">
         <div>
-          <p className="text-[10px] tracking-widest text-slate-400 uppercase">
+          <p className="text-lg tracking-widest text-slate-400 uppercase">
             Purpose
           </p>
-          <p className="font-medium text-slate-800 mt-0.5">
+          <p className="font-medium text-slate-800 mt-0.5 text-lg">
             {PURPOSES.find((p) => p.value === purpose)?.label}
           </p>
         </div>
         <div className="text-right">
-          <p className="text-[10px] tracking-widest text-slate-400 uppercase flex items-center justify-end gap-1.5">
+          <p className="text-lg tracking-widest text-slate-400 uppercase flex items-center justify-end gap-1.5">
             <FaLock className="text-[10px]" /> Secure Payment Via
           </p>
-          <p className="font-semibold text-slate-900 mt-0.5 tracking-wide">
+          <p className="font-semibold text-slate-900 mt-0.5 tracking-wide text-2xl">
             PAYSTACK
           </p>
         </div>
       </div>
 
-      <p className="text-center text-xs text-slate-400">
+      <p className="text-center text-lg text-slate-400">
         You’ll continue securely to Paystack to complete your payment.
       </p>
 

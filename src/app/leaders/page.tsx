@@ -166,7 +166,7 @@ export default function LeadershipPage() {
             transition: "all 1s cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         >
-          <p className="text-[11px] md:text-xs font-semibold tracking-[0.25em] uppercase text-brand-primary/70 mb-6">
+          <p className="text-lg md:text-xl font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-6">
             Our Leadership
           </p>
           <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-brand-primary leading-[1.1] tracking-tight mb-8">
@@ -174,7 +174,7 @@ export default function LeadershipPage() {
             <br />
             <span className="italic font-normal">before they lead.</span>
           </h2>
-          <p className="text-site-muted text-lg md:text-xl leading-relaxed max-w-2xl mx-auto font-light">
+          <p className="text-site-muted text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl mx-auto font-light">
             Leadership at Lakeside is rooted in the model of Christ: service,
             faith, and a deep commitment to shepherding our community through
             every season of life.
@@ -200,7 +200,7 @@ export default function LeadershipPage() {
                 <img
                   src={team[0].img}
                   alt={team[0].name}
-                  className="w-full aspect-[4/5] object-cover"
+                  className="w-full aspect-4/5 object-cover"
                 />
                 {/* Education badge */}
                 <div className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-5 py-3 shadow-md">
@@ -216,34 +216,24 @@ export default function LeadershipPage() {
 
             {/* Content */}
             <div className="w-full lg:w-[52%] lg:pl-4">
-              <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-brand-primary/60 mb-3">
+              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-3">
                 Head Pastor
               </p>
               <h3 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] text-brand-primary leading-tight mb-6">
                 {team[0].name}
               </h3>
-              <p className="text-site-muted text-lg leading-relaxed mb-8 max-w-lg">
+              <p className="text-site-muted text-xl leading-relaxed mb-8 max-w-lg">
                 {team[0].bio}
               </p>
 
               <div className="border-t border-divider-dark pt-6">
-                <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-2">
+                <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#9B2C2C] mb-2">
                   Leadership Focus
                 </p>
                 <p className="font-serif text-xl md:text-2xl text-brand-primary italic">
                   {team[0].focus}
                 </p>
               </div>
-
-              <a
-                href="#profile"
-                className="inline-flex items-center gap-2 mt-8 text-sm font-semibold tracking-wide text-brand-primary hover:text-brand-accent transition-colors group"
-              >
-                VIEW PROFILE
-                <span className="inline-block transition-transform group-hover:translate-x-1">
-                  ↗
-                </span>
-              </a>
             </div>
           </div>
         </div>
@@ -262,7 +252,7 @@ export default function LeadershipPage() {
         >
           <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-16">
             <div className="md:w-1/2">
-              <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-brand-primary/60 mb-4">
+              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-4">
                 Leadership Focus
               </p>
               <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-brand-primary leading-[1.1]">
@@ -270,13 +260,13 @@ export default function LeadershipPage() {
                 <br />
                 Formation
                 <br />
-                <span className="text-brand-accent italic">& Global Outreach</span>
+                <span className="text-[#9B2C2C] italic">& Global Outreach</span>
               </h3>
             </div>
             <div className="md:w-1/2 md:border-l md:border-divider-dark md:pl-12">
-              <p className="font-serif text-xl md:text-2xl text-site-muted italic leading-relaxed">
-                “Our mission is to create spaces where every person feels seen,
-                known, and loved by God.”
+              <p className="font-serif text-xl md:text-xl lg:text-2xl text-site-muted italic leading-relaxed">
+                "Our mission is to create spaces where every person feels seen,
+                known, and loved by God."
               </p>
             </div>
           </div>
@@ -301,14 +291,14 @@ export default function LeadershipPage() {
                 <img
                   src={team[1].img}
                   alt={team[1].name}
-                  className="w-full aspect-[4/5] object-cover"
+                  className="w-full aspect-4/5 object-cover"
                 />
                 {/* Education badge */}
                 <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm px-5 py-3 shadow-md">
-                  <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-0.5">
+                  <p className="text-sm font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-0.5">
                     Education
                   </p>
-                  <p className="font-serif text-sm text-brand-primary">
+                  <p className="font-serif text-lg text-brand-primary">
                     {team[1].education}
                   </p>
                 </div>
@@ -317,34 +307,24 @@ export default function LeadershipPage() {
 
             {/* Content */}
             <div className="w-full lg:w-[52%] lg:pr-4">
-              <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-brand-primary/60 mb-3">
+              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-3">
                 Associate Pastor
               </p>
               <h3 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] text-brand-primary leading-tight mb-6">
                 {team[1].name}
               </h3>
-              <p className="text-site-muted text-lg leading-relaxed mb-8 max-w-lg">
+              <p className="text-site-muted text-xl leading-relaxed mb-8 max-w-lg">
                 {team[1].bio}
               </p>
 
               <div className="border-t border-divider-dark pt-6">
-                <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-2">
+                <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#9B2C2C] mb-2">
                   Leadership Focus
                 </p>
                 <p className="font-serif text-xl md:text-2xl text-brand-primary italic">
                   {team[1].focus}
                 </p>
               </div>
-
-              <a
-                href="#profile"
-                className="inline-flex items-center gap-2 mt-8 text-sm font-semibold tracking-wide text-brand-primary hover:text-brand-accent transition-colors group"
-              >
-                VIEW PROFILE
-                <span className="inline-block transition-transform group-hover:translate-x-1">
-                  ↗
-                </span>
-              </a>
             </div>
           </div>
         </div>
@@ -364,13 +344,13 @@ export default function LeadershipPage() {
           >
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               <div>
-                <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-brand-primary/60 mb-3">
+                <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-3">
                   Support Team
                 </p>
-                <h2 className="font-serif text-4xl md:text-5xl text-brand-primary mb-3">
+                <h2 className="font-serif text-4xl md:text-5xl text-black mb-3">
                   Our Deacons
                 </h2>
-                <p className="text-site-muted text-lg max-w-xl">
+                <p className="text-site-muted text-xl max-w-xl">
                   Our deacons serve faithfully behind the scenes, supporting the
                   church family with humility, care, and dedication.
                 </p>
@@ -390,7 +370,7 @@ export default function LeadershipPage() {
                 <div
                   key={index}
                   ref={cardRef}
-                  className="group bg-white overflow-hidden shadow-sm hover:shadow-md transition-all duration-500"
+                  className="group shadow-sm hover:shadow-md transition-all duration-500"
                   style={{
                     opacity: cardVisible ? 1 : 0,
                     transform: cardVisible
@@ -403,11 +383,11 @@ export default function LeadershipPage() {
                     <img
                       src={deacon.img}
                       alt={deacon.name}
-                      className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-5 md:p-6">
-                    <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-1.5">
+                  <div className="p-5 md:p-6 bg-white">
+                    <p className="text-lg font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-1.5">
                       {deacon.role}
                     </p>
                     <h3 className="font-serif text-xl text-brand-primary leading-snug">
@@ -432,10 +412,10 @@ export default function LeadershipPage() {
             transition: "all 1s cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         >
-          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-brand-primary/60 mb-6">
+          <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-6">
             Connect With Us
           </p>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-brand-primary leading-tight mb-6">
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-black leading-tight mb-6">
             Leadership is always
             <br />
             about people.
@@ -448,14 +428,14 @@ export default function LeadershipPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-brand-primary text-white px-8 py-3.5 text-sm font-semibold tracking-wide hover:bg-brand-primary/90 transition-colors"
+              className="inline-flex items-center justify-center gap-2 bg-black text-white px-8 py-5 text-xl font-semibold tracking-wide  transition-colors rounded-lg"
             >
               CONTACT US
               <span>✉</span>
             </a>
             <a
               href="/about"
-              className="inline-flex items-center justify-center gap-2 border border-brand-primary/20 text-brand-primary px-8 py-3.5 text-sm font-semibold tracking-wide hover:border-brand-primary/40 transition-colors"
+              className="inline-flex items-center justify-center gap-2 border-2 border-black text-brand-primary px-8 py-5 text-xl font-semibold tracking-wide hover:bg-blue-900 hover:text-white transition-colors rounded-lg"
             >
               OUR HISTORY
               <span>→</span>

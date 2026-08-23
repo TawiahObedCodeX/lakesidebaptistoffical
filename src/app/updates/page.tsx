@@ -233,7 +233,7 @@ export default function BlogPage() {
             {/* Text */}
             <div>
               <FadeUp>
-                <p className="text-[#9B2C2C] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-5">
+                <p className="text-[#9B2C2C] text-lg sm:text-xl tracking-[0.3em] font-semibold uppercase mb-5">
                   {featuredSermon.label}
                 </p>
               </FadeUp>
@@ -251,7 +251,7 @@ export default function BlogPage() {
               </FadeUp>
 
               <FadeUp delay={0.16}>
-                <p className="text-[#5c5c5c] text-base sm:text-lg leading-relaxed max-w-lg mb-8">
+                <p className="text-[#5c5c5c] text-lg sm:text-xl leading-relaxed max-w-lg mb-8">
                   {featuredSermon.excerpt}
                 </p>
               </FadeUp>
@@ -259,35 +259,23 @@ export default function BlogPage() {
               <FadeUp delay={0.24}>
                 <div className="flex flex-wrap items-center gap-6 sm:gap-10 text-sm text-[#6b6b6b] mb-10">
                   <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase text-[#9a9a9a] mb-1">
+                    <p className="text-xl tracking-[0.2em] uppercase text-[#9a9a9a] mb-1">
                       Date
                     </p>
-                    <p className="font-medium text-[#1a1a1a]">
+                    <p className="font-medium text-[#1a1a1a] text-lg">
                       {featuredSermon.date}
                     </p>
                   </div>
                   <div className="w-px h-8 bg-[#ddd]" />
                   <div>
-                    <p className="text-[10px] tracking-[0.2em] uppercase text-[#9a9a9a] mb-1">
+                    <p className="text-xl tracking-[0.2em] uppercase text-[#9a9a9a] mb-1">
                       Read Time
                     </p>
-                    <p className="font-medium text-[#1a1a1a]">
+                    <p className="font-medium text-[#1a1a1a] text-lg">
                       {featuredSermon.readTime}
                     </p>
                   </div>
                 </div>
-              </FadeUp>
-
-              <FadeUp delay={0.32}>
-                <Link
-                  href={featuredSermon.href}
-                  className="group inline-flex items-center gap-2.5 text-[#1a1a1a] text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase hover:gap-3.5 transition-all duration-300"
-                >
-                  Explore Story
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
               </FadeUp>
             </div>
           </div>
@@ -302,7 +290,7 @@ export default function BlogPage() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 sm:mb-16">
             <FadeUp>
-              <p className="text-[#9B2C2C] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-3">
+              <p className="text-[#9B2C2C] text-sm sm:text-lg tracking-[0.3em] font-semibold uppercase mb-3">
                 Journal
               </p>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] leading-tight">
@@ -310,7 +298,7 @@ export default function BlogPage() {
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-[#6b6b6b] text-sm sm:text-base max-w-xs leading-relaxed">
+              <p className="text-[#6b6b6b] text-lg sm:text-xl max-w-xs leading-relaxed">
                 Exploring faith, community, and the stories that shape our
                 journey together.
               </p>
@@ -322,7 +310,7 @@ export default function BlogPage() {
             {/* Featured large post */}
             <FadeUp className="lg:col-span-7">
               <Link href={journalPosts[0].href} className="group block">
-                <div className="relative aspect-[16/11] sm:aspect-[16/10] rounded-xl overflow-hidden mb-6 shadow-md">
+                <div className="relative aspect-16/11 sm:aspect-16/10 rounded-xl overflow-hidden mb-6 shadow-md">
                   <Image
                     src={journalPosts[0].image}
                     alt={journalPosts[0].title}
@@ -330,19 +318,15 @@ export default function BlogPage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <p className="text-[#9B2C2C] text-[11px] tracking-[0.25em] font-semibold uppercase mb-2">
+                <p className="text-[#9B2C2C] text-lg tracking-[0.25em] font-semibold uppercase mb-2">
                   {journalPosts[0].category}
                 </p>
                 <h3 className="font-serif text-2xl sm:text-3xl text-[#1a1a1a] leading-snug mb-3 group-hover:text-[#9B2C2C] transition-colors duration-300">
                   {journalPosts[0].title}
                 </h3>
-                <p className="text-[#5c5c5c] text-base leading-relaxed max-w-lg mb-4">
+                <p className="text-[#5c5c5c] text-xl leading-relaxed max-w-lg mb-4">
                   {journalPosts[0].excerpt}
                 </p>
-                <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] uppercase text-[#1a1a1a]">
-                  Read Story
-                  <span className="w-6 h-px bg-[#1a1a1a]" />
-                </span>
               </Link>
             </FadeUp>
 
@@ -363,13 +347,13 @@ export default function BlogPage() {
                       />
                     </div>
                     <div className="pt-0.5">
-                      <p className="text-[#9B2C2C] text-[10px] sm:text-[11px] tracking-[0.22em] font-semibold uppercase mb-1.5">
+                      <p className="text-[#9B2C2C] text-sm sm:text-lg tracking-[0.22em] font-semibold uppercase mb-1.5">
                         {post.category}
                       </p>
                       <h4 className="font-serif text-lg sm:text-xl text-[#1a1a1a] leading-snug mb-2 group-hover:text-[#9B2C2C] transition-colors duration-300">
                         {post.title}
                       </h4>
-                      <p className="text-[#8a8a8a] text-xs tracking-wide">
+                      <p className="text-[#8a8a8a] text-sm tracking-wide">
                         {post.date} · {post.readTime}
                       </p>
                     </div>
@@ -390,7 +374,7 @@ export default function BlogPage() {
             {/* Text */}
             <div>
               <FadeUp>
-                <p className="text-[#C4A35A] text-xs sm:text-sm tracking-[0.28em] font-semibold uppercase mb-6">
+                <p className="text-red-500 text-xs sm:text-sm tracking-[0.28em] font-semibold uppercase mb-6">
                   Faith in Everyday Life
                 </p>
               </FadeUp>
@@ -415,27 +399,18 @@ export default function BlogPage() {
                   week.
                 </p>
               </FadeUp>
-
-              <FadeUp delay={0.24}>
-                <Link
-                  href="/blog"
-                  className="inline-flex items-center justify-center px-7 py-3.5 border border-[#C4A35A]/60 text-[#C4A35A] text-xs font-semibold tracking-[0.18em] uppercase rounded-sm hover:bg-[#C4A35A] hover:text-[#0F1419] transition-all duration-300"
-                >
-                  Explore Reflections
-                </Link>
-              </FadeUp>
             </div>
 
             {/* Image + quote card */}
             <FadeUp delay={0.1} className="relative">
-              <div className="relative aspect-[4/5] sm:aspect-[5/6] rounded-sm overflow-hidden">
+              <div className="relative aspect-4/5 sm:aspect-5/6 rounded-sm overflow-hidden">
                 <Image
                   src="/images/aboutimg2.png"
                   alt="City lights at night"
                   fill
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
               </div>
 
               {/* Quote overlay */}
@@ -444,13 +419,13 @@ export default function BlogPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.35 }}
-                className="absolute bottom-6 left-4 right-4 sm:bottom-8 sm:left-6 sm:right-auto sm:max-w-[280px] bg-[#0F1419]/95 backdrop-blur-sm border border-white/10 p-5 sm:p-6"
+                className="absolute bottom-6 left-4 right-4 sm:bottom-8 sm:left-6 sm:right-auto sm:max-w-70 bg-[#0F1419]/95 backdrop-blur-sm border border-white/10 p-5 sm:p-6"
               >
-                <p className="font-serif text-[#C4A35A] text-lg sm:text-xl leading-snug italic mb-3">
+                <p className="font-serif text-white text-lg sm:text-xl leading-snug italic mb-3">
                   &ldquo;Grace is not a Sunday event; it is a daily
                   rhythm.&rdquo;
                 </p>
-                <p className="text-white/50 text-[10px] tracking-[0.2em] uppercase">
+                <p className="text-white/50 text-sm tracking-[0.2em] uppercase">
                   A Daily Reflection
                 </p>
               </motion.div>
@@ -465,7 +440,7 @@ export default function BlogPage() {
       <section className="bg-[#F8F6F1] py-20 sm:py-28 lg:py-36">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <FadeUp className="text-center mb-14 sm:mb-16">
-            <p className="text-[#9B2C2C] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-4">
+            <p className="text-[#9B2C2C] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-4">
               Calendar
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a]">
@@ -477,7 +452,7 @@ export default function BlogPage() {
             {upcomingEvents.map((event, idx) => (
               <FadeUp key={event.title} delay={idx * 0.1}>
                 <article className="group">
-                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-5 shadow-md">
+                  <div className="relative aspect-4/5 rounded-xl overflow-hidden mb-5 shadow-md">
                     <Image
                       src={event.image}
                       alt={event.title}
@@ -490,15 +465,15 @@ export default function BlogPage() {
                       <p className="font-serif text-3xl sm:text-4xl font-medium text-[#1a1a1a] leading-none">
                         {event.day}
                       </p>
-                      <p className="text-[11px] tracking-[0.15em] uppercase text-[#9B2C2C] mt-1 font-semibold">
+                      <p className="text-sm tracking-[0.15em] uppercase text-[#9B2C2C] mt-1 font-semibold">
                         {event.month}
                       </p>
                     </div>
                     <div>
-                      <h3 className="font-serif text-lg sm:text-xl text-[#1a1a1a] leading-snug mb-1.5">
+                      <h3 className="font-serif text-lg sm:text-2xl text-[#1a1a1a] leading-snug mb-1.5">
                         {event.title}
                       </h3>
-                      <p className="text-[#6b6b6b] text-sm">
+                      <p className="text-[#6b6b6b] text-sm sm:text-lg leading-relaxed tracking-wide">
                         {event.time} · {event.location}
                       </p>
                     </div>
@@ -518,7 +493,7 @@ export default function BlogPage() {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-24 items-center">
             {/* Image */}
             <FadeUp>
-              <div className="relative aspect-[4/5] sm:aspect-[5/6] rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)]">
+              <div className="relative aspect-4/5 sm:aspect-5/6 rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.18)]">
                 <Image
                   src="/images/aboutimg4.jpeg"
                   alt="Community serving together"
@@ -533,7 +508,7 @@ export default function BlogPage() {
             {/* Text */}
             <div>
               <FadeUp>
-                <p className="text-[#9B2C2C] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-5">
+                <p className="text-[#9B2C2C] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-5">
                   Community
                 </p>
               </FadeUp>
@@ -547,23 +522,11 @@ export default function BlogPage() {
               </FadeUp>
 
               <FadeUp delay={0.16}>
-                <p className="text-[#5c5c5c] text-base sm:text-lg leading-relaxed max-w-md mb-10">
+                <p className="text-[#5c5c5c] text-base sm:text-xl leading-relaxed max-w-md mb-10">
                   Our Helping Hands program is the heartbeat of our community
                   engagement. Join us as we serve our local neighborhood through
                   practical help and meaningful connection.
                 </p>
-              </FadeUp>
-
-              <FadeUp delay={0.24}>
-                <Link
-                  href="/blog/4"
-                  className="group inline-flex items-center gap-2.5 text-[#1a1a1a] text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase hover:gap-3.5 transition-all duration-300"
-                >
-                  See How We Serve
-                  <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
               </FadeUp>
             </div>
           </div>

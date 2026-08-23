@@ -104,7 +104,7 @@ export default function DonationPage() {
               </div>
 
               <div>
-                <p className="text-[11px] font-semibold tracking-[0.25em] text-amber-600 uppercase mb-4">
+                <p className="text-lg font-semibold tracking-[0.25em] text-[#9B2C2C] uppercase mb-4">
                   Why We Give
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-slate-900 leading-tight mb-8">
@@ -141,12 +141,9 @@ export default function DonationPage() {
                       <h3 className="text-lg font-medium text-slate-900 mb-1.5">
                         {item.title}
                       </h3>
-                      <p className="text-slate-600 leading-relaxed text-[15px]">
+                      <p className="text-slate-600 leading-relaxed text-xl">
                         {item.desc}
                       </p>
-                      <button className="mt-2 text-[11px] font-semibold tracking-widest text-slate-900 uppercase hover:text-amber-600 transition-colors">
-                        Read More
-                      </button>
                     </motion.div>
                   ))}
                 </div>
@@ -167,7 +164,7 @@ export default function DonationPage() {
                 <h2 className="text-2xl sm:text-3xl font-serif font-medium text-slate-900 mb-1">
                   Give with Purpose
                 </h2>
-                <p className="text-slate-500 text-sm mb-8">
+                <p className="text-slate-500 text-lg mb-8">
                   Your gift makes a profound difference.
                 </p>
 
@@ -183,7 +180,7 @@ export default function DonationPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.25em] text-amber-600 uppercase mb-3">
+              <p className="text-lg font-semibold tracking-[0.25em] text-[#9B2C2C]  uppercase mb-3">
                 Where It Goes
               </p>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-slate-900 leading-tight">
@@ -191,7 +188,7 @@ export default function DonationPage() {
                 <br className="hidden sm:block" /> your generosity
               </h2>
             </div>
-            <button className="text-[11px] font-semibold tracking-widest text-slate-700 uppercase hover:text-slate-900 transition-colors self-start sm:self-auto">
+            <button className="text-lg font-semibold tracking-widest text-slate-700 uppercase hover:text-slate-900 transition-colors self-start sm:self-auto">
               See Full Report
             </button>
           </div>
@@ -254,7 +251,7 @@ export default function DonationPage() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-white leading-tight mt-4 mb-8">
               What we receive, we have the opportunity to share.
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
               Every gift is a seed planted into eternal purpose — funding
               worship, compassion, and mission that outlasts us all.
             </p>
@@ -294,7 +291,7 @@ export default function DonationPage() {
       {/* ========== FAQ ========== */}
       <section className="py-16 md:py-24 bg-white border-t border-slate-100">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <p className="text-[11px] font-semibold tracking-[0.25em] text-amber-600 uppercase mb-3 text-center">
+          <p className="text-lg font-semibold tracking-[0.25em] text-[#9B2C2C]  uppercase mb-3 text-center">
             Questions
           </p>
           <h2 className="text-3xl sm:text-4xl font-serif font-medium text-slate-900 text-center mb-12">
@@ -315,14 +312,14 @@ export default function DonationPage() {
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full flex items-center justify-between py-6 text-left group"
                 >
-                  <span className="text-base sm:text-lg font-medium text-slate-800 group-hover:text-slate-900 transition-colors pr-4">
+                  <span className="text-lg sm:text-xl font-medium text-slate-800 group-hover:text-slate-900 transition-colors pr-4">
                     {item.q}
                   </span>
                   <span className="text-slate-400 shrink-0">
                     {openFaq === i ? (
-                      <FaMinus className="text-sm" />
+                      <FaMinus className="text-lg" />
                     ) : (
-                      <FaPlus className="text-sm" />
+                      <FaPlus className="text-lg" />
                     )}
                   </span>
                 </button>
@@ -335,7 +332,7 @@ export default function DonationPage() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-6 text-slate-600 leading-relaxed text-[15px]">
+                      <p className="pb-6 text-slate-600 leading-relaxed text-lg">
                         {item.a}
                       </p>
                     </motion.div>
