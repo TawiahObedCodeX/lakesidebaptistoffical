@@ -1,173 +1,158 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { PageHero } from "@/components/PageHero";
 import { motion } from "framer-motion";
+import { useRef } from "react";
+import { useInView } from "framer-motion";
+import { PageHero } from "@/components/PageHero";
 import {
-  FaChurch,
-  FaPray,
-  FaBroadcastTower,
   FaChild,
-  FaFire,
-  FaHeart,
   FaMusic,
   FaGlobe,
-  FaBook,
-  FaGraduationCap,
+  FaHeart,
   FaUserFriends,
+  FaClock,
 } from "react-icons/fa";
-import { useState, useRef, useEffect } from "react";
-/**
- * CUSTOM HOOK: useIntersection
- * Optimized for 2026 performance standards.
- */
-function useIntersection(options = { threshold: 0.15 }) {
-  const [isIntersecting, setIntersecting] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIntersecting(true);
-        if (ref.current) observer.unobserve(ref.current);
-      }
-    }, options);
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [options]);
+/* ─────────────────────────────────────────────
+   HELPERS
+───────────────────────────────────────────── */
 
-  return [ref, isIntersecting] as const;
-}
-
-/* ── UI Components: Icons ── */
-const PlayCircle = () => (
-  <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5" stroke="currentColor" strokeWidth="2">
-    <circle cx="12" cy="12" r="10" />
-    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
-  </svg>
-);
-
-const CalendarIcon = () => (
-  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-    <line x1="16" y1="2" x2="16" y2="6" />
-    <line x1="8" y1="2" x2="8" y2="6" />
-    <line x1="3" y1="10" x2="21" y2="10" />
-  </svg>
-);
-
-/* ── Data ── */
-const sermons = [
-  {
-    id: 1,
-    day: "28",
-    month: "Dec ",
-    title: "A THANKFUL HEART",
-    preacher: `REV. EDGAR NASHIEF`,
-    category: "Transformation",
-    time: "9:50 AM",
-    img: "/images/pastorimg.jpg",
-  },
-  {
-    id: 2,
-    day: "12",
-    month: "Apr ",
-    title: `THE SACRIFICE OF THANKSGIVING`,
-    preacher: " REV OLUWATOYIN LAWAL",
-    category: "Resilience",
-    time: "9:50 AM",
-    img: "/images/pastorimg.jpg",
-  },
-  {
-    id: 3,
-    day: "25",
-    month: "MAR",
-    title: "THE POWER OF THE SEED",
-    preacher: "REV Edgar Nashief",
-    category: "Vision",
-    time: "9:50 AM",
-    img: "/images/pastorimg.jpg",
-    url:"https://www.youtube.com/live/_4PKOR7v5x0?si=920YtIOJJrO4itEx"
-  },
-
-];
-
-
-/* ── Sermon Card Component ── */
-function SermonCard({ sermon, index }: { sermon: typeof sermons[0]; index: number }) {
-  const [ref, visible] = useIntersection();
-  
+function FadeUp({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`group relative flex flex-col bg-white rounded-4xl overflow-hidden transition-all duration-[1000s] cubic-bezier(0.2, 1, 0.2, 1) 
-      ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
-      style={{ transitionDuration: "0.8s", transitionDelay: `${index * 150}ms` }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
     >
-      {/* Image Container */}
-      <div className="relative h-70 overflow-hidden">
-        <img
-          src={sermon.img}
-          alt={sermon.title}
-          className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60" />
-        
-        {/* Date Badge: Glassmorphism */}
-        <div className="absolute top-5 left-5 backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-3 text-white text-center min-w-15">
-          <span className="block text-2xl font-bold leading-none">{sermon.day}</span>
-          <span className="block text-[10px] tracking-widest uppercase font-medium opacity-80">{sermon.month}</span>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-8 flex flex-col flex-1 bg-white group-hover:bg-slate-50 transition-colors duration-500">
-        <div className="flex items-center gap-2 text-slate-400 mb-3 text-xs font-semibold">
-          <CalendarIcon />
-          <span>{sermon.time}</span>
-          <span className="mx-1">•</span>
-          <span>{sermon.preacher}</span>
-        </div>
-        
-        <h3 className="text-2xl font-serif font-bold text-slate-900 leading-tight mb-6 group-hover:text-amber-600 transition-colors">
-          {sermon.title}
-        </h3>
-
-        <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
-          <button className="flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-slate-900 hover:text-amber-600 transition-all">
-            Watch Now
-            <div className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all">
-              <PlayCircle />
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
+      {children}
+    </motion.div>
   );
 }
 
+/* ─────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────── */
+
+const featuredSermons = [
+  {
+    id: 1,
+    category: "THEOLOGY",
+    day: "14",
+    month: "MAY",
+    preacher: "DR. MARCUS THORNE",
+    duration: "42 MIN",
+    title: "The Architecture of Grace",
+    img: "/images/pastorimg.jpg", // replace with your actual image
+    featured: true,
+  },
+  {
+    id: 2,
+    category: "SPIRITUAL GROWTH",
+    day: "07",
+    month: "MAY",
+    preacher: "SARAH JENKINS",
+    duration: "35 MIN",
+    title: "Walking in Stillness",
+    img: "/images/pastorimg.jpg",
+    featured: false,
+  },
+  {
+    id: 3,
+    category: "FAITH",
+    day: "30",
+    month: "APR",
+    preacher: "DR. MARCUS THORNE",
+    duration: "38 MIN",
+    title: "The Unseen Hand",
+    img: "/images/pastorimg.jpg",
+    featured: false,
+  },
+];
+
+const serviceTimes = [
+  {
+    day: "SUNDAY",
+    time: "8:00 – 11:00",
+    period: "AM",
+    label: "Main Worship Service",
+    icon: <FaClock className="w-4 h-4" />,
+  },
+  {
+    day: "WEDNESDAY",
+    time: "7:00 – 8:30",
+    period: "PM",
+    label: "Midweek Prayer & Study",
+    icon: <FaClock className="w-4 h-4" />,
+  },
+  {
+    day: "ONLINE",
+    time: "Every",
+    period: "Sunday",
+    label: "Live Stream Available",
+    icon: <FaMusic className="w-4 h-4" />,
+  },
+];
+
+const ministries = [
+  {
+    id: "01",
+    icon: <FaChild className="w-5 h-5" />,
+    title: "Children's Ministry",
+    desc: "Nurturing the next generation in a fun, safe, and Christ-centered environment.",
+  },
+  {
+    id: "02",
+    icon: <FaMusic className="w-5 h-5" />,
+    title: "Youth Ministry",
+    desc: "Empowering teens to live out their faith boldly in today's world.",
+  },
+  {
+    id: "03",
+    icon: <FaMusic className="w-5 h-5" />,
+    title: "Worship Team",
+    desc: "Leading our community into God's presence through music and creativity.",
+  },
+  {
+    id: "04",
+    icon: <FaGlobe className="w-5 h-5" />,
+    title: "Outreach & Missions",
+    desc: "Extending God's love to our local community and beyond.",
+  },
+  {
+    id: "05",
+    icon: <FaHeart className="w-5 h-5" />,
+    title: "Marriage & Family",
+    desc: "Strengthening bonds through biblical principles and shared experiences.",
+  },
+  {
+    id: "06",
+    icon: <FaUserFriends className="w-5 h-5" />,
+    title: "Men's Ministry",
+    desc: "Building strong men of character through fellowship and service.",
+  },
+];
+
+/* ─────────────────────────────────────────────
+   PAGE
+───────────────────────────────────────────── */
+
 export default function ServicesPage() {
-  const [headerRef, headerVisible] = useIntersection();
-  const serviceTimes = [
-    { day: "Sunday", time: "8:00 – 11:00 AM", label: "Main Worship Service", icon: <FaChurch /> },
-    { day: "Wednesday", time: "7:00 - 8:30 AM", label: "Midweek Prayer", icon: <FaPray /> },
-    { day: "Online", time: "Every Sunday", label: "Live Stream Available", icon: <FaBroadcastTower /> },
-  ];
-
-  const ministries = [
-    { icon: <FaChild />, title: "Children's Ministry", desc: "Fun and faith-building for kids" },
-    { icon: <FaFire />, title: "Youth Ministry", desc: "Empowering young leaders" },
-    { icon: <FaHeart />, title: "Marriage & Family life", desc: "Strong families in Christ" },
-    { icon: <FaMusic />, title: "Worship Team", desc: "Leading spirit-filled worship" },
-    { icon: <FaGlobe />, title: "Outreach & Missions", desc: "Impacting communities" },
-    { icon: <FaUserFriends />, title: "Women's Ministry", desc: "Sisterhood & growth" },
-    { icon: <FaUserFriends />, title: "Men's Ministry", desc: "Brotherhood & growth" },
-  ];
-
   return (
-    <main className="bg-site-bg min-h-screen overflow-hidden">
-      {/* 1. Hero Section - Now Fixed */}
+    <main className="bg-white min-h-screen overflow-x-hidden">
+      {/* 1. HERO — untouched */}
       <PageHero
         eyebrow="Our Services"
         title="Experience God Like Never Before"
@@ -175,95 +160,296 @@ export default function ServicesPage() {
         imageSrc="/images/lbcimg3.jpeg"
       />
 
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <div 
-          ref={headerRef} 
-          className={`flex flex-col md:flex-row md:items-end justify-between mb-16 transition-all duration-1000 ${headerVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
-        >
-          <div className="max-w-xl">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-              Featured Teachings
-            </h2>
-            <div className="h-1 w-20 bg-blue-900 mb-6" />
-            <p className="text-slate-500 text-2xl leading-relaxed">
-              Filtering through our most impactful series. Select a topic that resonates with your current season of life.
-            </p>
+      {/* ═══════════════════════════════════════
+          2. FEATURED TEACHINGS
+      ═══════════════════════════════════════ */}
+      <section className="py-20 sm:py-24 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          {/* Header */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 lg:mb-16">
+            <div className="max-w-xl">
+              <FadeUp>
+                <p className="text-[11px] sm:text-xs tracking-[0.25em] font-semibold uppercase text-slate-500 mb-4">
+                  FEATURED TEACHINGS
+                </p>
+              </FadeUp>
+              <FadeUp delay={0.08}>
+                <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] leading-[1.1] tracking-tight text-[#1a1a1a]">
+                  Life-Changing
+                  <br />
+                  Truths
+                </h2>
+              </FadeUp>
+              <FadeUp delay={0.14}>
+                <p className="mt-5 text-slate-500 text-base sm:text-lg leading-relaxed max-w-md">
+                  Explore our latest messages designed to challenge your thinking and
+                  nourish your spirit.
+                </p>
+              </FadeUp>
+            </div>
+
+            <FadeUp delay={0.18}>
+              <Link
+                href="/sermons"
+                className="inline-flex items-center justify-center border border-slate-300 px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase text-slate-800 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
+              >
+                BROWSE ARCHIVE
+              </Link>
+            </FadeUp>
           </div>
-          
-        </div>
 
-        {/* The Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {sermons.map((s, i) => (
-            <SermonCard key={s.id} sermon={s} index={i} />
-          ))}
-        </div>
+          {/* Sermon Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+            {/* Large featured card */}
+            <FadeUp className="lg:col-span-7">
+              <div className="group relative overflow-hidden rounded-sm bg-slate-100">
+                <div className="relative aspect-[16/10] lg:aspect-[4/3]">
+                  <img
+                    src={featuredSermons[0].img}
+                    alt={featuredSermons[0].title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-black/20" />
 
+                  {/* Category */}
+                  <span className="absolute top-5 left-5 text-[10px] tracking-[0.2em] font-semibold uppercase text-white/90">
+                    {featuredSermons[0].category}
+                  </span>
+
+                  {/* Play button */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button className="w-14 h-14 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-900 shadow-lg hover:scale-105 transition-transform">
+                      <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </button>
+                  </div>
+                  <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.2em] font-semibold uppercase text-white">
+                    LISTEN PREVIEW
+                  </span>
+                </div>
+
+                {/* Meta */}
+                <div className="p-6 sm:p-8 bg-white">
+                  <div className="flex items-start gap-5">
+                    <div className="text-center shrink-0">
+                      <p className="text-3xl font-serif font-medium leading-none text-[#1a1a1a]">
+                        {featuredSermons[0].day}
+                      </p>
+                      <p className="text-[10px] tracking-[0.15em] uppercase text-slate-500 mt-1">
+                        {featuredSermons[0].month}
+                      </p>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500 mb-2">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-3.5 h-3.5 rounded-full border border-slate-300 flex items-center justify-center text-[8px]">
+                            ♂
+                          </span>
+                          {featuredSermons[0].preacher}
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="opacity-60">⏱</span>
+                          {featuredSermons[0].duration}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-2xl sm:text-[1.7rem] text-[#1a1a1a] leading-snug">
+                        {featuredSermons[0].title}
+                      </h3>
+                      <Link
+                        href={`/sermons/${featuredSermons[0].id}`}
+                        className="inline-flex items-center gap-2 mt-4 text-[11px] font-semibold tracking-[0.15em] uppercase text-slate-700 hover:text-slate-900 transition-colors"
+                      >
+                        VIEW SERMON <span>→</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+
+            {/* Right column – two smaller cards */}
+            <div className="lg:col-span-5 flex flex-col gap-6 lg:gap-8">
+              {featuredSermons.slice(1).map((sermon, i) => (
+                <FadeUp key={sermon.id} delay={0.1 + i * 0.08}>
+                  <div className="group relative overflow-hidden rounded-sm bg-slate-100">
+                    <div className="relative aspect-[16/9]">
+                      <img
+                        src={sermon.img}
+                        alt={sermon.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/25" />
+                      <span className="absolute top-4 left-4 text-[10px] tracking-[0.2em] font-semibold uppercase text-white/90">
+                        {sermon.category}
+                      </span>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <button className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-slate-900 shadow-md hover:scale-105 transition-transform">
+                          <svg className="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </button>
+                      </div>
+                      <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.2em] font-semibold uppercase text-white">
+                        LISTEN PREVIEW
+                      </span>
+                    </div>
+
+                    <div className="p-5 sm:p-6 bg-white">
+                      <div className="flex items-start gap-4">
+                        <div className="text-center shrink-0">
+                          <p className="text-2xl font-serif font-medium leading-none text-[#1a1a1a]">
+                            {sermon.day}
+                          </p>
+                          <p className="text-[10px] tracking-[0.15em] uppercase text-slate-500 mt-0.5">
+                            {sermon.month}
+                          </p>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-slate-500 mb-1.5">
+                            <span className="flex items-center gap-1.5">
+                              <span className="w-3.5 h-3.5 rounded-full border border-slate-300 flex items-center justify-center text-[8px]">
+                                ♂
+                              </span>
+                              {sermon.preacher}
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <span className="opacity-60">⏱</span>
+                              {sermon.duration}
+                            </span>
+                          </div>
+                          <h3 className="font-serif text-xl text-[#1a1a1a] leading-snug">
+                            {sermon.title}
+                          </h3>
+                          <Link
+                            href={`/sermons/${sermon.id}`}
+                            className="inline-flex items-center gap-2 mt-3 text-[11px] font-semibold tracking-[0.15em] uppercase text-slate-700 hover:text-slate-900 transition-colors"
+                          >
+                            VIEW SERMON <span>→</span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* 2. Image & Text Section */}
-      
+      {/* ═══════════════════════════════════════
+          3. THE WEEKLY RHYTHM
+      ═══════════════════════════════════════ */}
+      <section className="py-20 sm:py-24 lg:py-28 bg-[#F8F6F1]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          <div className="text-center mb-14 lg:mb-16">
+            <FadeUp>
+              <p className="text-[11px] sm:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500 mb-4">
+                THE WEEKLY RHYTHM
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.08}>
+              <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.4rem] leading-[1.15] tracking-tight text-[#1a1a1a]">
+                Make Room for What
+                <br />
+                Matters
+              </h2>
+            </FadeUp>
+          </div>
 
-      {/* 3. Service Times */}
-      <section className="py-24  bg-blue-800 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] bg-size-[40px_40px] opacity-30" />
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-16 text-center">Service Times</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {serviceTimes.map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="bg-white/10 backdrop-blur-md border border-white/20 p-10 rounded-3xl text-center group hover:bg-white/15 transition-all duration-500"
-              >
-                <div className="text-white text-5xl mb-8 flex justify-center group-hover:rotate-12 transition-transform duration-300">
-                  {s.icon}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-slate-200/80 rounded-sm overflow-hidden shadow-sm">
+            {serviceTimes.map((item, i) => (
+              <FadeUp key={item.day} delay={0.1 + i * 0.08}>
+                <div className="bg-white px-8 py-12 sm:py-14 text-center h-full flex flex-col items-center">
+                  <div className="text-slate-400 mb-6">{item.icon}</div>
+                  <p className="text-[11px] tracking-[0.2em] font-semibold uppercase text-slate-500 mb-4">
+                    {item.day}
+                  </p>
+                  <p className="font-serif text-3xl sm:text-4xl text-[#1a1a1a] leading-none">
+                    {item.time}
+                  </p>
+                  <p className="font-serif text-3xl sm:text-4xl text-[#1a1a1a] mt-1">
+                    {item.period}
+                  </p>
+                  <p className="mt-5 text-sm text-slate-500">{item.label}</p>
                 </div>
-                <h3 className="text-3xl font-bold mb-3">{s.day}</h3>
-                <p className="text-red-400 text-2xl font-semibold mb-2">{s.time}</p>
-                <p className="text-white/70 text-sm tracking-widest uppercase font-medium">{s.label}</p>
-              </motion.div>
+              </FadeUp>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Ministries Grid */}
-      <section className="py-24 max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
-          {/* <h2 className="text-brand-secondary font-bold tracking-widest uppercase text-sm mb-4">What we offer</h2> */}
-          <h3 className="text-4xl font-serif font-bold text-brand-primary">Our Ministries</h3>
-          <div className="w-24 h-1 bg-blue-900 mx-auto mt-6 rounded-full" />
-        </div>
+      {/* ═══════════════════════════════════════
+          4. MINISTRIES – Find Your Place
+      ═══════════════════════════════════════ */}
+      <section className="py-20 sm:py-24 lg:py-28 bg-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          {/* Header */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 lg:mb-16">
+            <div className="max-w-xl">
+              <FadeUp>
+                <p className="text-[11px] sm:text-xs tracking-[0.25em] font-semibold uppercase text-slate-500 mb-4">
+                  MINISTRIES
+                </p>
+              </FadeUp>
+              <FadeUp delay={0.08}>
+                <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] leading-[1.1] tracking-tight text-[#1a1a1a]">
+                  Find Your Place
+                </h2>
+              </FadeUp>
+              <FadeUp delay={0.14}>
+                <p className="mt-5 text-slate-500 text-base sm:text-lg leading-relaxed max-w-md">
+                  There is a place for every season, every age, and every story. Discover
+                  where you belong in the Lakeside family.
+                </p>
+              </FadeUp>
+            </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {ministries.map((m, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -12 }}
-              className="group p-5  rounded-3xl bg-white border border-neutral-100 shadow hover:border-brand-accent/30 hover:shadow-xl transition-all duration-300 flex flex-col"
-            >
-              <div className="text-blue-900 text-4xl mb-6 group-hover:scale-110 transition-transform">{m.icon}</div>
-              <h3 className="text-2xl font-bold text-brand-primary mb-4">{m.title}</h3>
-              <p className="text-site-muted text-[15px] leading-relaxed grow">{m.desc}</p>
+            <FadeUp delay={0.18}>
               <Link
                 href="/ministries"
-                className="mt-8 text-black font-bold text-xs uppercase tracking-widest hover:text-blue-700 inline-flex items-center gap-2 group-hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 border border-slate-300 px-6 py-3 text-xs font-semibold tracking-[0.15em] uppercase text-slate-800 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
               >
-                Learn More <span className="text-lg">→</span>
+                ALL COMMUNITIES <span>→</span>
               </Link>
-            </motion.div>
-          ))}
+            </FadeUp>
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+            {ministries.map((m, i) => (
+              <FadeUp key={m.id} delay={0.06 + i * 0.05}>
+                <div className="group relative h-full bg-[#FAFAF9] border border-slate-100 rounded-sm p-7 sm:p-8 flex flex-col transition-all duration-300 hover:border-slate-200 hover:shadow-sm">
+                  {/* Number + Icon */}
+                  <div className="flex items-start justify-between mb-8">
+                    <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 group-hover:border-slate-300 transition-colors">
+                      {m.icon}
+                    </div>
+                    <span className="text-4xl font-serif text-slate-200/80 leading-none select-none">
+                      {m.id}
+                    </span>
+                  </div>
+
+                  <h3 className="font-serif text-xl sm:text-[1.35rem] text-[#1a1a1a] mb-3">
+                    {m.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 leading-relaxed grow mb-6">
+                    {m.desc}
+                  </p>
+
+                  <Link
+                    href="/ministries"
+                    className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.15em] uppercase text-slate-700 group-hover:text-slate-900 transition-colors"
+                  >
+                    LEARN MORE <span className="transition-transform group-hover:translate-x-1">→</span>
+                  </Link>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
-      </section>      
+      </section>
     </main>
   );
 }

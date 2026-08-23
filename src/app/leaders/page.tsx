@@ -201,25 +201,7 @@ export default function LeadershipPage() {
   </div>
       </section>
 
-      {/* --- STATS OVERLAP --- */}
-      {/* <section className="relative z-20 -mt-24 px-6">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10 backdrop-blur-md border border-glass-border rounded-3xl overflow-hidden shadow-card-lg">
-          {[
-            { label: "Ministry Years", value: "20+" },
-            { label: "Community Partners", value: "14" },
-            { label: "Global Missions", value: "06" },
-          ].map((stat, i) => (
-            <div key={i} className="bg-white p-10 text-center">
-              <p className="text-brand-secondary font-serif text-4xl font-bold mb-1">
-                {stat.value}
-              </p>
-              <p className="text-site-muted text-[10px] font-bold uppercase tracking-widest">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section> */}
+    
 
       {/* --- FEATURED LEADER --- */}
       <section className="max-w-6xl mx-auto px-6 py-28">
