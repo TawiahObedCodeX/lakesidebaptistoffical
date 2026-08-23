@@ -1,11 +1,10 @@
 // app/(routes)/donation/donation-form.tsx
-// REMOVED: OTP verification - now redirects directly to Paystack
 "use client";
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { FaCheckCircle, FaSpinner } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaSpinner, FaLock } from "react-icons/fa";
 
-const PRESETS = [100, 200, 300, 500, 1000, 2000] as const;
+const PRESETS = [50, 70, 100, 200, 500, 1000] as const;
 
 const PURPOSES = [
   { value: "TITHE", label: "Tithe" },
@@ -15,9 +14,9 @@ const PURPOSES = [
 ] as const;
 
 export function DonationForm() {
-  const [selectedPreset, setSelectedPreset] = useState<number>(PRESETS[3]);
+  const [selectedPreset, setSelectedPreset] = useState<number>(100);
   const [customAmount, setCustomAmount] = useState("");
-  const [purpose, setPurpose] = useState<string>("GIVE");
+  const [purpose, setPurpose] = useState<string>("TITHE");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,10 +25,12 @@ export function DonationForm() {
     return Number.isFinite(n) && n > 0 ? n : selectedPreset;
   }, [customAmount, selectedPreset]);
 
-  async function onSubmit(formData: FormData) {
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setLoading(true);
     setError(null);
 
+    const formData = new FormData(e.currentTarget);
     const firstName = String(formData.get("firstName") ?? "").trim();
     const lastName = String(formData.get("lastName") ?? "").trim();
     const email = String(formData.get("email") ?? "").trim();
@@ -41,7 +42,7 @@ export function DonationForm() {
       setLoading(false);
       return;
     }
-    
+
     if (resolvedAmount < 10) {
       setError("Minimum amount is GH₵10.");
       setLoading(false);
@@ -50,7 +51,7 @@ export function DonationForm() {
 
     try {
       const giverName = `${firstName} ${lastName}`.trim();
-      
+
       const res = await fetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -66,35 +67,41 @@ export function DonationForm() {
       });
 
       const data = await res.json();
-      
+
       if (!data.ok) {
         throw new Error(data.error || "Payment initialization failed");
       }
 
-      // Redirect directly to Paystack (no OTP step)
       window.location.href = data.authorization_url;
-      
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : "Something went wrong.";
+      const errorMessage =
+        err instanceof Error ? err.message : "Something went wrong.";
       setError(errorMessage);
       setLoading(false);
     }
   }
 
   return (
-    <form action={onSubmit} className="space-y-12">
-      {error && (
-        <div className="bg-red-50 text-red-700 p-5 rounded-2xl border border-red-100">
-          {error}
-        </div>
-      )}
+    <form onSubmit={onSubmit} className="space-y-8">
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-100 text-sm"
+          >
+            {error}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Purpose Selection */}
+      {/* 1. SELECT PURPOSE */}
       <div>
-        <h3 className="uppercase tracking-widest text-sm font-semibold text-slate-500 mb-6">
-          Purpose
-        </h3>
-        <div className="grid grid-cols-2 gap-4">
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
+          1. Select Purpose
+        </p>
+        <div className="grid grid-cols-2 gap-3">
           {PURPOSES.map((p) => (
             <motion.button
               key={p.value}
@@ -102,10 +109,10 @@ export function DonationForm() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setPurpose(p.value)}
-              className={`py-6 rounded-2xl font-medium border transition-all ${
-                purpose === p.value 
-                  ? "bg-blue-600 text-white border-blue-600" 
-                  : "border-slate-200 hover:bg-blue-50 hover:border-blue-300"
+              className={`py-3.5 px-4 rounded-xl text-sm font-medium border transition-all duration-300 ${
+                purpose === p.value
+                  ? "bg-slate-900 text-white border-slate-900 shadow-md"
+                  : "bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:bg-slate-50"
               }`}
             >
               {p.label}
@@ -114,97 +121,138 @@ export function DonationForm() {
         </div>
       </div>
 
-      {/* Amount Selection */}
+      {/* 2. CHOOSE AMOUNT */}
       <div>
-        <h3 className="uppercase tracking-widest text-sm font-semibold text-slate-500 mb-6">
-          Amount (GH₵)
-        </h3>
-        <div className="flex justify-between items-end mb-8">
-          <span className="text-7xl font-light tracking-tighter text-slate-900">
-            {resolvedAmount}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
+          2. Choose Amount
+        </p>
+        <div className="grid grid-cols-3 gap-3 mb-4">
           {PRESETS.map((amt) => (
             <motion.button
               key={amt}
               type="button"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => { 
-                setSelectedPreset(amt); 
-                setCustomAmount(""); 
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => {
+                setSelectedPreset(amt);
+                setCustomAmount("");
               }}
-              className={`py-7 rounded-2xl font-semibold transition-all ${
-                !customAmount && selectedPreset === amt 
-                  ? "bg-blue-600 text-white" 
-                  : "border border-slate-200 hover:border-blue-300"
+              className={`py-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                !customAmount && selectedPreset === amt
+                  ? "bg-slate-900 text-white shadow-md"
+                  : "bg-white text-slate-700 border border-slate-200 hover:border-slate-400"
               }`}
             >
-              {amt}
+              GH₵{amt}
             </motion.button>
           ))}
         </div>
 
-        <input
-          type="number"
-          value={customAmount}
-          onChange={(e) => setCustomAmount(e.target.value)}
-          placeholder="Custom amount"
-          className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-8 py-7 text-2xl outline-none"
-        />
-      </div>
-
-      {/* Donor Information */}
-      <div className="space-y-6">
-        <h3 className="uppercase tracking-widest text-sm font-semibold text-slate-500">
-          Your Information
-        </h3>
-        <div className="grid md:grid-cols-2 gap-5">
-          <input 
-            name="firstName" 
-            type="text" 
-            required 
-            placeholder="First Name" 
-            className="border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" 
-          />
-          <input 
-            name="lastName" 
-            type="text" 
-            required 
-            placeholder="Last Name" 
-            className="border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" 
+        <div className="relative">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">
+            GH₵
+          </span>
+          <input
+            type="number"
+            value={customAmount}
+            onChange={(e) => setCustomAmount(e.target.value)}
+            placeholder="Custom amount"
+            className="w-full border border-slate-200 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 rounded-xl pl-14 pr-4 py-3.5 text-sm outline-none transition-all"
           />
         </div>
-        <input 
-          name="email" 
-          type="email" 
-          required 
-          placeholder="Email Address" 
-          className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" 
-        />
-        <input 
-          name="phone" 
-          type="tel" 
-          placeholder="Phone Number (optional)" 
-          className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none" 
-        />
-        <textarea 
-          name="note" 
-          rows={3} 
-          placeholder="Note or prayer request (optional)" 
-          className="w-full border border-slate-200 focus:border-blue-600 rounded-2xl px-6 py-5 outline-none resize-y" 
-        />
       </div>
 
-      {/* Submit Button */}
+      {/* TOTAL GIFT */}
+      <div className="bg-slate-50 rounded-2xl py-8 px-6 text-center border border-slate-100">
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-2">
+          Total Gift
+        </p>
+        <motion.p
+          key={resolvedAmount}
+          initial={{ scale: 0.9, opacity: 0.6 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="text-5xl md:text-6xl font-serif font-medium text-slate-900 tracking-tight"
+        >
+          GH₵{resolvedAmount.toLocaleString()}
+        </motion.p>
+      </div>
+
+      {/* 3. DONOR DETAILS */}
+      <div>
+        <p className="text-[11px] font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
+          3. Donor Details
+        </p>
+        <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input
+              name="firstName"
+              type="text"
+              required
+              placeholder="First Name"
+              className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
+            />
+            <input
+              name="lastName"
+              type="text"
+              required
+              placeholder="Last Name"
+              className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
+            />
+          </div>
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="Email Address"
+            className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
+          />
+          <input
+            name="phone"
+            type="tel"
+            placeholder="Phone Number (Optional)"
+            className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
+          />
+          <textarea
+            name="note"
+            rows={3}
+            placeholder="Note or prayer request (optional)"
+            className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none resize-none transition-all"
+          />
+        </div>
+      </div>
+
+      {/* Summary bar */}
+      <div className="bg-slate-50 rounded-xl px-5 py-4 flex items-center justify-between text-sm border border-slate-100">
+        <div>
+          <p className="text-[10px] tracking-widest text-slate-400 uppercase">
+            Purpose
+          </p>
+          <p className="font-medium text-slate-800 mt-0.5">
+            {PURPOSES.find((p) => p.value === purpose)?.label}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] tracking-widest text-slate-400 uppercase flex items-center justify-end gap-1.5">
+            <FaLock className="text-[10px]" /> Secure Payment Via
+          </p>
+          <p className="font-semibold text-slate-900 mt-0.5 tracking-wide">
+            PAYSTACK
+          </p>
+        </div>
+      </div>
+
+      <p className="text-center text-xs text-slate-400">
+        You’ll continue securely to Paystack to complete your payment.
+      </p>
+
+      {/* Submit */}
       <motion.button
         type="submit"
         disabled={loading}
         whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.985 }}
-        className="w-full py-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl font-semibold text-2xl shadow-xl disabled:opacity-70 flex items-center justify-center gap-3"
+        whileTap={{ scale: 0.99 }}
+        className="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-sm tracking-wide shadow-lg disabled:opacity-70 flex items-center justify-center gap-2 transition-colors duration-300"
       >
         {loading ? (
           <>
@@ -213,8 +261,8 @@ export function DonationForm() {
           </>
         ) : (
           <>
-            Donate GH₵{resolvedAmount}
-            <FaCheckCircle />
+            GIVE GH₵{resolvedAmount.toLocaleString()}
+            <span className="text-lg">→</span>
           </>
         )}
       </motion.button>
