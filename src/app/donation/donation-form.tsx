@@ -262,7 +262,6 @@ export function DonationForm() {
         ) : (
           <>
             GIVE GH₵{resolvedAmount.toLocaleString()}
-            <span className="text-lg">→</span>
           </>
         )}
       </motion.button>
