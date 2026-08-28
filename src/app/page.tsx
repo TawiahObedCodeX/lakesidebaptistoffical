@@ -68,7 +68,7 @@ const impactItems = [
     title: "Local Donation Drives",
     description:
       "We believe in being the hands and feet of Jesus. Our outreach programs are designed to meet the practical and spiritual needs of our neighbors, bringing hope and help to those who need it most.",
-    image: "/images/donation-drive.jpg",
+    image: "/images/pappoe.jpg",
     alt: "Community members distributing food and supplies",
     reverse: false,
   },
@@ -76,7 +76,7 @@ const impactItems = [
     title: "Hospital Visitation",
     description:
       "We believe in being the hands and feet of Jesus. Our outreach programs are designed to meet the practical and spiritual needs of our neighbors, bringing hope and help to those who need it most.",
-    image: "/images/hospital-visit.jpg",
+    image: "/images/191.jpg",
     alt: "Nurse visiting with elderly patient",
     reverse: true,
   },
@@ -84,7 +84,7 @@ const impactItems = [
     title: "School Support Programs",
     description:
       "We believe in being the hands and feet of Jesus. Our outreach programs are designed to meet the practical and spiritual needs of our neighbors, bringing hope and help to those who need it most.",
-    image: "/images/school-support.jpg",
+    image: "/images/191.jpg",
     alt: "Volunteers helping children with schoolwork",
     reverse: false,
   },
@@ -97,7 +97,7 @@ const schedule = [
     description: "Main sanctuary service with full choir.",
   },
   {
-    time: "11:00 AM",
+    time: "8:00 AM",
     title: "Bible Study",
     description: "Deep dive into the Word in the fellowship hall.",
   },
@@ -112,9 +112,9 @@ const schedule = [
     description: "Sacred time of remembrance and grace.",
   },
   {
-    time: "Fridays",
+    time: "6:00 PM",
     title: "Youth Service",
-    description: "High energy worship and relevant teaching.",
+    description: "High energy worship and relevant teaching. friday evening",
   },
   {
     time: "Seasonal",
@@ -172,18 +172,18 @@ export default function HomePage() {
             >
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/who-we-are.jpg"
+                  src="/images/pastorimg.jpg"
                   alt="Lakeside Baptist Church community family"
                   width={700}
                   height={850}
-                  className="w-full h-auto object-cover aspect-[4/5]"
+                  className="w-full h-auto object-cover aspect-4/5"
                   priority
                 />
                 {/* Quote overlay */}
                 <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-auto sm:max-w-xs">
                   <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-xl border border-white/50">
                     <div className="text-4xl text-gray-300 leading-none mb-2 font-serif">”</div>
-                    <p className="text-gray-800 text-[15px] leading-relaxed font-medium">
+                    <p className="text-gray-800 text-lg leading-relaxed font-medium">
                       &quot;A place where everyone belongs and grace overflows.&quot;
                     </p>
                   </div>
@@ -208,7 +208,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-lg text-gray-600 mb-8 leading-relaxed"
+                className="text-xl text-gray-600 mb-8 leading-relaxed"
               >
                 Discover a community dedicated to Christ, connection, and compassion.
               </motion.p>
@@ -218,7 +218,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.15 }}
-                className="text-gray-700 text-[17px] leading-relaxed mb-10"
+                className="text-gray-700 text-lg leading-relaxed mb-10"
               >
                 Lakeside Baptist Church is more than just a building. We are a family of believers committed to living out the gospel in every aspect of our lives.
               </motion.p>
@@ -235,8 +235,8 @@ export default function HomePage() {
                     className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
                   >
                     <div className="text-gray-800 mb-3">{item.icon}</div>
-                    <h3 className="font-bold text-gray-900 text-lg mb-1">{item.title}</h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{item.description}</p>
+                    <h3 className="font-bold text-[#B85C38] text-xl mb-1">{item.title}</h3>
+                    <p className="text-gray-600 text-lg leading-relaxed">{item.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -263,7 +263,7 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-lg text-gray-600"
+              className="text-xl text-gray-600"
             >
               Making a difference in our city and beyond.
             </motion.p>
@@ -289,7 +289,7 @@ export default function HomePage() {
                       alt={item.alt}
                       width={700}
                       height={480}
-                      className="w-full h-auto object-cover aspect-[16/11]"
+                      className="w-full h-auto object-cover aspect-16/11"
                     />
                   </div>
                 </div>
@@ -299,16 +299,9 @@ export default function HomePage() {
                   <h3 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-5">
                     {item.title}
                   </h3>
-                  <p className="text-gray-700 text-[17px] leading-relaxed mb-8">
+                  <p className="text-gray-700 text-xl leading-relaxed mb-8">
                     {item.description}
                   </p>
-                  <Link
-                    href="/outreach"
-                    className="inline-flex items-center gap-2 text-gray-900 font-semibold hover:gap-3 transition-all duration-300 group"
-                  >
-                    How you can help
-                    <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -364,11 +357,11 @@ export default function HomePage() {
                         isLeft ? "sm:text-right sm:pr-12" : "sm:text-left sm:pl-12 sm:order-2"
                       }`}
                     >
-                      <p className="text-sm font-medium text-gray-500 mb-1">{item.time}</p>
-                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-gray-900 mb-1">
+                      <p className="text-lg font-medium text-black mb-1">{item.time}</p>
+                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#B85C38] mb-1">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 text-[15px] leading-relaxed">{item.description}</p>
+                      <p className="text-gray-600 text-lg leading-relaxed">{item.description}</p>
                     </div>
 
                     {/* Dot */}
@@ -392,14 +385,14 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-gray-900 tracking-tight mb-4"
             >
-              Frequently Asked Questions
+              Frequently Asked <span className="text-[#B85C38]">Questions</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-lg text-gray-600"
+              className="text-xl text-gray-600"
             >
               Everything you need to know about visiting Lakeside.
             </motion.p>
@@ -422,7 +415,7 @@ export default function HomePage() {
                     className="w-full flex items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-300"
                     aria-expanded={isOpen}
                   >
-                    <span className="font-medium text-gray-900 text-[17px] pr-4">
+                    <span className="font-medium text-gray-900 text-xl pr-4">
                       {faq.question}
                     </span>
                     <ChevronIcon open={isOpen} />
@@ -437,7 +430,7 @@ export default function HomePage() {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98] }}
                       >
-                        <div className="px-6 pb-5 text-gray-600 leading-relaxed text-[15.5px]">
+                        <div className="px-6 pb-5 text-gray-600 leading-relaxed text-lg">
                           {faq.answer}
                         </div>
                       </motion.div>

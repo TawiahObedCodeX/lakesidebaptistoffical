@@ -42,7 +42,7 @@ export function PageHero({ eyebrow, title, subtitle, imageSrc }: PageHeroProps) 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-block text-red-600 font-bold tracking-[0.25em] uppercase text-xl mb-6"
+            className="inline-block text-[#B85C38] font-bold tracking-[0.25em] uppercase text-xl mb-6"
           >
             {eyebrow}
           </motion.span>

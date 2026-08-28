@@ -14,12 +14,12 @@ export default function ContactPage() {
         <div className="relative z-10 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 mb-4">
             <div className="h-px w-8 bg-white" />
-            <span className="text-red-700 uppercase tracking-[3px] text-lg font-semibold">Get In Touch</span>
+            <span className="text-[#B85C38] uppercase tracking-[3px] text-lg font-semibold">Get In Touch</span>
             <div className="h-px w-8 bg-white" />
           </div>
 
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-white leading-tight mb-6">
-            We&apos;d Love to <span className="text-red-700">Hear From You</span>
+            We&apos;d Love to <span className="text-[#B85C38]">Hear From You</span>
           </h1>
           <p className="text-lg text-slate-300 max-w-md mx-auto">
             Whether you have a question, need prayer, or want to connect — we are here for you.
@@ -44,7 +44,7 @@ export default function ContactPage() {
           {/* CONTACT INFO */}
           <div className="space-y-10">
             <div>
-              <span className="text-red-500 uppercase tracking-widest text-2xl font-semibold">Contact Information</span>
+              <span className="text-[#B85C38] uppercase tracking-widest text-2xl font-semibold">Contact Information</span>
               <h2 className="text-4xl font-serif font-bold text-slate-900 mt-3 mb-4">
                 Let&apos;s Start a Conversation
               </h2>
@@ -109,7 +109,7 @@ export default function ContactPage() {
           {/* CONTACT FORM */}
           <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-10 border border-slate-100">
             <div className="mb-8">
-              <span className="uppercase text-red-500 text-xl font-semibold tracking-widest">Send a Message</span>
+              <span className="uppercase text-[#B85C38] text-xl font-semibold tracking-widest">Send a Message</span>
               <h3 className="text-3xl font-serif font-semibold text-slate-900 mt-2">We&apos;re Here For You</h3>
             </div>
             <ContactForm />
@@ -122,7 +122,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-red-500 font-bold uppercase tracking-widest text-2xl ">Our Location</span>
+              <span className="text-[#B85C38] font-bold uppercase tracking-widest text-2xl ">Our Location</span>
               <h2 className="text-4xl font-serif font-bold mt-4 mb-6 leading-tight">
                 Come Experience<br />Community With Us
               </h2>
@@ -133,7 +133,7 @@ export default function ContactPage() {
             </div>
 
             {/* Google Map */}
-            <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-700 h-[420px]">
+            <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-700 h-105">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.1234567890123!2d-0.123456789!3d5.678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNXPDoM6xMOW4s0M!5e0!3m2!1sen!2sgh!4v1720000000000"
                 width="100%"

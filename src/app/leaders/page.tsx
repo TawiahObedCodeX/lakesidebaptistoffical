@@ -135,7 +135,7 @@ export default function LeadershipPage() {
         <div className="relative z-10 max-w-4xl mx-auto">
           <h1 className="font-serif text-5xl md:text-8xl font-bold text-white leading-[0.9] tracking-tighter mb-8">
             The Hearts Behind <br />
-            <em className="text-red-600 italic font-normal">the Mission.</em>
+            <em className="text-[#B85C38] italic font-normal">the Mission.</em>
           </h1>
           <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-light">
             Our leadership team is dedicated to fostering a community of faith,
@@ -166,7 +166,7 @@ export default function LeadershipPage() {
             transition: "all 1s cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         >
-          <p className="text-lg md:text-xl font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-6">
+          <p className="text-lg md:text-xl font-semibold tracking-[0.25em] uppercase text-[#B85C38] mb-6">
             Our Leadership
           </p>
           <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-brand-primary leading-[1.1] tracking-tight mb-8">
@@ -216,7 +216,7 @@ export default function LeadershipPage() {
 
             {/* Content */}
             <div className="w-full lg:w-[52%] lg:pl-4">
-              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-3">
+              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#B85C38] mb-3">
                 Head Pastor
               </p>
               <h3 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] text-brand-primary leading-tight mb-6">
@@ -227,7 +227,7 @@ export default function LeadershipPage() {
               </p>
 
               <div className="border-t border-divider-dark pt-6">
-                <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#9B2C2C] mb-2">
+                <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#B85C38] mb-2">
                   Leadership Focus
                 </p>
                 <p className="font-serif text-xl md:text-2xl text-brand-primary italic">
@@ -252,7 +252,7 @@ export default function LeadershipPage() {
         >
           <div className="flex flex-col md:flex-row md:items-center gap-10 md:gap-16">
             <div className="md:w-1/2">
-              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-4">
+              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#B85C38] mb-4">
                 Leadership Focus
               </p>
               <h3 className="font-serif text-4xl md:text-5xl lg:text-6xl text-brand-primary leading-[1.1]">
@@ -260,13 +260,13 @@ export default function LeadershipPage() {
                 <br />
                 Formation
                 <br />
-                <span className="text-[#9B2C2C] italic">& Global Outreach</span>
+                <span className="text-[#B85C38] italic">& Global Outreach</span>
               </h3>
             </div>
             <div className="md:w-1/2 md:border-l md:border-divider-dark md:pl-12">
               <p className="font-serif text-xl md:text-xl lg:text-2xl text-site-muted italic leading-relaxed">
-                "Our mission is to create spaces where every person feels seen,
-                known, and loved by God."
+                Our mission is to create spaces where every person feels seen,
+                known, and loved by God.
               </p>
             </div>
           </div>
@@ -307,7 +307,7 @@ export default function LeadershipPage() {
 
             {/* Content */}
             <div className="w-full lg:w-[52%] lg:pr-4">
-              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-3">
+              <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#B85C38] mb-3">
                 Associate Pastor
               </p>
               <h3 className="font-serif text-4xl md:text-5xl lg:text-[3.4rem] text-brand-primary leading-tight mb-6">
@@ -318,7 +318,7 @@ export default function LeadershipPage() {
               </p>
 
               <div className="border-t border-divider-dark pt-6">
-                <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#9B2C2C] mb-2">
+                <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#B85C38] mb-2">
                   Leadership Focus
                 </p>
                 <p className="font-serif text-xl md:text-2xl text-brand-primary italic">
@@ -344,7 +344,7 @@ export default function LeadershipPage() {
           >
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
               <div>
-                <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-3">
+                <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#B85C38] mb-3">
                   Support Team
                 </p>
                 <h2 className="font-serif text-4xl md:text-5xl text-black mb-3">
@@ -387,7 +387,7 @@ export default function LeadershipPage() {
                     />
                   </div>
                   <div className="p-5 md:p-6 bg-white">
-                    <p className="text-lg font-semibold tracking-[0.2em] uppercase text-brand-primary/60 mb-1.5">
+                    <p className="text-lg font-semibold tracking-[0.2em] uppercase text-[#B85C38] mb-1.5">
                       {deacon.role}
                     </p>
                     <h3 className="font-serif text-xl text-brand-primary leading-snug">
@@ -412,7 +412,7 @@ export default function LeadershipPage() {
             transition: "all 1s cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         >
-          <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#9B2C2C] mb-6">
+          <p className="text-lg font-semibold tracking-[0.25em] uppercase text-[#B85C38] mb-6">
             Connect With Us
           </p>
           <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-black leading-tight mb-6">

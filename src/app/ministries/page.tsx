@@ -66,7 +66,7 @@ export default function MinistriesPage() {
         </div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <span className="text-red-400 font-bold tracking-[0.2em] uppercase text-xl mb-4 block">
+          <span className="text-[#B85C38] font-bold tracking-[0.2em] uppercase text-3xl mb-4 block">
             Our Community
           </span>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
@@ -119,7 +119,7 @@ export default function MinistriesPage() {
                     <h2 className="text-4xl font-bold text-black">
                       {m.title}
                     </h2>
-                    <h4 className="text-red-600 font-bold text-xl uppercase tracking-widest mb-2">
+                    <h4 className="text-[#B85C38] font-bold text-xl uppercase tracking-widest mb-2">
                       {m.subtitle}
                     </h4>
                   </div>
@@ -141,7 +141,7 @@ export default function MinistriesPage() {
                             key={i}
                             className="flex items-center gap-3 text-brand-primary font-medium"
                           >
-                            <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                            <div className="w-2 h-2 bg-[#B85C38] rounded-full"></div>
                             {item}
                           </div>
                         ))}

@@ -58,7 +58,7 @@ export default function DonationPage() {
           >
             Give Boldly.
             <br />
-            <span className="text-red-500 font-medium">Impact Eternally.</span>
+            <span className="text-[#B85C38] font-medium">Impact Eternally.</span>
           </motion.h1>
 
           <motion.p
@@ -97,14 +97,14 @@ export default function DonationPage() {
             >
               <div className="relative overflow-hidden rounded-2xl aspect-4/5 sm:aspect-5/6 shadow-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1438232992691-ae7f0d0e58a5?q=80&w=1200&auto=format&fit=crop"
+                  src="/images/kntim.jpg"
                   alt="Sanctuary interior"
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
 
               <div>
-                <p className="text-lg font-semibold tracking-[0.25em] text-[#9B2C2C] uppercase mb-4">
+                <p className="text-lg font-semibold tracking-[0.25em] text-[#B85C38] uppercase mb-4">
                   Why We Give
                 </p>
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-slate-900 leading-tight mb-8">
@@ -180,7 +180,7 @@ export default function DonationPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
             <div>
-              <p className="text-lg font-semibold tracking-[0.25em] text-[#9B2C2C]  uppercase mb-3">
+              <p className="text-lg font-semibold tracking-[0.25em] text-[#B85C38]  uppercase mb-3">
                 Where It Goes
               </p>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-slate-900 leading-tight">
@@ -197,19 +197,19 @@ export default function DonationPage() {
             {[
               {
                 title: "Sustaining the Sanctuary",
-                img: "https://images.unsplash.com/photo-1507692049080-b54e0c3b0a1f?q=80&w=800&auto=format&fit=crop",
+                img: "/images/children1.jpg",
               },
               {
                 title: "City Compassion",
-                img: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=800&auto=format&fit=crop",
+                img: "/images/mimi.jpg",
               },
               {
                 title: "Global Mission",
-                img: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=800&auto=format&fit=crop",
+                img: "/images/serviceyouth.png",
               },
               {
                 title: "Next Generation",
-                img: "https://images.unsplash.com/photo-1511632765481-a9296c2973a1?q=80&w=800&auto=format&fit=crop",
+                img: "/images/umm.jpg",
               },
             ].map((item, i) => (
               <motion.div
@@ -264,9 +264,9 @@ export default function DonationPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             {[
-              "https://images.unsplash.com/photo-1511632765481-a9296c2973a1?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600&auto=format&fit=crop",
+              "/images/childministries.png",
+              "/images/mimi.jpg",
+              "/images/311.jpg ",
             ].map((src, i) => (
               <motion.div
                 key={i}
@@ -291,7 +291,7 @@ export default function DonationPage() {
       {/* ========== FAQ ========== */}
       <section className="py-16 md:py-24 bg-white border-t border-slate-100">
         <div className="max-w-3xl mx-auto px-5 sm:px-8">
-          <p className="text-lg font-semibold tracking-[0.25em] text-[#9B2C2C]  uppercase mb-3 text-center">
+          <p className="text-lg font-semibold tracking-[0.25em] text-[#B85C38] uppercase mb-3 text-center">
             Questions
           </p>
           <h2 className="text-3xl sm:text-4xl font-serif font-medium text-slate-900 text-center mb-12">

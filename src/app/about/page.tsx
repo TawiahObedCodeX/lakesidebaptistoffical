@@ -80,21 +80,18 @@ const TABS = [
   {
     id: "vision",
     label: "Our vision",
-    icon: "✦",
     heading: "A home for every hopeful heart.",
     body: "We imagine a church where faith feels close, questions are welcomed, and every person discovers they have a meaningful place in God's story.",
   },
   {
     id: "mission",
     label: "Our mission",
-    icon: "✧",
     heading: "Faith that shows up every day.",
     body: "We exist to love God, love people, and serve our city with open hands and open hearts—making disciples who make disciples.",
   },
   {
     id: "approach",
     label: "Our approach",
-    icon: "❋",
     heading: "Presence over performance.",
     body: "We walk slowly with people, create space for honest questions, and practice a faith that is both deeply rooted and radically welcoming.",
   },
@@ -146,7 +143,7 @@ export default function AboutPage() {
             className="inline-flex items-center gap-3 mb-6"
           >
             <div className="h-px w-12 bg-white" />
-            <span className="text-red-600 text-xl font-bold tracking-[0.25em] uppercase">
+            <span className="text-red-400/90 text-xl font-bold tracking-[0.25em] uppercase">
               Our Story
             </span>
             <div className="h-px w-12 bg-white" />
@@ -162,7 +159,7 @@ export default function AboutPage() {
             }}
             className="text-5xl sm:text-7xl lg:text-8xl font-serif font-bold text-white leading-[1.05] tracking-tight mb-8"
           >
-            About <span className="text-red-600">Us</span>
+            About <span className="text-red-400/90">Us</span>
           </motion.h1>
 
           <motion.p
@@ -386,12 +383,6 @@ export default function AboutPage() {
                   transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="pl-0 lg:pl-8 xl:pl-12 border-l-0 lg:border-l border-white/10"
                 >
-                  <div className="mb-5 sm:mb-6">
-                    <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#C4A35A]/10 text-[#C4A35A] text-lg">
-                      {activeContent.icon}
-                    </span>
-                  </div>
-
                   <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] text-[#F5F0E8] leading-[1.2] mb-5 sm:mb-6 max-w-md">
                     {activeContent.heading}
                   </h3>
@@ -440,7 +431,7 @@ export default function AboutPage() {
                 </span>
                 <h2 className="text-4xl sm:text-5xl font-bold text-brand-primary leading-tight mb-8">
                   Your generosity makes a{" "}
-                  <span className="text-red-600">profound impact</span>
+                  <span className="text-[#B85C38]">profound impact</span>
                 </h2>
               </FadeUp>
 
@@ -515,10 +506,6 @@ export default function AboutPage() {
 
         <FadeUp delay={0.22}>
           <div className="flex items-center gap-3">
-            <span className="block h-px w-8 bg-[#E8C9B8]/60" />
-            <p className="text-[#E8C9B8] text-xs sm:text-sm tracking-[0.2em] uppercase font-medium">
-              Senior Pastor · LBC
-            </p>
           </div>
         </FadeUp>
       </div>

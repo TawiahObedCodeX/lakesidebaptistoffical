@@ -168,7 +168,7 @@ export default function BlogPage() {
             className="inline-flex items-center gap-3 mb-6"
           >
             <div className="h-px w-10 bg-white/70" />
-            <span className="text-red-500 text-sm sm:text-base font-semibold tracking-[0.28em] uppercase">
+            <span className="text-[#B85C38] text-sm sm:text-base font-semibold tracking-[0.28em] uppercase">
               Journal
             </span>
             <div className="h-px w-10 bg-white/70" />
@@ -220,7 +220,7 @@ export default function BlogPage() {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 xl:gap-20 items-center">
             {/* Image */}
             <FadeUp>
-              <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)]">
+              <div className="relative aspect-4/5 sm:aspect-3/4 lg:aspect-4/5 rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)]">
                 <Image
                   src={featuredSermon.image}
                   alt={featuredSermon.title}
@@ -233,7 +233,7 @@ export default function BlogPage() {
             {/* Text */}
             <div>
               <FadeUp>
-                <p className="text-[#9B2C2C] text-lg sm:text-xl tracking-[0.3em] font-semibold uppercase mb-5">
+                <p className="text-[#B85C38] text-lg sm:text-xl tracking-[0.3em] font-semibold uppercase mb-5">
                   {featuredSermon.label}
                 </p>
               </FadeUp>
@@ -290,7 +290,7 @@ export default function BlogPage() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 sm:mb-16">
             <FadeUp>
-              <p className="text-[#9B2C2C] text-sm sm:text-lg tracking-[0.3em] font-semibold uppercase mb-3">
+              <p className="text-[#B85C38] text-sm sm:text-lg tracking-[0.3em] font-semibold uppercase mb-3">
                 Journal
               </p>
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a] leading-tight">
@@ -318,10 +318,10 @@ export default function BlogPage() {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <p className="text-[#9B2C2C] text-lg tracking-[0.25em] font-semibold uppercase mb-2">
+                <p className="text-[#B85C38] text-lg tracking-[0.25em] font-semibold uppercase mb-2">
                   {journalPosts[0].category}
                 </p>
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#1a1a1a] leading-snug mb-3 group-hover:text-[#9B2C2C] transition-colors duration-300">
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#1a1a1a] leading-snug mb-3 group-hover:text-[#B85C38] transition-colors duration-300">
                   {journalPosts[0].title}
                 </h3>
                 <p className="text-[#5c5c5c] text-xl leading-relaxed max-w-lg mb-4">
@@ -347,10 +347,10 @@ export default function BlogPage() {
                       />
                     </div>
                     <div className="pt-0.5">
-                      <p className="text-[#9B2C2C] text-sm sm:text-lg tracking-[0.22em] font-semibold uppercase mb-1.5">
+                      <p className="text-[#B85C38] text-sm sm:text-lg tracking-[0.22em] font-semibold uppercase mb-1.5">
                         {post.category}
                       </p>
-                      <h4 className="font-serif text-lg sm:text-xl text-[#1a1a1a] leading-snug mb-2 group-hover:text-[#9B2C2C] transition-colors duration-300">
+                      <h4 className="font-serif text-lg sm:text-xl text-[#1a1a1a] leading-snug mb-2 group-hover:text-[#B85C38] transition-colors duration-300">
                         {post.title}
                       </h4>
                       <p className="text-[#8a8a8a] text-sm tracking-wide">
@@ -374,7 +374,7 @@ export default function BlogPage() {
             {/* Text */}
             <div>
               <FadeUp>
-                <p className="text-red-500 text-xs sm:text-sm tracking-[0.28em] font-semibold uppercase mb-6">
+                <p className="text-[#B85C38] text-xs sm:text-sm tracking-[0.28em] font-semibold uppercase mb-6">
                   Faith in Everyday Life
                 </p>
               </FadeUp>
@@ -440,7 +440,7 @@ export default function BlogPage() {
       <section className="bg-[#F8F6F1] py-20 sm:py-28 lg:py-36">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <FadeUp className="text-center mb-14 sm:mb-16">
-            <p className="text-[#9B2C2C] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-4">
+            <p className="text-[#B85C38] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-4">
               Calendar
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#1a1a1a]">
@@ -465,7 +465,7 @@ export default function BlogPage() {
                       <p className="font-serif text-3xl sm:text-4xl font-medium text-[#1a1a1a] leading-none">
                         {event.day}
                       </p>
-                      <p className="text-sm tracking-[0.15em] uppercase text-[#9B2C2C] mt-1 font-semibold">
+                      <p className="text-sm tracking-[0.15em] uppercase text-[#B85C38] mt-1 font-semibold">
                         {event.month}
                       </p>
                     </div>
@@ -508,7 +508,7 @@ export default function BlogPage() {
             {/* Text */}
             <div>
               <FadeUp>
-                <p className="text-[#9B2C2C] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-5">
+                <p className="text-[#B85C38] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-5">
                   Community
                 </p>
               </FadeUp>

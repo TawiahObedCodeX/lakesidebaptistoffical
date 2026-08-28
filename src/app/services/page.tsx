@@ -486,7 +486,7 @@ export default function ServicesPage() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 lg:mb-16">
             <div className="max-w-xl">
               <FadeUp>
-                <p className="text-lg  sm:text-lg tracking-[0.25em] font-semibold uppercase text-slate-500 mb-4">
+                <p className="text-lg  sm:text-lg tracking-[0.25em] font-semibold uppercase text-[#B85C38] mb-4">
                   FEATURED TEACHINGS
                 </p>
               </FadeUp>
@@ -534,7 +534,7 @@ export default function ServicesPage() {
                           {featuredSermons[0].preacher}
                         </span>
                       </div>
-                      <h3 className="font-serif text-2xl sm:text-[1.7rem] text-[#1a1a1a] leading-snug">
+                      <h3 className="font-serif text-2xl sm:text-[1.7rem] text-[#B85C38] leading-snug">
                         {featuredSermons[0].title}
                       </h3>
                     </div>
@@ -571,7 +571,7 @@ export default function ServicesPage() {
                               {sermon.duration}
                             </span>
                           </div>
-                          <h3 className="font-serif text-2xl text-[#1a1a1a] leading-snug">
+                          <h3 className="font-serif text-2xl text-[#B85C38] leading-snug">
                             {sermon.title}
                           </h3>
                         </div>
@@ -611,7 +611,7 @@ export default function ServicesPage() {
                             {sermon.duration}
                           </span>
                         </div>
-                        <h3 className="font-serif text-2xl text-[#1a1a1a] leading-snug">
+                        <h3 className="font-serif text-2xl text-[#B85C38] leading-snug">
                           {sermon.title}
                         </h3>
                       </div>
@@ -631,7 +631,7 @@ export default function ServicesPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
           <div className="text-center mb-14 lg:mb-16">
             <FadeUp>
-              <p className="text-[11px] sm:text-lg tracking-[0.3em] font-semibold uppercase text-slate-500 mb-4">
+              <p className="text-[11px] sm:text-lg tracking-[0.3em] font-semibold uppercase text-[#B85C38] mb-4">
                 THE WEEKLY RHYTHM
               </p>
             </FadeUp>
@@ -675,7 +675,7 @@ export default function ServicesPage() {
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 lg:mb-16">
             <div className="max-w-xl">
               <FadeUp>
-                <p className="text-[11px] sm:text-lg tracking-[0.25em] font-semibold uppercase text-slate-500 mb-4">
+                <p className="text-[11px] sm:text-lg tracking-[0.25em] font-semibold uppercase text-[#B85C38] mb-4">
                   MINISTRIES
                 </p>
               </FadeUp>
@@ -717,7 +717,7 @@ export default function ServicesPage() {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-xl sm:text-[1.35rem] text-[#1a1a1a] mb-3">
+                  <h3 className="font-serif text-xl sm:text-[1.35rem] text-[#B85C38] mb-3">
                     {m.title}
                   </h3>
                   <p className="text-lg text-slate-500 leading-relaxed grow mb-6">
