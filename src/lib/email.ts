@@ -6,7 +6,23 @@ import { Resend } from 'resend'
 
 // ALWAYS use environment variables for API keys
 // NEVER hardcode API keys in your code - they will be blocked by GitHub
-const resend = new Resend(process.env.RESEND_API_KEY || '')
+//
+// IMPORTANT: We do NOT create the Resend client at the top level anymore.
+// Creating `new Resend(...)` at import time causes Next.js's build step
+// ("Collecting page data") to run it immediately, and if RESEND_API_KEY
+// isn't available at that moment, Resend throws and crashes the build.
+// Instead, we create the client lazily, only when we're about to send.
+let resend: Resend | null = null
+
+function getResendClient(): Resend | null {
+  if (!process.env.RESEND_API_KEY) {
+    return null
+  }
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY)
+  }
+  return resend
+}
 
 // Interface for contact form email data
 interface ContactEmailData {
@@ -47,12 +63,18 @@ export async function sendContactNotification(data: ContactEmailData) {
   }
 
   try {
+    const client = getResendClient()
+    if (!client) {
+      console.log('Resend client unavailable. Skipping email notification.')
+      return
+    }
+
     const categoryDisplay = data.category
       .replace(/_/g, ' ')
       .toLowerCase()
       .replace(/\b\w/g, (char) => char.toUpperCase())
 
-    await resend.emails.send({
+    await client.emails.send({
       from: 'Lakeside Baptist Church <onboarding@resend.dev>',
       to: process.env.ADMIN_EMAIL,
       replyTo: data.email,
@@ -257,6 +279,12 @@ export async function sendDonationReceipt(data: DonationReceiptData) {
   }
 
   try {
+    const client = getResendClient()
+    if (!client) {
+      console.log('Resend client unavailable. Skipping donation receipt.')
+      return
+    }
+
     const currencySymbols: Record<string, string> = {
       GHS: 'GH₵', USD: '$', EUR: '€', GBP: '£'
     }
@@ -267,7 +295,7 @@ export async function sendDonationReceipt(data: DonationReceiptData) {
     }
     const purposeLabel = purposeLabels[data.purpose] || data.purpose
 
-    await resend.emails.send({
+    await client.emails.send({
       from: 'Lakeside Baptist Church <onboarding@resend.dev>',
       to: data.donorEmail,
       subject: `Donation Receipt - ${symbol}${data.amount} for ${purposeLabel}`,
