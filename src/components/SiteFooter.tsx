@@ -171,11 +171,9 @@ export function SiteFooter() {
             <h3 className="text-white text-lg font-bold tracking-wider uppercase">
               Connect With Us
             </h3>
-
             <div className="space-y-8">
               {/* Visit Us */}
               <div className="flex items-start gap-4">
-                <span className="text-brand-accent text-2xl mt-0.5 shrink-0">✦</span>
                 <div>
                   <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Visit Us
@@ -188,7 +186,6 @@ export function SiteFooter() {
 
               {/* Contact */}
               <div className="flex items-start gap-4">
-                <span className="text-brand-accent text-2xl mt-0.5 shrink-0">✦</span>
                 <div>
                   <p className="text-white text-lg uppercase font-bold tracking-widest mb-1">
                     Contact

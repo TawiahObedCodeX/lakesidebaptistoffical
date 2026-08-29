@@ -1,6 +1,4 @@
 // src/app/api/payments/initialize/route.ts
-// Updated to include phone number for Paystack SMS notifications
-
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { initializePayment } from '@/lib/paystack'
@@ -10,6 +8,9 @@ import { headers } from 'next/headers'
 
 export async function POST(request: Request) {
   try {
+    // Warm up database connection
+    await prisma.$queryRaw`SELECT 1`
+    
     const headersList = await headers()
     const ip = headersList.get('x-forwarded-for') ?? 'unknown'
     
@@ -18,39 +19,68 @@ export async function POST(request: Request) {
     
     const reference = `CHURCH-${Date.now()}-${uuidv4().slice(0, 8)}`
     
-    const donation = await prisma.donation.create({
-      data: {
-        amount: validatedData.amount,
-        currency: validatedData.currency || 'GHS',
-        purpose: validatedData.purpose,
-        giverName: validatedData.giverName,
-        giverEmail: validatedData.giverEmail,
-        giverPhone: validatedData.giverPhone || null,
-        reference: reference,
-        note: validatedData.metadata?.note || null,
-        metadata: {
-          ip_address: ip,
-          source: validatedData.metadata?.source || 'website',
-          user_agent: headersList.get('user-agent') || 'unknown',
-          phone_provided: !!validatedData.giverPhone
-        },
-        status: 'PENDING'
-      }
-    })
+    // Create donation with retry logic
+    let donation;
+    try {
+      donation = await prisma.donation.create({
+        data: {
+          amount: validatedData.amount,
+          currency: validatedData.currency || 'GHS',
+          purpose: validatedData.purpose,
+          giverName: validatedData.giverName,
+          giverEmail: validatedData.giverEmail,
+          giverPhone: validatedData.giverPhone || null,
+          reference: reference,
+          note: validatedData.metadata?.note || null,
+          metadata: {
+            ip_address: ip,
+            source: validatedData.metadata?.source || 'website',
+            user_agent: headersList.get('user-agent') || 'unknown',
+            phone_provided: !!validatedData.giverPhone
+          },
+          status: 'PENDING'
+        }
+      })
+    } catch (dbError) {
+      console.error('Database error creating donation:', dbError)
+      // Retry after reconnection
+      await prisma.$disconnect()
+      await prisma.$connect()
+      
+      donation = await prisma.donation.create({
+        data: {
+          amount: validatedData.amount,
+          currency: validatedData.currency || 'GHS',
+          purpose: validatedData.purpose,
+          giverName: validatedData.giverName,
+          giverEmail: validatedData.giverEmail,
+          giverPhone: validatedData.giverPhone || null,
+          reference: reference,
+          note: validatedData.metadata?.note || null,
+          metadata: {
+            ip_address: ip,
+            source: validatedData.metadata?.source || 'website',
+            user_agent: headersList.get('user-agent') || 'unknown',
+            phone_provided: !!validatedData.giverPhone
+          },
+          status: 'PENDING'
+        }
+      })
+    }
     
-    // Initialize Paystack payment with phone number for SMS notifications
+    // Initialize Paystack payment
     const paystackResponse = await initializePayment({
       email: validatedData.giverEmail,
       amount: validatedData.amount,
       currency: validatedData.currency || 'GHS',
       reference: reference,
-      phone: validatedData.giverPhone || undefined, // Pass phone to Paystack for SMS
+      phone: validatedData.giverPhone || undefined,
       metadata: {
         donation_id: donation.id,
         donor_name: validatedData.giverName,
         purpose: validatedData.purpose,
         giver_phone: validatedData.giverPhone || null,
-        send_sms: true // Flag to enable SMS notifications
+        send_sms: true
       }
     })
     
@@ -61,14 +91,13 @@ export async function POST(request: Request) {
       }
     })
     
-    // Return response with direct payment URL
     return NextResponse.json({
       ok: true,
       message: 'Payment initialized successfully',
       authorization_url: paystackResponse.data.authorization_url,
       reference: reference,
       donationId: donation.id,
-      smsNotification: !!validatedData.giverPhone // Confirm SMS will be sent
+      smsNotification: !!validatedData.giverPhone
     })
     
   } catch (error: unknown) {

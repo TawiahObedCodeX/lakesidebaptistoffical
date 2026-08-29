@@ -1,16 +1,16 @@
 // src/app/api/contact/route.ts
-// This endpoint processes messages from the contact form
-// It validates the input, saves to database, and notifies admins via email
-
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { contactSchema } from '@/lib/validation'
 import { headers } from 'next/headers'
 import { rateLimit } from '@/lib/rate-limit'
-import { sendContactNotification } from '@/lib/email' // Import our email function
+import { sendContactNotification } from '@/lib/email'
 
 export async function POST(request: Request) {
   try {
+    // Warm up database connection (prevents cold start issues)
+    await prisma.$queryRaw`SELECT 1`
+    
     // Apply rate limiting to prevent spam
     const headersList = await headers()
     const ip = headersList.get('x-forwarded-for') ?? 'unknown'
@@ -30,27 +30,51 @@ export async function POST(request: Request) {
     // Determine the category based on message content
     const category = detectCategory(validatedData.message)
     
-    // Save the message to database
-    const contactMessage = await prisma.contactMessage.create({
-      data: {
-        firstName: validatedData.firstName,
-        lastName: validatedData.lastName,
-        email: validatedData.email,
-        phone: validatedData.phone || null,
-        message: validatedData.message,
-        category: category,
-        status: 'UNREAD',
-        metadata: {
-          ip_address: ip,
-          user_agent: headersList.get('user-agent') || 'unknown',
-          submitted_from: headersList.get('referer') || 'direct'
+    // Save the message to database with retry logic
+    let contactMessage;
+    try {
+      contactMessage = await prisma.contactMessage.create({
+        data: {
+          firstName: validatedData.firstName,
+          lastName: validatedData.lastName,
+          email: validatedData.email,
+          phone: validatedData.phone || null,
+          message: validatedData.message,
+          category: category,
+          status: 'UNREAD',
+          metadata: {
+            ip_address: ip,
+            user_agent: headersList.get('user-agent') || 'unknown',
+            submitted_from: headersList.get('referer') || 'direct'
+          }
         }
-      }
-    })
+      })
+    } catch (dbError) {
+      console.error('Database error saving contact message:', dbError)
+      // Retry once after reconnection
+      await prisma.$disconnect()
+      await prisma.$connect()
+      
+      contactMessage = await prisma.contactMessage.create({
+        data: {
+          firstName: validatedData.firstName,
+          lastName: validatedData.lastName,
+          email: validatedData.email,
+          phone: validatedData.phone || null,
+          message: validatedData.message,
+          category: category,
+          status: 'UNREAD',
+          metadata: {
+            ip_address: ip,
+            user_agent: headersList.get('user-agent') || 'unknown',
+            submitted_from: headersList.get('referer') || 'direct'
+          }
+        }
+      })
+    }
     
-    // Send email notification to the church admin
-    // This is where the admin receives the contact form message in their email
-    await sendContactNotification({
+    // Send email notification (non-blocking)
+    sendContactNotification({
       firstName: validatedData.firstName,
       lastName: validatedData.lastName,
       email: validatedData.email,
@@ -58,7 +82,7 @@ export async function POST(request: Request) {
       message: validatedData.message,
       category: category,
       referenceId: contactMessage.id
-    })
+    }).catch(err => console.error('Email notification failed:', err))
     
     return NextResponse.json({
       ok: true,
@@ -83,7 +107,6 @@ export async function POST(request: Request) {
   }
 }
 
-// Helper function to automatically categorize messages
 function detectCategory(message: string): string {
   const lowerMessage = message.toLowerCase()
   

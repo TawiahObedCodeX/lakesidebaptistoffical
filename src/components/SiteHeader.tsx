@@ -117,15 +117,15 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative text-xl font-semibold tracking-wide transition-all duration-300 hover:text-red-700 ${
-                pathname === item.href ? "text-red-700" : "text-white"
+              className={`relative text-xl font-semibold tracking-wide transition-all duration-300 hover:text-[#B85C38] ${
+                pathname === item.href ? "text-[#B85C38]" : "text-white"
               }`}
             >
               {item.label}
               {pathname === item.href && (
                 <motion.div
                   layoutId="nav-underline"
-                  className="absolute -bottom-1 left-0 h-0.5 w-full bg-red-700"
+                  className="absolute -bottom-1 left-0 h-0.5 w-full bg-[#B85C38]"
                 />
               )}
             </Link>
@@ -138,7 +138,7 @@ export function SiteHeader() {
             onMouseLeave={() => setPagesOpen(false)}
           >
             <button
-              className="flex items-center gap-1 text-xl font-semibold text-white hover:text-red-700 transition-colors"
+              className="flex items-center gap-1 text-xl font-semibold text-white hover:text-[#B85C38] transition-colors"
               aria-expanded={pagesOpen}
               aria-haspopup="true"
             >
@@ -160,7 +160,7 @@ export function SiteHeader() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="rounded-xl px-4 py-2.5 text-lg text-center text-white/80 hover:bg-white/5 hover:text-red-700 transition-all"
+                        className="rounded-xl px-4 py-2.5 text-lg text-center text-white/80 hover:bg-white/5 hover:text-[#B85C38] transition-all"
                       >
                         {item.label}
                       </Link>
@@ -216,7 +216,7 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     onClick={closeMobileMenu}
-                    className="text-2xl font-bold text-white active:text-brand-accent hover:text-red-500 transition-colors"
+                    className="text-2xl font-bold text-white active:text-brand-accent hover:text-[#B85C38] transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -227,7 +227,7 @@ export function SiteHeader() {
               <Link
                 href="/donation"
                 onClick={closeMobileMenu}
-                className="mt-4 rounded-full bg-white px-8 py-3 text-lg font-bold text-black hover:bg-red-600 hover:text-white transition-all"
+                className="mt-4 rounded-full bg-white px-8 py-3 text-lg font-bold text-black hover:bg-[#B85C38] hover:text-white transition-all"
               >
                 GIVE ONLINE
               </Link>
