@@ -1,10 +1,34 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { HomeHero } from "@/components/HomeHero";
+
+function FadeUp({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 48 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.85, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 // Icons (inline SVGs for zero dependency)
 const CrossIcon = () => (
@@ -60,6 +84,31 @@ const values = [
     icon: <HandIcon />,
     title: "Service",
     description: "Serving our city with humble hearts.",
+  },
+];
+
+/* ─────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────── */
+
+const TABS = [
+  {
+    id: "vision",
+    label: "Our vision",
+    heading: "A home for every hopeful heart.",
+    body: "We imagine a church where faith feels close, questions are welcomed, and every person discovers they have a meaningful place in God's story.",
+  },
+  {
+    id: "mission",
+    label: "Our mission",
+    heading: "Faith that shows up every day.",
+    body: "We exist to love God, love people, and serve our city with open hands and open hearts—making disciples who make disciples.",
+  },
+  {
+    id: "approach",
+    label: "Our approach",
+    heading: "Presence over performance.",
+    body: "We walk slowly with people, create space for honest questions, and practice a faith that is both deeply rooted and radically welcoming.",
   },
 ];
 
@@ -123,36 +172,37 @@ const schedule = [
   },
 ];
 
-const faqs = [
-  {
-    question: "What should I wear?",
-    answer:
-      "Come as you are! Most people dress casually — jeans, shirts, and comfortable clothes are perfectly fine. We care more about your heart than your outfit.",
-  },
-  {
-    question: "Is there childcare available?",
-    answer:
-      "Yes! We offer safe, loving childcare and age-appropriate classes for infants through elementary during both Sunday services. Check-in is available 15 minutes before service starts.",
-  },
-  {
-    question: "Where do I park?",
-    answer:
-      "Free parking is available in the main lot on the east side of the building, with additional overflow parking across the street. Volunteers are happy to help direct you on Sunday mornings.",
-  },
-  {
-    question: "How long is the service?",
-    answer:
-      "Our Sunday worship services typically last about 75–90 minutes, including worship, prayer, and the message. You’re welcome to arrive a few minutes early to find a seat and connect with others.",
-  },
-];
+// const faqs = [
+//   {
+//     question: "What should I wear?",
+//     answer:
+//       "Come as you are! Most people dress casually — jeans, shirts, and comfortable clothes are perfectly fine. We care more about your heart than your outfit.",
+//   },
+//   {
+//     question: "Is there childcare available?",
+//     answer:
+//       "Yes! We offer safe, loving childcare and age-appropriate classes for infants through elementary during both Sunday services. Check-in is available 15 minutes before service starts.",
+//   },
+//   {
+//     question: "Where do I park?",
+//     answer:
+//       "Free parking is available in the main lot on the east side of the building, with additional overflow parking across the street. Volunteers are happy to help direct you on Sunday mornings.",
+//   },
+//   {
+//     question: "How long is the service?",
+//     answer:
+//       "Our Sunday worship services typically last about 75–90 minutes, including worship, prayer, and the message. You’re welcome to arrive a few minutes early to find a seat and connect with others.",
+//   },
+// ];
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+   const [activeTab, setActiveTab] = useState("vision");
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
-
+  const activeContent = TABS.find((t) => t.id === activeTab) ?? TABS[0];
   return (
     <>
       {/* === HERO (already present) === */}
@@ -244,6 +294,118 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+          {/* ══════════════════════════
+                3. OUR FOUNDATION  (matches second UI)
+            ══════════════════════════ */}
+            <section className="py-24 sm:py-28 lg:py-36 bg-blue-900/95 relative overflow-hidden">
+              {/* subtle grid */}
+              <div
+                className="absolute inset-0 opacity-[0.035]"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
+                  backgroundSize: "72px 72px",
+                }}
+              />
+      
+              <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
+                {/* Header */}
+                <FadeUp className="mb-14 sm:mb-16 lg:mb-20">
+                  <p className="text-[#C45C3A] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-5">
+                    OUR FOUNDATION
+                  </p>
+                  <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] text-[#F5F0E8] leading-[1.15] max-w-2xl">
+                    A faith with its sleeves
+                    <br />
+                    rolled up.
+                  </h2>
+                </FadeUp>
+      
+                {/* Split layout */}
+                <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-20 items-start">
+                  {/* LEFT — Tab list */}
+                  <div className="lg:col-span-5">
+                    <div className="flex flex-col">
+                      {TABS.map((tab, idx) => {
+                        const isActive = activeTab === tab.id;
+                        return (
+                          <motion.button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{
+                              duration: 0.5,
+                              delay: idx * 0.08,
+                              ease: [0.22, 1, 0.36, 1],
+                            }}
+                            className={`group relative flex items-center justify-between py-5 sm:py-6 border-t border-white/10 text-left transition-colors duration-300 ${
+                              isActive
+                                ? "text-[#E8A87C]"
+                                : "text-white/55 hover:text-white/85"
+                            }`}
+                          >
+                            <span
+                              className={`text-lg sm:text-xl font-medium tracking-wide transition-colors px-5 duration-300 ${
+                                isActive ? "text-[#E8A87C]" : ""
+                              }`}
+                            >
+                              {tab.label}
+                            </span>
+                            <span
+                              className={`text-xl sm:text-2xl transition-all duration-300 ${
+                                isActive
+                                  ? "text-[#E8A87C] translate-x-0"
+                                  : "text-white/30 group-hover:text-white/60 group-hover:translate-x-1"
+                              }`}
+                            >
+                              ›
+                            </span>
+                            {/* active indicator line */}
+                            {isActive && (
+                              <motion.div
+                                layoutId="foundation-active"
+                                className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#E8A87C]"
+                                transition={{
+                                  type: "spring",
+                                  stiffness: 380,
+                                  damping: 30,
+                                }}
+                              />
+                            )}
+                          </motion.button>
+                        );
+                      })}
+                      <div className="border-t border-white/10" />
+                    </div>
+                  </div>
+      
+                  {/* RIGHT — Content panel */}
+                  <div className="lg:col-span-7 relative min-h-55 sm:min-h-65">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeContent.id}
+                        initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                        className="pl-0 lg:pl-8 xl:pl-12 border-l-0 lg:border-l border-white/10"
+                      >
+                        <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] text-[#F5F0E8] leading-[1.2] mb-5 sm:mb-6 max-w-md">
+                          {activeContent.heading}
+                        </h3>
+      
+                        <p className="text-white/60 text-base sm:text-lg leading-relaxed max-w-lg">
+                          {activeContent.body}
+                        </p>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </div>
+            </section>
 
       {/* ========== COMMUNITY IMPACT ========== */}
       <section id="community-impact" className="scroll-mt-28 py-20 md:py-28 bg-white">
@@ -375,7 +537,7 @@ export default function HomePage() {
       </section>
 
       {/* ========== FAQ ========== */}
-      <section id="faq" className="scroll-mt-28 py-20 md:py-28 bg-white">
+      {/* <section id="faq" className="scroll-mt-28 py-20 md:py-28 bg-white">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <motion.h2
@@ -441,7 +603,7 @@ export default function HomePage() {
             })}
           </div>
         </div>
-      </section>
+      </section> */}
     </>
   );
 }

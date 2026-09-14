@@ -49,7 +49,7 @@ function FadeUp({
 }
 
 /* ─────────────────────────────────────────────
-   AUDIO PLAYER COMPONENT
+   AUDIO PLAYER COMPONENT (FIXED)
 ───────────────────────────────────────────── */
 
 function AudioPlayerCard({
@@ -134,10 +134,19 @@ function AudioPlayerCard({
     }
   }, []);
 
+  // --- FIXED play/pause callbacks ---
   const playAudio = useCallback(() => {
     if (audioRef.current && !isPlaying && timeLeft > 0) {
-      audioRef.current.play();
-      setIsPlaying(true);
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((error) => {
+          // Autoplay was blocked – silently handle or show a toast
+          console.warn("Audio play failed:", error);
+          setIsPlaying(false);
+        });
     }
   }, [isPlaying, timeLeft]);
 
@@ -321,7 +330,7 @@ function AudioPlayerCard({
 }
 
 /* ─────────────────────────────────────────────
-   DATA
+   DATA (unchanged)
 ───────────────────────────────────────────── */
 
 const featuredSermons = [
@@ -335,7 +344,7 @@ const featuredSermons = [
     title: "The Architecture of Grace",
     img: "/images/pastorimg.jpg",
     featured: true,
-    audioSrc: "/audio/sermon1.mp3", // Replace with actual audio file
+    audioSrc: "/audio/audio.mp3",
   },
   {
     id: 2,
@@ -347,7 +356,7 @@ const featuredSermons = [
     title: "Walking in Stillness",
     img: "/images/pastorimg.jpg",
     featured: false,
-    audioSrc: "/audio/sermon2.mp3", // Replace with actual audio file
+    audioSrc: "/audio/audio.mp3",
   },
   {
     id: 3,
@@ -359,7 +368,7 @@ const featuredSermons = [
     title: "The Unseen Hand",
     img: "/images/pastorimg.jpg",
     featured: false,
-    audioSrc: "/audio/sermon3.mp3", // Replace with actual audio file
+    audioSrc: "/audio/audio.mp3",
   },
   {
     id: 4,
@@ -371,7 +380,7 @@ const featuredSermons = [
     title: "Songs of Deliverance",
     img: "/images/pastorimg.jpg",
     featured: false,
-    audioSrc: "/audio/sermon4.mp3", // Replace with actual audio file
+    audioSrc: "/audio/audio.mp3",
   },
   {
     id: 5,
@@ -383,7 +392,7 @@ const featuredSermons = [
     title: "The Power of Persistent Prayer",
     img: "/images/pastorimg.jpg",
     featured: false,
-    audioSrc: "/audio/sermon5.mp3", // Replace with actual audio file
+    audioSrc: "/audio/audio.mp3",
   },
   {
     id: 6,
@@ -395,7 +404,7 @@ const featuredSermons = [
     title: "Building Bridges, Not Walls",
     img: "/images/pastorimg.jpg",
     featured: false,
-    audioSrc: "/audio/sermon6.mp3", // Replace with actual audio file
+    audioSrc: "/audio/audi1o.mp4",
   },
 ];
 
@@ -463,13 +472,13 @@ const ministries = [
 ];
 
 /* ─────────────────────────────────────────────
-   PAGE
+   PAGE (unchanged)
 ───────────────────────────────────────────── */
 
 export default function ServicesPage() {
   return (
     <main className="bg-white min-h-screen overflow-x-hidden">
-      {/* 1. HERO — untouched */}
+      {/* 1. HERO */}
       <PageHero
         eyebrow="Our Services"
         title="Experience God Like Never Before"
@@ -516,7 +525,6 @@ export default function ServicesPage() {
                   featured={true}
                   audioSrc={featuredSermons[0].audioSrc}
                 />
-                {/* Meta */}
                 <div className="p-6 sm:p-8 bg-white">
                   <div className="flex items-start gap-5">
                     <div className="text-center shrink-0">
@@ -530,7 +538,6 @@ export default function ServicesPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-lg text-slate-500 mb-2">
                         <span className="flex items-center gap-1.5">
-
                           {featuredSermons[0].preacher}
                         </span>
                       </div>
