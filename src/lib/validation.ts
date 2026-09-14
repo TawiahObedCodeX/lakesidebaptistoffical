@@ -23,10 +23,12 @@ export const paymentSchema = z.object({
     .toLowerCase()
     .trim(),
   
-  // Phone is now REQUIRED for SMS notifications
+  // Phone is optional (SMS notifications are best-effort when provided)
   giverPhone: z.string()
     .regex(/^(0|\+?233)\d{9}$/, 'Please enter a valid Ghana phone number (e.g., 0241234567)')
-    .transform(val => val.replace(/\s/g, '')),
+    .optional()
+    .nullable()
+    .transform(val => (val ? val.replace(/\s/g, '') : null)),
   
   metadata: z.object({
     note: z.string().max(500, 'Note must be less than 500 characters').optional(),

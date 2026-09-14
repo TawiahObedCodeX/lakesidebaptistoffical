@@ -6,17 +6,9 @@ import { FaSpinner, FaLock } from "react-icons/fa";
 
 const PRESETS = [50, 70, 100, 200, 500, 1000] as const;
 
-const PURPOSES = [
-  { value: "TITHE", label: "Tithe" },
-  { value: "OFFERING", label: "Offering" },
-  { value: "GIVE", label: "General Giving" },
-  { value: "EVENT_TICKET", label: "Event / Project" },
-] as const;
-
 export function DonationForm() {
   const [selectedPreset, setSelectedPreset] = useState<number>(100);
   const [customAmount, setCustomAmount] = useState("");
-  const [purpose, setPurpose] = useState<string>("TITHE");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,19 +22,6 @@ export function DonationForm() {
     setLoading(true);
     setError(null);
 
-    const formData = new FormData(e.currentTarget);
-    const firstName = String(formData.get("firstName") ?? "").trim();
-    const lastName = String(formData.get("lastName") ?? "").trim();
-    const email = String(formData.get("email") ?? "").trim();
-    const phone = String(formData.get("phone") ?? "").trim();
-    const note = String(formData.get("note") ?? "").trim();
-
-    if (!firstName || !lastName || !email) {
-      setError("Please provide your full name and email.");
-      setLoading(false);
-      return;
-    }
-
     if (resolvedAmount < 10) {
       setError("Minimum amount is GH₵10.");
       setLoading(false);
@@ -50,19 +29,16 @@ export function DonationForm() {
     }
 
     try {
-      const giverName = `${firstName} ${lastName}`.trim();
-
       const res = await fetch("/api/payments/initialize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: resolvedAmount,
-          purpose,
-          giverName,
-          giverEmail: email,
-          giverPhone: phone || null,
+          purpose: "GIVE",
+          giverName: "Anonymous Donor",
+          giverEmail: "donor@lakesidebaptist.org",
           currency: "GHS",
-          metadata: { note: note || undefined, source: "donation_page" },
+          metadata: { source: "donation_page" },
         }),
       });
 
@@ -96,35 +72,10 @@ export function DonationForm() {
         )}
       </AnimatePresence>
 
-      {/* 1. SELECT PURPOSE */}
+      {/* 1. CHOOSE AMOUNT */}
       <div>
         <p className="text-lg font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
-          1. Select Purpose
-        </p>
-        <div className="grid grid-cols-2 gap-3">
-          {PURPOSES.map((p) => (
-            <motion.button
-              key={p.value}
-              type="button"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => setPurpose(p.value)}
-              className={`py-3.5 px-4 rounded-xl text-lg font-medium border transition-all duration-300 ${
-                purpose === p.value
-                  ? "bg-slate-900 text-white border-slate-900 shadow-md"
-                  : "bg-white text-slate-700 border-slate-200 hover:border-slate-400 hover:bg-slate-50"
-              }`}
-            >
-              {p.label}
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* 2. CHOOSE AMOUNT */}
-      <div>
-        <p className="text-lg font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
-          2. Choose Amount
+          1. Choose Amount
         </p>
         <div className="grid grid-cols-3 gap-3 mb-4">
           {PRESETS.map((amt) => (
@@ -178,67 +129,18 @@ export function DonationForm() {
         </motion.p>
       </div>
 
-      {/* 3. DONOR DETAILS */}
-      <div>
-        <p className="text-lg font-semibold tracking-[0.2em] text-slate-400 uppercase mb-4">
-          3. Donor Details
-        </p>
-        <div className="space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <input
-              name="firstName"
-              type="text"
-              required
-              placeholder="First Name"
-              className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
-            />
-            <input
-              name="lastName"
-              type="text"
-              required
-              placeholder="Last Name"
-              className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
-            />
-          </div>
-          <input
-            name="email"
-            type="email"
-            required
-            placeholder="Email Address"
-            className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
-          />
-          <input
-            name="phone"
-            type="tel"
-            placeholder="Phone Number (Optional)"
-            className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none transition-all"
-          />
-          <textarea
-            name="note"
-            rows={3}
-            placeholder="Note or prayer request (optional)"
-            className="w-full border border-slate-200 focus:border-slate-900 rounded-xl px-4 py-3.5 text-sm outline-none resize-none transition-all"
-          />
-        </div>
-      </div>
-
       {/* Summary bar */}
       <div className="bg-slate-50 rounded-xl px-5 py-4 flex items-center justify-between text-sm border border-slate-100">
         <div>
           <p className="text-lg tracking-widest text-slate-400 uppercase">
-            Purpose
-          </p>
-          <p className="font-medium text-slate-800 mt-0.5 text-lg">
-            {PURPOSES.find((p) => p.value === purpose)?.label}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-lg tracking-widest text-slate-400 uppercase flex items-center justify-end gap-1.5">
-            <FaLock className="text-[10px]" /> Secure Payment Via
+            Secure Payment Via
           </p>
           <p className="font-semibold text-slate-900 mt-0.5 tracking-wide text-2xl">
             PAYSTACK
           </p>
+        </div>
+        <div className="flex items-center gap-1.5 text-right text-[#B85C38] text-xl">
+          <FaLock className="text-[10px]" />
         </div>
       </div>
 
