@@ -96,13 +96,13 @@ const TABS = [
     id: "vision",
     label: "Our vision",
     heading: "A home for every hopeful heart.",
-    body: "We imagine a church where faith feels close, questions are welcomed, and every person discovers they have a meaningful place in God's story.",
+    body: "To be a Christ-centered church that passionately knows Jesus, reflects His character, and transforms lives by making Him known in our communities, our nation, and the world through the power of the Holy Spirit..",
   },
   {
     id: "mission",
     label: "Our mission",
     heading: "Faith that shows up every day.",
-    body: "We exist to love God, love people, and serve our city with open hands and open hearts—making disciples who make disciples.",
+    body: "Our mission is to lead people into a personal and growing relationship with Jesus Christ through the faithful preaching and teaching of God’s Word, fervent prayer, authentic worship, loving fellowship, intentional discipleship, compassionate service, and bold evangelism, equipping every believer to know Christ deeply and make Him known faithfully..",
   },
   {
     id: "approach",
@@ -139,38 +139,7 @@ const impactItems = [
   },
 ];
 
-const schedule = [
-  {
-    time: "9:00 AM",
-    title: "Sunday Worship",
-    description: "Main sanctuary service with full choir.",
-  },
-  {
-    time: "8:00 AM",
-    title: "Bible Study",
-    description: "Deep dive into the Word in the fellowship hall.",
-  },
-  {
-    time: "6:00 PM",
-    title: "Prayer Meeting",
-    description: "Mid-week corporate prayer and intercession.",
-  },
-  {
-    time: "First Sunday",
-    title: "Communion",
-    description: "Sacred time of remembrance and grace.",
-  },
-  {
-    time: "6:00 PM",
-    title: "Youth Service",
-    description: "High energy worship and relevant teaching. friday evening",
-  },
-  {
-    time: "Seasonal",
-    title: "Special Programs",
-    description: "Conferences, outreach, and holiday services.",
-  },
-];
+
 
 // const faqs = [
 //   {
@@ -407,134 +376,9 @@ export default function HomePage() {
               </div>
             </section>
 
-      {/* ========== COMMUNITY IMPACT ========== */}
-      <section id="community-impact" className="scroll-mt-28 py-20 md:py-28 bg-white">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-gray-900 tracking-tight mb-4"
-            >
-              Community Impact
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-gray-600"
-            >
-              Making a difference in our city and beyond.
-            </motion.p>
-          </div>
+  
 
-          <div className="space-y-20 md:space-y-28">
-            {impactItems.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${
-                  item.reverse ? "lg:[&>div:first-child]:order-2" : ""
-                }`}
-              >
-                {/* Image */}
-                <div className={`${item.reverse ? "lg:order-2" : ""}`}>
-                  <div className="relative rounded-3xl overflow-hidden shadow-xl">
-                    <Image
-                      src={item.image}
-                      alt={item.alt}
-                      width={700}
-                      height={480}
-                      className="w-full h-auto object-cover aspect-16/11"
-                    />
-                  </div>
-                </div>
-
-                {/* Text */}
-                <div className={`${item.reverse ? "lg:order-1" : ""}`}>
-                  <h3 className="text-3xl sm:text-4xl font-serif font-bold text-gray-900 mb-5">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-700 text-xl leading-relaxed mb-8">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== WEEKLY SCHEDULE ========== */}
-      <section id="schedule" className="scroll-mt-28 py-20 md:py-28 bg-white">
-        <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 md:mb-20">
-            <motion.h2
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-gray-900 tracking-tight mb-4"
-            >
-              Our Weekly Schedule
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-lg text-gray-600"
-            >
-              Join us throughout the week for fellowship and growth.
-            </motion.p>
-          </div>
-
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 -translate-x-1/2 hidden sm:block" />
-
-            <div className="space-y-12 sm:space-y-16">
-              {schedule.map((item, index) => {
-                const isLeft = index % 2 === 0;
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.55, delay: index * 0.06 }}
-                    className={`relative flex flex-col sm:flex-row items-center gap-6 sm:gap-0 ${
-                      isLeft ? "sm:justify-start" : "sm:justify-end"
-                    }`}
-                  >
-                    {/* Content card */}
-                    <div
-                      className={`w-full sm:w-[42%] ${
-                        isLeft ? "sm:text-right sm:pr-12" : "sm:text-left sm:pl-12 sm:order-2"
-                      }`}
-                    >
-                      <p className="text-lg font-medium text-black mb-1">{item.time}</p>
-                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#B85C38] mb-1">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 text-lg leading-relaxed">{item.description}</p>
-                    </div>
-
-                    {/* Dot */}
-                    <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-gray-300 shadow-sm z-10 hidden sm:block" />
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
+  
 
       {/* ========== FAQ ========== */}
       {/* <section id="faq" className="scroll-mt-28 py-20 md:py-28 bg-white">

@@ -13,6 +13,38 @@ import Link from "next/link";
 /* ─────────────────────────────────────────────
    HELPERS
 ───────────────────────────────────────────── */
+const schedule = [
+  {
+    time: "9:00 AM",
+    title: "Sunday Worship",
+    description: "Main sanctuary service with full choir.",
+  },
+  {
+    time: "8:00 AM",
+    title: "Bible Study",
+    description: "Deep dive into the Word in the fellowship hall.",
+  },
+  {
+    time: "6:00 PM",
+    title: "Prayer Meeting",
+    description: "Mid-week corporate prayer and intercession.",
+  },
+  {
+    time: "First Sunday",
+    title: "Communion",
+    description: "Sacred time of remembrance and grace.",
+  },
+  {
+    time: "6:00 PM",
+    title: "Youth Service",
+    description: "High energy worship and relevant teaching. friday evening",
+  },
+  {
+    time: "Seasonal",
+    title: "Special Programs",
+    description: "Conferences, outreach, and holiday services.",
+  },
+];
 
 function FadeUp({
   children,
@@ -76,33 +108,14 @@ const Orb = ({ className }: { className?: string }) => (
    DATA
 ───────────────────────────────────────────── */
 
-const TABS = [
-  {
-    id: "vision",
-    label: "Our vision",
-    heading: "A home for every hopeful heart.",
-    body: "We imagine a church where faith feels close, questions are welcomed, and every person discovers they have a meaningful place in God's story.",
-  },
-  {
-    id: "mission",
-    label: "Our mission",
-    heading: "Faith that shows up every day.",
-    body: "We exist to love God, love people, and serve our city with open hands and open hearts—making disciples who make disciples.",
-  },
-  {
-    id: "approach",
-    label: "Our approach",
-    heading: "Presence over performance.",
-    body: "We walk slowly with people, create space for honest questions, and practice a faith that is both deeply rooted and radically welcoming.",
-  },
-];
+
 
 /* ─────────────────────────────────────────────
    PAGE
 ───────────────────────────────────────────── */
 
 export default function AboutPage() {
-  const [activeTab, setActiveTab] = useState("vision");
+
 
   const heroRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: heroScroll } = useScroll({
@@ -112,7 +125,7 @@ export default function AboutPage() {
   const heroY = useTransform(heroScroll, [0, 1], ["0%", "35%"]);
   const heroOpacity = useTransform(heroScroll, [0, 0.8], [1, 0]);
 
-  const activeContent = TABS.find((t) => t.id === activeTab) ?? TABS[0];
+
 
   return (
     <div className="bg-site-bg overflow-x-hidden">
@@ -188,214 +201,10 @@ export default function AboutPage() {
       {/* ══════════════════════════
           2. ABOUT US  (matches first UI)
       ══════════════════════════ */}
-      <section className="py-24 sm:py-28 lg:py-36 bg-[#F8F6F1] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
-            {/* LEFT — Image + badge */}
-            <FadeUp className="relative order-1">
-              <div className="relative aspect-4/5 sm:aspect-3/4 lg:aspect-4/5 max-w-md mx-auto lg:max-w-none">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.94, y: 30 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                  className="absolute inset-0 rounded-2xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)]"
-                >
-                  <ParallaxImage
-                    src="/images/aboutimg2.png"
-                    alt="Friends standing together at sunset"
-                    className="w-full h-full"
-                  />
-                </motion.div>
-
-                {/* Gold badge — bottom right of image */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.6, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 180,
-                    damping: 18,
-                    delay: 0.45,
-                  }}
-                  className="absolute -bottom-4 -right-2 sm:bottom-4 sm:right-4 md:bottom-6 md:right-6 z-10"
-                >
-                  <div className="bg-blue-900 text-white rounded-xl px-5 py-4 sm:px-6 sm:py-5 shadow-xl text-center min-w-27.5">
-                    <div className="flex justify-center mb-1.5">
-                      {/* Fixed complete SVG path */}
-                      <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        className="text-white"
-                      >
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                      </svg>
-                    </div>
-                    <p className="text-2xl sm:text-3xl font-serif font-semibold leading-none tracking-tight">
-                      16 years
-                    </p>
-                    <p className="text-[10px] sm:text-[11px] tracking-[0.2em] uppercase mt-1.5 font-medium opacity-80">
-                      OF GRACE
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
-            </FadeUp>
-
-            {/* RIGHT — Content */}
-            <div className="order-2">
-              <FadeUp>
-                <p className="text-[#B85C38] text-xs sm:text-lg tracking-[0.25em] font-semibold uppercase mb-5">
-                  WHO WE ARE
-                </p>
-              </FadeUp>
-
-              <FadeUp delay={0.08}>
-                <h2 className="font-serif text-[2.4rem] sm:text-5xl lg:text-[3.4rem] xl:text-[3.75rem] leading-[1.12] tracking-tight text-[#1a1a1a] mb-6">
-                  More than a
-                  <br />
-                  building.
-                  <br />
-                  <span className="text-[#B85C38]">A belonging.</span>
-                </h2>
-              </FadeUp>
-
-              <FadeUp delay={0.16}>
-                <div className="space-y-5 text-[#5c5c5c] text-base sm:text-xl leading-relaxed max-w-lg">
-                  <p>
-                    We are a diverse family learning to follow Jesus together.
-                    Our doors are open to the curious, the certain, the
-                    searching, and the starting over.
-                  </p>
-                  <p>
-                    There is room here for your whole story. Come find a people
-                    who will walk with you through every season.
-                  </p>
-                </div>
-              </FadeUp>
-
-
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ══════════════════════════
           3. OUR FOUNDATION  (matches second UI)
       ══════════════════════════ */}
-      <section className="py-24 sm:py-28 lg:py-36 bg-blue-900/95 relative overflow-hidden">
-        {/* subtle grid */}
-        <div
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)",
-            backgroundSize: "72px 72px",
-          }}
-        />
-
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-          {/* Header */}
-          <FadeUp className="mb-14 sm:mb-16 lg:mb-20">
-            <p className="text-[#C45C3A] text-xs sm:text-lg tracking-[0.3em] font-semibold uppercase mb-5">
-              OUR FOUNDATION
-            </p>
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] text-[#F5F0E8] leading-[1.15] max-w-2xl">
-              A faith with its sleeves
-              <br />
-              rolled up.
-            </h2>
-          </FadeUp>
-
-          {/* Split layout */}
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 xl:gap-20 items-start">
-            {/* LEFT — Tab list */}
-            <div className="lg:col-span-5">
-              <div className="flex flex-col">
-                {TABS.map((tab, idx) => {
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <motion.button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 0.5,
-                        delay: idx * 0.08,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      className={`group relative flex items-center justify-between py-5 sm:py-6 border-t border-white/10 text-left transition-colors duration-300 ${
-                        isActive
-                          ? "text-[#E8A87C]"
-                          : "text-white/55 hover:text-white/85"
-                      }`}
-                    >
-                      <span
-                        className={`text-lg sm:text-xl font-medium tracking-wide transition-colors px-5 duration-300 ${
-                          isActive ? "text-[#E8A87C]" : ""
-                        }`}
-                      >
-                        {tab.label}
-                      </span>
-                      <span
-                        className={`text-xl sm:text-2xl transition-all duration-300 ${
-                          isActive
-                            ? "text-[#E8A87C] translate-x-0"
-                            : "text-white/30 group-hover:text-white/60 group-hover:translate-x-1"
-                        }`}
-                      >
-                        ›
-                      </span>
-                      {/* active indicator line */}
-                      {isActive && (
-                        <motion.div
-                          layoutId="foundation-active"
-                          className="absolute left-0 top-0 bottom-0 w-0.5 bg-[#E8A87C]"
-                          transition={{
-                            type: "spring",
-                            stiffness: 380,
-                            damping: 30,
-                          }}
-                        />
-                      )}
-                    </motion.button>
-                  );
-                })}
-                <div className="border-t border-white/10" />
-              </div>
-            </div>
-
-            {/* RIGHT — Content panel */}
-            <div className="lg:col-span-7 relative min-h-55 sm:min-h-65">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeContent.id}
-                  initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  className="pl-0 lg:pl-8 xl:pl-12 border-l-0 lg:border-l border-white/10"
-                >
-                  <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] text-[#F5F0E8] leading-[1.2] mb-5 sm:mb-6 max-w-md">
-                    {activeContent.heading}
-                  </h3>
-
-                  <p className="text-white/60 text-base sm:text-lg leading-relaxed max-w-lg">
-                    {activeContent.body}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ══════════════════════════
           7. PASTOR'S MESSAGE
@@ -482,96 +291,166 @@ export default function AboutPage() {
       {/* ══════════════════════════
     PASTOR QUOTE SECTION  (matches first image)
 ══════════════════════════ */}
-<section className="bg-blue-900/95 py-20 sm:py-24 lg:py-32 overflow-hidden">
-  <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-    <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
-      {/* LEFT — Quote */}
-      <div className="order-2 lg:order-1">
-        <FadeUp>
-          <blockquote className="font-serif text-[1.85rem] sm:text-4xl lg:text-[2.75rem] xl:text-[3.1rem] leading-tight text-[#F8EDE3] mb-8 sm:mb-10">
-            “You don&apos;t have to
-            <br className="hidden sm:block" />
-            have it all together to
-            <br className="hidden sm:block" />
-            have a place here.”
-          </blockquote>
-        </FadeUp>
+      <section className="bg-blue-900/95 py-20 sm:py-24 lg:py-32 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-center">
+            {/* LEFT — Quote */}
+            <div className="order-2 lg:order-1">
+              <FadeUp>
+                <blockquote className="font-serif text-[1.85rem] sm:text-4xl lg:text-[2.75rem] xl:text-[3.1rem] leading-tight text-[#F8EDE3] mb-8 sm:mb-10">
+                  “You don&apos;t have to
+                  <br className="hidden sm:block" />
+                  have it all together to
+                  <br className="hidden sm:block" />
+                  have a place here.”
+                </blockquote>
+              </FadeUp>
 
-        <FadeUp delay={0.12}>
-          <p className="text-[#E8C9B8] text-base sm:text-xl leading-relaxed max-w-md mb-8 sm:mb-10">
-            We are becoming whole, together — through worship, honest
-            friendship, and a faith that meets us exactly where we are.
-          </p>
-        </FadeUp>
+              <FadeUp delay={0.12}>
+                <p className="text-[#E8C9B8] text-base sm:text-xl leading-relaxed max-w-md mb-8 sm:mb-10">
+                  We are becoming whole, together — through worship, honest
+                  friendship, and a faith that meets us exactly where we are.
+                </p>
+              </FadeUp>
 
-        <FadeUp delay={0.22}>
-          <div className="flex items-center gap-3">
+              <FadeUp delay={0.22}>
+                <div className="flex items-center gap-3"></div>
+              </FadeUp>
+            </div>
+
+            {/* RIGHT — Image */}
+            <FadeUp delay={0.1} className="order-1 lg:order-2">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96, y: 24 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                className="relative aspect-4/3 sm:aspect-5/4 rounded-sm overflow-hidden shadow-2xl"
+              >
+                <ParallaxImage
+                  src="/images/aboutimg2.png"
+                  alt="Friends standing together at sunset"
+                  className="w-full h-full"
+                />
+              </motion.div>
+            </FadeUp>
           </div>
-        </FadeUp>
-      </div>
+        </div>
+      </section>
 
-      {/* RIGHT — Image */}
-      <FadeUp delay={0.1} className="order-1 lg:order-2">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 24 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative aspect-4/3 sm:aspect-5/4 rounded-sm overflow-hidden shadow-2xl"
-        >
-          <ParallaxImage
-            src="/images/aboutimg2.png"
-            alt="Friends standing together at sunset"
-            className="w-full h-full"
-          />
-        </motion.div>
-      </FadeUp>
-    </div>
-  </div>
-</section>
-
-{/* ══════════════════════════
+      {/* ══════════════════════════
     CTA — YOUR NEXT CHAPTER  (matches second image)
 ══════════════════════════ */}
-<section className="bg-[#F7F4EF] py-24 sm:py-28 lg:py-36 relative overflow-hidden">
-  <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
-    <FadeUp>
-      <p className="text-[#9B2C2C] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-6 sm:mb-8">
-        YOUR NEXT CHAPTER
-      </p>
-    </FadeUp>
+      <section className="bg-[#F7F4EF] py-24 sm:py-28 lg:py-36 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center">
+          <FadeUp>
+            <p className="text-[#9B2C2C] text-xs sm:text-sm tracking-[0.3em] font-semibold uppercase mb-6 sm:mb-8">
+              YOUR NEXT CHAPTER
+            </p>
+          </FadeUp>
 
-    <FadeUp delay={0.1}>
-      <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.15] tracking-tight text-[#1C1C1C] mb-6 sm:mb-8">
-        There is a seat
-        <br />
-        <span className="text-[#9B2C2C]">with your name on</span>
-        <br />
-        <span className="text-[#9B2C2C]">it.</span>
-      </h2>
-    </FadeUp>
+          <FadeUp delay={0.1}>
+            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-[4.25rem] leading-[1.15] tracking-tight text-[#1C1C1C] mb-6 sm:mb-8">
+              There is a seat
+              <br />
+              <span className="text-[#9B2C2C]">with your name on</span>
+              <br />
+              <span className="text-[#9B2C2C]">it.</span>
+            </h2>
+          </FadeUp>
 
-    <FadeUp delay={0.2}>
-      <p className="text-[#5C5C5C] text-base sm:text-xl leading-relaxed max-w-xl mx-auto mb-10 sm:mb-12">
-        Join us this Sunday at 9:00 or 11:00 AM. Come early
-        <br className="hidden sm:block" />
-        for coffee. Stay for the conversation.
-      </p>
-    </FadeUp>
+          <FadeUp delay={0.2}>
+            <p className="text-[#5C5C5C] text-base sm:text-xl leading-relaxed max-w-xl mx-auto mb-10 sm:mb-12">
+              Join us this Sunday at 9:00 or 11:00 AM. Come early
+              <br className="hidden sm:block" />
+              for coffee. Stay for the conversation.
+            </p>
+          </FadeUp>
 
-    <FadeUp delay={0.3}>
-      <Link
-        href="https://maps.app.goo.gl/Yz2cagLBaWCynadDA?g_st=ic"
-        className="group inline-flex items-center gap-2.5 bg-blue-900 text-white px-8 py-4 sm:px-10 sm:py-4.5 text-sm font-semibold tracking-[0.12em] uppercase rounded-lg hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-0.5"
-      >
-        PLAN YOUR VISIT
-        <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
-          ↗
-        </span>
-      </Link>
-    </FadeUp>
-  </div>
-</section>
+          <FadeUp delay={0.3}>
+            <Link
+              href="https://maps.app.goo.gl/Yz2cagLBaWCynadDA?g_st=ic"
+              className="group inline-flex items-center gap-2.5 bg-blue-900 text-white px-8 py-4 sm:px-10 sm:py-4.5 text-sm font-semibold tracking-[0.12em] uppercase rounded-lg hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-3xl hover:-translate-y-0.5"
+            >
+              PLAN YOUR VISIT
+              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
+                ↗
+              </span>
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ========== WEEKLY SCHEDULE ========== */}
+      <section id="schedule" className="scroll-mt-28 py-20 md:py-28 bg-white">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 md:mb-20">
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-gray-900 tracking-tight mb-4"
+            >
+              Our Weekly Schedule
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-lg text-gray-600"
+            >
+              Join us throughout the week for fellowship and growth.
+            </motion.p>
+          </div>
+
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gray-200 -translate-x-1/2 hidden sm:block" />
+
+            <div className="space-y-12 sm:space-y-16">
+              {schedule.map((item, index) => {
+                const isLeft = index % 2 === 0;
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.55, delay: index * 0.06 }}
+                    className={`relative flex flex-col sm:flex-row items-center gap-6 sm:gap-0 ${
+                      isLeft ? "sm:justify-start" : "sm:justify-end"
+                    }`}
+                  >
+                    {/* Content card */}
+                    <div
+                      className={`w-full sm:w-[42%] ${
+                        isLeft
+                          ? "sm:text-right sm:pr-12"
+                          : "sm:text-left sm:pl-12 sm:order-2"
+                      }`}
+                    >
+                      <p className="text-lg font-medium text-black mb-1">
+                        {item.time}
+                      </p>
+                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#B85C38] mb-1">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-600 text-lg leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Dot */}
+                    <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-[3px] border-gray-300 shadow-sm z-10 hidden sm:block" />
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
